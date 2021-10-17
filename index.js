@@ -1,6 +1,7 @@
 const fs = require('fs');
 const { Client, Collection, Intents } = require('discord.js');
 require('dotenv').config();
+const [ client_id, guild_id ] = ['876116418037444630', '876116489902653513']
 
 const client = new Client({ intents: [Intents.FLAGS.GUILDS] });
 
