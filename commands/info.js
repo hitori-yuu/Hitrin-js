@@ -1,5 +1,5 @@
-const { SlashCommandBuilder } = require('@discordjs/builders');
-const { MessageEmbed } = require('discord.js');
+const { SlashCommandBuilder, SlashCommandUserOption } = require('@discordjs/builders');
+const { MessageEmbed, Options } = require('discord.js');
 
 module.exports = {
 	data: new SlashCommandBuilder()
@@ -19,11 +19,31 @@ module.exports = {
 
         .addSubcommand(subcommand =>
             subcommand
+                .setName('member')
+                .setDescription('Show the member details'))
+
+        .addSubcommand(subcommand =>
+            subcommand
                 .setName('server')
                 .setDescription('Show the server details')),
+
     async execute(interaction) {
         if (interaction.options.getSubcommand() === 'user') {
-            await interaction.reply('User details...')
+            const user = interaction.options.getUser('target');
+            var bot = 'BOT'
+            if (!user.bot) bot = 'USER'
+            const embed = new MessageEmbed()
+                .setColor('#89c3eb')
+                .setTitle('User Details')
+                .setAuthor(`${interaction.user.tag}`, interaction.user.displayAvatarURL({format: 'png'}), interaction.user.displayAvatarURL({format: 'png'}))
+                .addFields(
+                    { name: '__**General:**__', value: `**[Name]** ${user.tag}\n**[ID]** ${user.id}\n**[Type]** ${bot}` },
+                    { name: '__**Temporal:**__', value: `**[Created At]** ${user.createdAt}` },
+                )
+                .setThumbnail(user.displayAvatarURL({format: 'png'}))
+                .setTimestamp()
+                .setFooter('Hitorin', 'https://hitori-yuu.github.io/Hitorin-web/');
+            await interaction.reply({ embeds: [embed] });
         }
         if (interaction.options.getSubcommand() === 'server') {
             await interaction.reply('Server details...')
