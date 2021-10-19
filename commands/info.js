@@ -1,5 +1,5 @@
 const { SlashCommandBuilder } = require('@discordjs/builders');
-const { MessageEmbed } = require('discord.js');
+const { MessageEmbed, Client, Intents } = require('discord.js');
 
 module.exports = {
 	data: new SlashCommandBuilder()
@@ -28,7 +28,7 @@ module.exports = {
                 .setName('server')
                 .setDescription('Show the server details')),
 
-    async execute(interaction, client) {
+    async execute(interaction) {
         if (interaction.options.getSubcommand() === 'user') {
             const user = interaction.options.getUser('target');
             var bot = 'BOT'
@@ -66,22 +66,35 @@ module.exports = {
         }
 
         if (interaction.options.getSubcommand() === 'server') {
-            await interaction.reply('Server details...')
+            const server = interaction.guild
+            const s = new MessageEmbed()
+                .setColor('#89c3eb')
+                .setTitle('User Details')
+                .setAuthor(`${interaction.user.tag}`, interaction.user.displayAvatarURL({format: 'png'}), interaction.user.displayAvatarURL({format: 'png'}))
+                .addFields(
+                    { name: '__**General:**__', value: `**[Name]** ${server.name}\n**[ID]** ${server.id}\n**[Owner]** ${fetch(server.owner) || 'None'}\n**[Type]** ${bot}` },
+                    { name: '__**Temporal:**__', value: `**[Created At]** ${new Date(member.user.createdTimestamp).toLocaleDateString()}\n**[Joined At]** ${new Date(member.joinedTimestamp).toLocaleDateString()}` },
+                )
+                .setThumbnail(server.iconURL({format: 'png'}))
+                .setFooter('Hitorin')
+                .setTimestamp()
+            channel.send({ embeds: [s] });
         }
 
         if (interaction.options.getSubcommand() === 'bot') {
-            const b = new MessageEmbed()
-            .setColor('#89c3eb')
-            .setTitle('Bot Details')
-            .setAuthor(`${interaction.user.tag}`, interaction.user.displayAvatarURL({format: 'png'}), interaction.user.displayAvatarURL({format: 'png'}))
-            .addFields(
-                { name: '__**General:**__', value: `**[Name]** ${client.tag}\n**[ID]** ${client.id}` },
-                { name: '__**Temporal:**__', value: `**[Created At]** ${new Date(client.createdTimestamp).toLocaleDateString()}` },
-            )
-            .setThumbnail(client.displayAvatarURL({format: 'png'}))
-            .setFooter('Hitorin', client.displayAvatarURL({format: 'png'}))
-            .setTimestamp()
-            await interaction.reply({ embeds: [b] });
+            // const b = new MessageEmbed()
+            // .setColor('#89c3eb')
+            // .setTitle('Bot Details')
+            // .setAuthor(`${interaction.user.tag}`, interaction.user.displayAvatarURL({format: 'png'}), interaction.user.displayAvatarURL({format: 'png'}))
+            // .addFields(
+            //     { name: '__**General:**__', value: `**[Name]** ${client.tag}\n**[ID]** ${client.id}` },
+            //     { name: '__**Temporal:**__', value: `**[Created At]** ${new Date(client.createdTimestamp).toLocaleDateString()}` },
+            // )
+            // .setThumbnail(client.displayAvatarURL({format: 'png'}))
+            // .setFooter('Hitorin', client.displayAvatarURL({format: 'png'}))
+            // .setTimestamp()
+            console.log(client.user)
+            // await interaction.reply({ embeds: [b] });
         }
     }
 };
