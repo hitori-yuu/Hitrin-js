@@ -50,14 +50,14 @@ module.exports = {
         if (interaction.options.getSubcommand() === 'member') {
             const member = interaction.options.getMember('target');
             var bot = 'BOT'
-            if (!member.bot) bot = 'USER'
+            if (!member.user.bot) bot = 'USER'
             const m = new MessageEmbed()
                 .setColor('#89c3eb')
                 .setTitle('User Details')
                 .setAuthor(`${interaction.user.tag}`, interaction.user.displayAvatarURL({format: 'png'}), interaction.user.displayAvatarURL({format: 'png'}))
                 .addFields(
-                    { name: '__**General:**__', value: `**[Name]** ${member.tag}\n**[ID]** ${member.id}\n**[Nickname]** ${member.nickname}\n**[Type]** ${bot}` },
-                    { name: '__**Temporal:**__', value: `**[Created At]** ${new Date(member.createdTimestamp).toLocaleDateString()}\n**[Joined At]** ${new Date(member.joinedTimeStamp).toLocaleDateString()}` },
+                    { name: '__**General:**__', value: `**[Name]** ${member.user.tag}\n**[ID]** ${member.id}\n**[Nickname]** ${member.nickname || 'None'}\n**[Type]** ${bot}` },
+                    { name: '__**Temporal:**__', value: `**[Created At]** ${new Date(member.user.createdTimestamp).toLocaleDateString()}\n**[Joined At]** ${new Date(member.joinedTimestamp).toLocaleDateString()}` },
                 )
                 .setThumbnail(member.displayAvatarURL({format: 'png'}))
                 .setFooter('Hitorin')
@@ -82,9 +82,6 @@ module.exports = {
             .setFooter('Hitorin', client.displayAvatarURL({format: 'png'}))
             .setTimestamp()
             await interaction.reply({ embeds: [b] });
-        }
-        else {
-            await interaction.reply('You didn\'t enter anything...')
         }
     }
 };
