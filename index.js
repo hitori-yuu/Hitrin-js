@@ -3,7 +3,9 @@ const { Client, Collection, Intents } = require('discord.js');
 require('dotenv').config();
 const [ client_id, guild_id ] = ['876116418037444630', '876116489902653513']
 
-const options = { ws: { intents: Intents.ALL } };
+const options = {
+    intents: ["GUILDS", "GUILD_BANS", "GUILD_MESSAGES", "GUILD_MEMBERS", "GUILD_PRESENCES"],
+};
 const client = new Client(options);
 
 const eventFiles = fs.readdirSync('./events').filter(file => file.endsWith('.js'));
