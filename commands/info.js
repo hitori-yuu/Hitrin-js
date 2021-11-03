@@ -1,5 +1,5 @@
 const { SlashCommandBuilder } = require('@discordjs/builders');
-const { MessageEmbed, Client, Intents } = require('discord.js');
+const { MessageEmbed, Client, Intents, ClientUser } = require('discord.js');
 
 module.exports = {
 	data: new SlashCommandBuilder()
@@ -82,6 +82,11 @@ module.exports = {
         }
 
         if (interaction.options.getSubcommand() === 'bot') {
+            const options = {
+                intents: ["GUILDS", "GUILD_BANS", "GUILD_MESSAGES", "GUILD_MEMBERS", "GUILD_PRESENCES"],
+            };
+            const client = new Client(options);
+            console.log(client);
             // const b = new MessageEmbed()
             // .setColor('#89c3eb')
             // .setTitle('Bot Details')
@@ -93,7 +98,6 @@ module.exports = {
             // .setThumbnail(client.displayAvatarURL({format: 'png'}))
             // .setFooter('Hitorin', client.displayAvatarURL({format: 'png'}))
             // .setTimestamp()
-            console.log(client.user)
             // await interaction.reply({ embeds: [b] });
         }
     }
