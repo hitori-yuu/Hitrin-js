@@ -14,29 +14,29 @@ module.exports = {
 		const permission = new MessageEmbed()
 			.setColor('#ba2636')
 			.setTitle('Unsuccessful execution')
-			.setAuthor(`${interaction.user.tag}`, interaction.user.displayAvatarURL({format: 'png'}), interaction.user.displayAvatarURL({format: 'png'}))
+			.setAuthor(`${interaction.user.tag}`, interaction.user.displayAvatarURL({ format: 'png' }), interaction.user.displayAvatarURL({ format: 'png' }))
 			.setDescription('You don\'t have the permission to run it. Required: `BAN_MEMBERS`')
 			.setFooter('Hitorin')
-			.setTimestamp()
+			.setTimestamp();
 		if (!interaction.member.permissions.has('BAN_MEMBERS')) return await interaction.reply({ embeds: [permission] });
 
 		const invalid = new MessageEmbed()
 			.setColor('#ba2636')
 			.setTitle('Unsuccessful execution')
-			.setAuthor(`${interaction.user.tag}`, interaction.user.displayAvatarURL({format: 'png'}), interaction.user.displayAvatarURL({format: 'png'}))
+			.setAuthor(`${interaction.user.tag}`, interaction.user.displayAvatarURL({ format: 'png' }), interaction.user.displayAvatarURL({ format: 'png' }))
 			.setDescription('Invalid user')
 			.setFooter('Hitorin')
-			.setTimestamp()
+			.setTimestamp();
 		if (!user) return await interaction.reply({ embeds: [invalid] });
 
 		const success = new MessageEmbed()
 			.setColor('#028760')
 			.setTitle(`Unbanning: ${user.tag} | Executor: ${interaction.user.tag}`)
-			.setAuthor(`${interaction.user.tag}`, interaction.user.displayAvatarURL({format: 'png'}), interaction.user.displayAvatarURL({format: 'png'}))
+			.setAuthor(`${interaction.user.tag}`, interaction.user.displayAvatarURL({ format: 'png' }), interaction.user.displayAvatarURL({ format: 'png' }))
 			.setDescription(`Reason: ${reasons}`)
 			.setFooter('Hitorin')
-			.setTimestamp()
+			.setTimestamp();
 		await interaction.reply({ embeds: [success] });
-		interaction.guild.members.unban(user(`「` + reasons + `」by:${interaction.user.tag}`))
+		interaction.guild.members.unban(user('「' + reasons + `」by:${interaction.user.tag}`));
 	},
 };

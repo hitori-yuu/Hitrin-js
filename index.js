@@ -1,10 +1,9 @@
 const fs = require('fs');
-const { Client, Collection, Intents } = require('discord.js');
+const { Client, Collection } = require('discord.js');
 require('dotenv').config();
-const [ client_id, guild_id ] = ['876116418037444630', '876116489902653513']
 
 const options = {
-    intents: ["GUILDS", "GUILD_BANS", "GUILD_MESSAGES", "GUILD_MEMBERS", "GUILD_PRESENCES"],
+	intents: ['GUILDS', 'GUILD_BANS', 'GUILD_MESSAGES', 'GUILD_MEMBERS', 'GUILD_PRESENCES'],
 };
 const client = new Client(options);
 
@@ -14,7 +13,8 @@ for (const file of eventFiles) {
 	const event = require(`./events/${file}`);
 	if (event.once) {
 		client.once(event.name, (...args) => event.execute(...args));
-	} else {
+	}
+	else {
 		client.on(event.name, (...args) => event.execute(...args));
 	}
 }
@@ -36,7 +36,8 @@ client.on('interactionCreate', async interaction => {
 
 	try {
 		await command.execute(interaction);
-	} catch (error) {
+	}
+	catch (error) {
 		console.error(error);
 		await interaction.reply({ content: 'There was an error while executing this command!', ephemeral: true });
 	}

@@ -4,7 +4,7 @@ const { Routes } = require('discord-api-types/v9');
 require('dotenv').config();
 
 const commands = [];
-const [ client_id, guild_id ] = ['876116418037444630', '876116489902653513']
+const [ client_id, guild_id ] = ['876116418037444630', '876116489902653513'];
 const commandFiles = fs.readdirSync('./commands').filter(file => file.endsWith('.js'));
 
 for (const file of commandFiles) {
