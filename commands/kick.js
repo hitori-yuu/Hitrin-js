@@ -7,7 +7,7 @@ module.exports = {
 		.setDescription('Kick the user from the server.')
 		.addUserOption(option => option.setName('target').setDescription('The user'))
 		.addStringOption(option => option.setName('reason').setDescription('The reason')),
-	async execute(interaction) {
+	async execute(interaction, client) {
 		const member = interaction.options.getMember('target');
 		const reasons = interaction.options.getString('reason') || 'None';
 
@@ -16,7 +16,7 @@ module.exports = {
 			.setTitle('Unsuccessful execution')
 			.setAuthor(`${interaction.user.tag}`, interaction.user.displayAvatarURL({ format: 'png' }), interaction.user.displayAvatarURL({ format: 'png' }))
 			.setDescription('You don\'t have the permission to run it. Required: `KICK_MEMBERS`')
-			.setFooter('Hitorin')
+			.setFooter('Hitorin', client.user.displayAvatarURL({ format: 'png' }))
 			.setTimestamp();
 		if (!interaction.member.permissions.has('KICK_MEMBERS')) return await interaction.reply({ embeds: [permission] });
 
@@ -25,7 +25,7 @@ module.exports = {
 			.setTitle('Unsuccessful execution')
 			.setAuthor(`${interaction.user.tag}`, interaction.user.displayAvatarURL({ format: 'png' }), interaction.user.displayAvatarURL({ format: 'png' }))
 			.setDescription('Invalid member')
-			.setFooter('Hitorin')
+			.setFooter('Hitorin', client.user.displayAvatarURL({ format: 'png' }))
 			.setTimestamp();
 		if (!member) return await interaction.reply({ embeds: [invalid] });
 
@@ -34,9 +34,9 @@ module.exports = {
 			.setTitle(`Kicked: ${member.user.tag} | Executor: ${interaction.user.tag}`)
 			.setAuthor(`${interaction.user.tag}`, interaction.user.displayAvatarURL({ format: 'png' }), interaction.user.displayAvatarURL({ format: 'png' }))
 			.setDescription(`Reason: ${reasons}`)
-			.setFooter('Hitorin')
+			.setFooter('Hitorin', client.user.displayAvatarURL({ format: 'png' }))
 			.setTimestamp();
 		await interaction.reply({ embeds: [success] });
-		member.kick(reasons + `by:${interaction.user.tag}`);
+		member.kick(reasons + '「' + reasons + `」by:${interaction.user.tag}`);
 	},
 };
