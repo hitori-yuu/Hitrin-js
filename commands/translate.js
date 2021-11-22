@@ -4,7 +4,7 @@ const translate = require('@imlinhanchao/google-translate-api');
 module.exports = {
 	data: new SlashCommandBuilder()
 		.setName('translate')
-		.setDescription('Replies with Pong!')
+		.setDescription('Translate the specified text.')
 		.addStringOption(option => option.setName('text').setDescription('the text'))
 		.addStringOption(option => option.setName('language').setDescription('the language').addChoice('Japanese', 'ja').addChoice('English', 'en')),
 	async execute(interaction) {

@@ -23,7 +23,7 @@ module.exports = {
 			const d = new MessageEmbed()
 				.setColor('#89c3eb')
 				.setTitle('Command Log(DM)')
-				.setAuthor(interaction.content)
+				.setAuthor(`${interaction.content}`)
 				.addFields(
 					{ name: '__**Executor:**__', value: `**[Name]** ${interaction.user.tag}\n**[ID]** ${interaction.user.id}\n**[Mention]** <@${interaction.user.id}>` },
 				)
