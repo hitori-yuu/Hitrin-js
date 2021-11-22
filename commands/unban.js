@@ -4,7 +4,7 @@ const { MessageEmbed } = require('discord.js');
 module.exports = {
 	data: new SlashCommandBuilder()
 		.setName('unban')
-		.setDescription('Cancel the ban of the user from the server.')
+		.setDescription('Remove the ban of the user from the server.')
 		.addUserOption(option => option.setName('target').setDescription('The user'))
 		.addStringOption(option => option.setName('reason').setDescription('The reason')),
 	async execute(interaction, client) {
