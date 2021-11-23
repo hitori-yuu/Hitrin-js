@@ -1,6 +1,7 @@
 const fs = require('fs');
 const { Client, Collection } = require('discord.js');
 require('dotenv').config();
+// Min 1, Max 30
 
 const options = {
 	intents: ['GUILDS', 'GUILD_BANS', 'GUILD_MESSAGES', 'GUILD_MEMBERS', 'GUILD_PRESENCES'],
