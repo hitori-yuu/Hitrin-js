@@ -22,7 +22,7 @@ module.exports = {
 				{ name: '__**Author:**__', value: `**[Name]** ${author.tag}\n**[ID]** ${author.id}\n**[Mention]** <@${author.id}>` },
 				{ name: '__**Help:**__', value: 'If you need help, please contact [me](https://twitter.com/yuu_hitorin).' },
 				{ name: '__**ヘルプ:**__', value: 'もし何かバグや質問等ありましたら[私に](https://twitter.com/yuu_hitorin)ご連絡ください。' },
-				{ name: '__**SNS:**__', value: '**[Twitter]** [yuu_hitorin](https://twitter.com/yuu_hitorin)\n**[GamerTag]** hitori_yuu / yuu.hitorin(STEAM)' },
+				{ name: '__**SNS:**__', value: '**[Twitter]** [yuu_hitorin](https://twitter.com/yuu_hitorin)\n**[Discord]** [SERVER](https://discord.gg/7BDq9ZNfkf)\n**[GamerTag]** hitori_yuu / yuu.hitorin(STEAM)' },
 			)
 			.setThumbnail(guild.iconURL({ format: 'png' }))
 			.setFooter('Hitorin', client.user.displayAvatarURL({ format: 'png' }))
