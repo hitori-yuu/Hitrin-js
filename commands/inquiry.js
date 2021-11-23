@@ -37,7 +37,7 @@ module.exports = {
 			await interaction.reply({ embeds: [success_1] });
 			await client.channels.cache.get('912561215669149717').send({ embeds: [in_1] });
 		}
-		if (type === 'r') {
+		else if (type === 'r') {
 			const target = interaction.options.getUser('target');
 			const success_2 = new MessageEmbed()
 				.setColor('#028760')

@@ -38,7 +38,7 @@ module.exports = {
 					.setTitle('Warning.')
 					.setThumbnail('https://zet-art.net/wp-content/uploads/2019/03/caution-01.png')
 					.setDescription(`[The site](${page}) is a known dangerous page. We recommend that you **do not view** this page.`)
-					.setFooter('')
+					.setFooter('Powered by Norton Safeweb')
 					.setTimestamp()
 					.setColor('#8b0000');
 				interaction.reply({ embeds: [embed_3] });

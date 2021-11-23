@@ -1,6 +1,6 @@
 const { SlashCommandBuilder } = require('@discordjs/builders');
 const { MessageEmbed } = require('discord.js');
-let bot = 'BOT';
+let bot = '🤖BOT';
 require('dotenv').config();
 const version = process.env.VERSION;
 
@@ -15,7 +15,7 @@ module.exports = {
 		const type = interaction.options.getString('type');
 		if (type === 'user') {
 			const user = interaction.options.getUser('target');
-			if (!user.bot) bot = 'USER';
+			if (!user.bot) bot = '👤USER';
 			const u = new MessageEmbed()
 				.setColor('#89c3eb')
 				.setTitle('User Details')
@@ -32,14 +32,21 @@ module.exports = {
 
 		if (type === 'member') {
 			const member = interaction.options.getMember('target');
-			if (!member.user.bot) bot = 'USER';
+			if (!member.user.bot) bot = '👤USER';
+			const period = Math.round((Date.now() - member.joinedAt) / 86400000);
+			let status = '🟢 Online 🟢';
+			if (member.presence.status === 'idle') status = '🟡 IDLE 🟡';
+			else if (member.presence.status === 'dnd') status = '🔴 DND 🔴';
+			else if (member.presence.status === 'offline') status = '⚫ Offline ⚫';
 			const m = new MessageEmbed()
 				.setColor('#89c3eb')
 				.setTitle('Member Details')
 				.setAuthor(`${interaction.user.tag}`, interaction.user.displayAvatarURL({ format: 'png' }), interaction.user.displayAvatarURL({ format: 'png' }))
 				.addFields(
 					{ name: '__**General:**__', value: `**[Name]** ${member.user.tag}\n**[ID]** ${member.id}\n**[Nickname]** ${member.nickname || 'None'}\n**[Type]** ${bot}` },
-					{ name: '__**Temporal:**__', value: `**[Created At]** ${new Date(member.user.createdTimestamp).toLocaleDateString()}\n**[Joined At]** ${new Date(member.joinedTimestamp).toLocaleDateString()}` },
+					{ name: '__**Temporal:**__', value: `**[Created At]** ${new Date(member.user.createdTimestamp).toLocaleDateString()}\n**[Joined At]** ${new Date(member.joinedTimestamp).toLocaleDateString() || 'None'}\n**[Join Period]** ${period || 'None'} days` },
+					{ name: '__**Status:**__', value: `**[General]** ${status || 'None'}` },
+					{ name: '__**Roles:**__', value: `**[Highest Role]**\n${member.roles.highest || 'None'}\n**[Roles (${member.roles.cache.size})]**\n${member.roles.cache.map(role => `${role}`).join(' , ') || 'None'}` },
 				)
 				.setThumbnail(member.displayAvatarURL({ format: 'png' }))
 				.setFooter('Hitorin', client.user.displayAvatarURL({ format: 'png' }))

@@ -22,7 +22,6 @@ module.exports = {
 			.setDescription('You don\'t have the permission to run it. Required: `BAN_MEMBERS`')
 			.setFooter('Hitorin', client.user.displayAvatarURL({ format: 'png' }))
 			.setTimestamp();
-		if (!interaction.member.permissions.has('BAN_MEMBERS')) return await interaction.reply({ embeds: [permission] });
 
 		const invalid = new MessageEmbed()
 			.setColor('#ba2636')
@@ -31,7 +30,6 @@ module.exports = {
 			.setDescription('Invalid user')
 			.setFooter('Hitorin', client.user.displayAvatarURL({ format: 'png' }))
 			.setTimestamp();
-		if (!user) return await interaction.reply({ embeds: [invalid] });
 
 		const success = new MessageEmbed()
 			.setColor('#028760')
@@ -42,5 +40,7 @@ module.exports = {
 			.setTimestamp();
 		await interaction.reply({ embeds: [success] });
 		user.ban({ reason: '「' + reasons + `」by:${interaction.user.tag}`, days: day });
+		if (!user) return await interaction.reply({ embeds: [invalid] });
+		else if (!interaction.member.permissions.has('BAN_MEMBERS')) return await interaction.reply({ embeds: [permission] });
 	},
 };
