@@ -4,7 +4,7 @@ const { MessageEmbed } = require('discord.js');
 module.exports = {
 	data: new SlashCommandBuilder()
 		.setName('inquiry')
-		.setDescription('Replies with Pong!')
+		.setDescription('Send inquiries, etc. to the management.')
 		.addStringOption(option => option.setName('type').setDescription('the type').addChoice('Request', 'req').addChoice('Question', 'q').addChoice('Bug', 'b').addChoice('Report', 'r'))
 		.addStringOption(option => option.setName('body').setDescription('the body'))
 		.addUserOption(option => option.setName('target').setDescription('the user')),

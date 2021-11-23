@@ -11,6 +11,7 @@ module.exports = {
 			.setTitle('Help')
 			.setAuthor(`${interaction.user.tag}`, interaction.user.displayAvatarURL({ format: 'png' }), interaction.user.displayAvatarURL({ format: 'png' }))
 			.addFields(
+				{ name: '__**Help:**__', value: '`help`: Show the help.(This command)\n`inquiry <TYPE> [BODY] [TARGET]`: Send inquiries, etc. to the management.' },
 				{ name: '__**Settings:**__', value: '`set-nick <STRING>`: Set the nickname of the BOT.' },
 				{ name: '__**Useful:**__', value: '`docs <STRING>`: Searching for in discord.js docs.\n`info <TYPE> [TARGET]`: Show its details.\n`translate <TEXT> <LANGUAGE>`: Translate the specified text.' },
 				{ name: '__**Playing:**__', value: '`omikuji`: Draw a fortune.\n`dice <TIMES> <SIDE>`: Roll the dice.' },
