@@ -5,12 +5,13 @@ module.exports = {
 	data: new SlashCommandBuilder()
 		.setName('ban')
 		.setDescription('Ban the user from the server.')
-		.addUserOption(option => option.setName('target').setDescription('The user ※only either the __user__ or the __user ID__.'))
-		.addStringOption(option => option.setName('targetid').setDescription('The user ID ※only either the __user__ or the __user ID__.'))
+		.addUserOption(option => option.setName('target').setDescription('The user'))
+		.addStringOption(option => option.setName('target_id').setDescription('The user ID'))
 		.addStringOption(option => option.setName('reason').setDescription('The reason'))
 		.addNumberOption(option => option.setName('days').setDescription('The days')),
 	async execute(interaction, client) {
-		const user = interaction.options.getUser('target') || interaction.options.getString('targetid');
+		const user_id = interaction.options.getString('target_id');
+		const user = interaction.options.getUser('target') || client.users.fetch(user_id);
 		const reasons = interaction.options.getString('reason') || 'None';
 		const day = interaction.options.getNumber('days') || '';
 
@@ -40,18 +41,6 @@ module.exports = {
 			.setFooter('Hitorin', client.user.displayAvatarURL({ format: 'png' }))
 			.setTimestamp();
 		await interaction.reply({ embeds: [success] });
-
-		if (interaction.options.getUser('target') || interaction.options.getString('targetid')) {
-			if (interaction.options.getUser('target')) {
-				user.ban({ reason: '「' + reasons + `」by:${interaction.user.tag}`, days: day });
-			}
-			if (interaction.options.getString('targetid')) {
-				client.cache.get(user).ban({ reason: '「' + reasons + `」by:${interaction.user.tag}`, days: day });
-			}
-		}
-
-		if (interaction.options.getUser('target') && interaction.options.getString('targetid')) {
-			await interaction.reply('Sorry, Specify **only either** the __user__ or the __user ID__.');
-		}
+		user.ban({ reason: '「' + reasons + `」by:${interaction.user.tag}`, days: day });
 	},
 };
