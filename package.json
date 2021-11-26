@@ -15,7 +15,6 @@
     "axios": "^0.23.0",
     "date-utils": "^1.2.21",
     "discord-api-types": "^0.23.1",
-    "discord-xp": "^1.1.16",
     "discord.js": "^13.2.0",
     "dotenv": "^10.0.0",
     "google-translate-api": "^2.3.0",
