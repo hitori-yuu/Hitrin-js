@@ -1,5 +1,6 @@
 const fs = require('fs');
 const { Client, Collection } = require('discord.js');
+const mongoose = require('mongoose');
 require('dotenv').config();
 
 const options = {
@@ -28,7 +29,28 @@ for (const file of commandFiles) {
 	client.commands.set(command.data.name, command);
 }
 
+mongoose
+	.connect(process.env.MONGODB, {
+		useNewUrlParser: true,
+	})
+	.then(() => {
+		console.log('Connected to the database.');
+	})
+	.catch((error) => {
+		console.log(error);
+	});
+
 client.on('interactionCreate', async interaction => {
+	const profileModel = require('./models/coins.js');
+	const profileData = await profileModel.findOne({ userID: interaction.user.id });
+	if (!profileData) {
+		const profile = await profileModel.create({
+			userID: interaction.user.id,
+			coins: 2000,
+		});
+		profile.save();
+	}
+
 	if (!interaction.isCommand()) return;
 
 	const command = client.commands.get(interaction.commandName);

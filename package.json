@@ -16,9 +16,12 @@
     "date-utils": "^1.2.21",
     "discord-api-types": "^0.23.1",
     "discord.js": "^13.2.0",
+    "discordutility": "^0.2.6",
     "dotenv": "^10.0.0",
     "google-translate-api": "^2.3.0",
-    "node-fetch": "^2.6.5"
+    "mongoose": "^6.0.13",
+    "node-fetch": "^2.6.5",
+    "uninstall": "^0.0.0"
   },
   "devDependencies": {
     "eslint": "^8.0.1",
