@@ -4,7 +4,7 @@ module.exports = {
 	async execute(client) {
 		console.log(`Ready! Logged in as ${client.user.tag}`);
 		setInterval(() => {
-			client.user.setActivity('Trying version 1.0.1', { type: 'PLAYING' }, { status: 'dnd' });
+			client.user.setActivity(`/help | 1.0.1v | ${client.guilds.cache.size} servers | ${client.users.cache.size} users`, { type: 'PLAYING' }, { status: 'online' });
 		}, 10000);
 	},
 };

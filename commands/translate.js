@@ -4,9 +4,9 @@ const translate = require('@imlinhanchao/google-translate-api');
 module.exports = {
 	data: new SlashCommandBuilder()
 		.setName('translate')
-		.setDescription('Translate the specified text.')
-		.addStringOption(option => option.setName('text').setDescription('the text'))
-		.addStringOption(option => option.setName('language').setDescription('the language').addChoice('Japanese', 'ja').addChoice('English', 'en')),
+		.setDescription('任意のテキストを翻訳します。')
+		.addStringOption(option => option.setName('テキスト').setDescription('任意の文字列を入力'))
+		.addStringOption(option => option.setName('言語').setDescription('翻訳先の言語').addChoice('日本語', 'ja').addChoice('英語', 'en')),
 	async execute(interaction) {
 		const original = interaction.options.getString('text');
 		const lang = interaction.options.getString('language');

@@ -4,10 +4,10 @@ const axios = require('axios');
 module.exports = {
 	data: new SlashCommandBuilder()
 		.setName('docs')
-		.setDescription('Searching for in discord.js docs')
-		.addStringOption(option => option.setName('target').setDescription('words to search')),
+		.setDescription('discord.jsのドキュメントから検索します。')
+		.addStringOption(option => option.setName('検索ワード').setDescription('任意の文字列を入力')),
 	async execute(interaction) {
-		const args = interaction.options.getString('target');
+		const args = interaction.options.getString('検索ワード');
 		const uri = `https://djsdocs.sorta.moe/v2/embed?src=stable&q=${encodeURIComponent(args)}`;
 		axios
 			.get(uri).then(async (embed) => {
@@ -16,7 +16,7 @@ module.exports = {
 					await interaction.reply({ embeds: [data] });
 				}
 				else {
-					await interaction.reply('Could not find that documentation');
+					await interaction.reply('そのドキュメントは見つかりませんでした。');
 				}
 			});
 	},

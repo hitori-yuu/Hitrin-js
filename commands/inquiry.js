@@ -4,23 +4,23 @@ const { MessageEmbed } = require('discord.js');
 module.exports = {
 	data: new SlashCommandBuilder()
 		.setName('inquiry')
-		.setDescription('Send inquiries, etc. to the management.')
-		.addStringOption(option => option.setName('type').setDescription('the type').addChoice('Request', 'req').addChoice('Question', 'q').addChoice('Bug', 'b').addChoice('Report', 'r'))
-		.addStringOption(option => option.setName('body').setDescription('the body'))
-		.addUserOption(option => option.setName('target').setDescription('the user')),
+		.setDescription('運営に依頼や質問等を送信します。')
+		.addStringOption(option => option.setName('種類').setDescription('種類を選択').addChoice('依頼', 'request').addChoice('質問', 'question').addChoice('不具合', 'bug').addChoice('報告', 'report'))
+		.addStringOption(option => option.setName('内容').setDescription('任意の文字列を入力'))
+		.addUserOption(option => option.setName('対象').setDescription('ユーザーを選択')),
 	async execute(interaction, client) {
-		const type = interaction.options.getString('type');
-		const body = interaction.options.getString('body') || 'None';
-		if (!type === 'r') {
+		const type = interaction.options.getString('種類');
+		const body = interaction.options.getString('内容') || 'None';
+		if (!type === 'report') {
 			let t = type;
-			if (t === 'req') t = 'Request';
-			if (t === 'q') t = 'Question';
-			if (t === 'b') t = 'Bug';
+			if (t === 'request') t = '依頼';
+			if (t === 'question') t = '質問';
+			if (t === 'bug') t = '不具合';
 			const success_1 = new MessageEmbed()
 				.setColor('#028760')
-				.setTitle('Send completely')
+				.setTitle('送信完了')
 				.setAuthor(`${interaction.user.tag}`, interaction.user.displayAvatarURL({ format: 'png' }), interaction.user.displayAvatarURL({ format: 'png' }))
-				.setDescription(`**[Type]** ${t}\n**[Body]** ${body}`)
+				.setDescription(`**[種類]** ${t}\n**[内容]** ${body}`)
 				.setFooter('Hitorin', client.user.displayAvatarURL({ format: 'png' }))
 				.setTimestamp();
 			const in_1 = new MessageEmbed()
@@ -41,9 +41,9 @@ module.exports = {
 			const target = interaction.options.getUser('target');
 			const success_2 = new MessageEmbed()
 				.setColor('#028760')
-				.setTitle('Send completely')
+				.setTitle('送信完了')
 				.setAuthor(`${interaction.user.tag}`, interaction.user.displayAvatarURL({ format: 'png' }), interaction.user.displayAvatarURL({ format: 'png' }))
-				.setDescription(`**[Type]** Report\n**[Body]** ${body}\n**[Target]** <@${target.id}>`)
+				.setDescription(`**[種類]** レポート\n**[内容]** ${body}\n**[対象]** <@${target.id}>`)
 				.setFooter('Hitorin', client.user.displayAvatarURL({ format: 'png' }))
 				.setTimestamp();
 			const in_2 = new MessageEmbed()

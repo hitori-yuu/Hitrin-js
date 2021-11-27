@@ -4,43 +4,48 @@ const { MessageEmbed } = require('discord.js');
 module.exports = {
 	data: new SlashCommandBuilder()
 		.setName('ban')
-		.setDescription('Ban the user from the server.')
-		.addUserOption(option => option.setName('target').setDescription('The user'))
-		.addStringOption(option => option.setName('target_id').setDescription('The user ID'))
-		.addStringOption(option => option.setName('reason').setDescription('The reason'))
-		.addNumberOption(option => option.setName('days').setDescription('The days')),
+		.setDescription('そのメンバーをサーバーから禁止します。')
+		.addUserOption(option => option.setName('対象').setDescription('メンバーを選択'))
+		.addStringOption(option => option.setName('理由').setDescription('任意の文字列を入力'))
+		.addStringOption(option => option.setName('メッセージ削除').setDescription('メッセージ履歴の削除期間を選択').addChoice('削除しない', '0').addChoice('過去24時間', '1').addChoice('過去7日', '7')),
 	async execute(interaction, client) {
-		const user_id = interaction.options.getString('target_id');
-		const user = interaction.options.getUser('target') || client.users.fetch(user_id);
-		const reasons = interaction.options.getString('reason') || 'None';
-		const day = interaction.options.getNumber('days') || '';
+		const user = interaction.options.getMember('対象');
+		const reasons = interaction.options.getString('理由') || 'None';
+		const messages = interaction.options.getString('削除') || '0';
 
 		const permission = new MessageEmbed()
 			.setColor('#ba2636')
-			.setTitle('Unsuccessful execution')
+			.setTitle('実行に失敗')
 			.setAuthor(`${interaction.user.tag}`, interaction.user.displayAvatarURL({ format: 'png' }), interaction.user.displayAvatarURL({ format: 'png' }))
-			.setDescription('You don\'t have the permission to run it. Required: `BAN_MEMBERS`')
+			.setDescription('あなたは実行に必要な権限を持っていません。 実行に必要な権限： `BAN_MEMBERS`')
 			.setFooter('Hitorin', client.user.displayAvatarURL({ format: 'png' }))
 			.setTimestamp();
 
 		const invalid = new MessageEmbed()
 			.setColor('#ba2636')
-			.setTitle('Unsuccessful execution')
+			.setTitle('実行に失敗')
 			.setAuthor(`${interaction.user.tag}`, interaction.user.displayAvatarURL({ format: 'png' }), interaction.user.displayAvatarURL({ format: 'png' }))
-			.setDescription('Invalid user')
+			.setDescription('存在しないメンバー')
 			.setFooter('Hitorin', client.user.displayAvatarURL({ format: 'png' }))
 			.setTimestamp();
 
 		const success = new MessageEmbed()
 			.setColor('#028760')
-			.setTitle(`Banned: ${user.tag} | Executor: ${interaction.user.tag}`)
+			.setTitle('メンバーを禁止(BAN)')
 			.setAuthor(`${interaction.user.tag}`, interaction.user.displayAvatarURL({ format: 'png' }), interaction.user.displayAvatarURL({ format: 'png' }))
-			.setDescription(`Reason: ${reasons}`)
+			.setDescription(`**[対象者]** <@${user.id}>\n**[実行者]** <@${interaction.user.id}>\n**[理由]**\n${reasons}`)
 			.setFooter('Hitorin', client.user.displayAvatarURL({ format: 'png' }))
 			.setTimestamp();
-		await interaction.reply({ embeds: [success] });
-		user.ban({ reason: '「' + reasons + `」by:${interaction.user.tag}`, days: day });
-		if (!user) return await interaction.reply({ embeds: [invalid] });
-		else if (!interaction.member.permissions.has('BAN_MEMBERS')) return await interaction.reply({ embeds: [permission] });
+
+		if (!user) {
+			return await interaction.reply({ embeds: [invalid] });
+		}
+		else if (!interaction.member.permissions.has('BAN_MEMBERS')) {
+			return await interaction.reply({ embeds: [permission] });
+		}
+		else {
+			user.ban({ reason: '「' + reasons + `」by:${interaction.user.tag}`, days: messages });
+			await interaction.reply({ embeds: [success] });
+		}
 	},
 };

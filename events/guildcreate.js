@@ -16,19 +16,19 @@ module.exports = {
 		const author = client.users.cache.get('874184214130602015');
 		const thanks = new MessageEmbed()
 			.setColor('#ffdb4f')
-			.setTitle('Thanks for letting me in!')
+			.setTitle('導入ありがとうございます！')
 			.setAuthor(`${owner.tag}`, `${owner.displayAvatarURL({ format: 'png' })}`)
 			.addFields(
-				{ name: '__**Author:**__', value: `**[Name]** ${author.tag}\n**[ID]** ${author.id}\n**[Mention]** <@${author.id}>` },
-				{ name: '__**Help:**__', value: 'If you need help, please contact [me](https://twitter.com/yuu_hitorin).' },
+				{ name: '__**作成者:**__', value: `**[名前]** ${author.tag}\n**[ID]** ${author.id}\n**[メンション]** <@${author.id}>` },
 				{ name: '__**ヘルプ:**__', value: 'もし何かバグや質問等ありましたら[私に](https://twitter.com/yuu_hitorin)ご連絡ください。' },
-				{ name: '__**SNS:**__', value: '**[Twitter]** [yuu_hitorin](https://twitter.com/yuu_hitorin)\n**[Discord]** [SERVER](https://discord.gg/7BDq9ZNfkf)\n**[GamerTag]** hitori_yuu / yuu.hitorin(STEAM)' },
+				{ name: '__**SNS:**__', value: '**[Twitter]** [yuu_hitorin](https://twitter.com/yuu_hitorin)\n**[Discord]** [サーバー](https://discord.gg/7BDq9ZNfkf)\n**[ゲーマータグ]** hitori_yuu / yuu.hitorin(STEAM)' },
+				{ name: '__**お知らせ受け取り:**__', value: '**ボットのお知らせを受け取るために、任意のチャンネルで `/set type:announce`を実行してください。これを行わないとお知らせが来ません。**' },
 			)
 			.setThumbnail(guild.iconURL({ format: 'png' }))
 			.setFooter('Hitorin', client.user.displayAvatarURL({ format: 'png' }))
 			.setTimestamp();
 		await client.channels.cache.get('879943806118678528').send({ embeds: [log] });
-		await client.users.cache.get(guild.ownerId).send({ content: '**Try typing `/help` / `/help` と入力してみてください！**', embeds: [thanks] });
+		await client.users.cache.get(guild.ownerId).send({ embeds: [thanks], content: '**Try typing `/help` / `/help` と入力してみてください！**' });
 		console.log('Bot joined server -> ' + guild.name);
 	},
 };
