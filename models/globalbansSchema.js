@@ -1,11 +1,11 @@
 const mongoose = require('mongoose');
 
-const bans = new mongoose.Schema({
+const globalbansSchema = new mongoose.Schema({
 	userID: { type: String, require: true, unique: true },
 	reason: { type: String },
 	date: { type: Date },
 });
 
-const model = mongoose.model('GlobalBans', bans);
+const model = mongoose.model('GlobalBans', globalbansSchema);
 
 module.exports = model;
