@@ -1,5 +1,6 @@
 const { SlashCommandBuilder } = require('@discordjs/builders');
 const cooldown = new Set();
+const profileModel = require('../models/profileSchema');
 
 module.exports = {
 	data: new SlashCommandBuilder()
@@ -8,7 +9,6 @@ module.exports = {
 		.addStringOption(option => option.setName('種類').setDescription('どんな行動をするか選択').addChoice('仕事', 'work').addChoice('盗む', 'steal').addChoice('手伝い', 'assist')),
 	async execute(interaction) {
 		if (cooldown.has(interaction.user.id)) return await interaction.reply('This command can only be executed once every 5 minutes.');
-		const profileModel = require('../models/coins.js');
 		const type = interaction.options.getString('type');
 		if (type === 'work') {
 			const amount_w = Math.floor(Math.random() * (60 + 1 - 30)) + 30;

@@ -1,4 +1,5 @@
 const { SlashCommandBuilder } = require('@discordjs/builders');
+const profileModel = require('../models/profileSchema');
 
 module.exports = {
 	data: new SlashCommandBuilder()
@@ -10,7 +11,6 @@ module.exports = {
 		if (!interaction.user.id === '874184214130602015') return;
 		const user = interaction.options.getUser('target');
 		const coins = interaction.options.getNumber('coins');
-		const profileModel = require('../models/coins.js');
 		await profileModel.findOneAndUpdate(
 			{
 				userID: user.id,

@@ -1,6 +1,7 @@
 const { SlashCommandBuilder } = require('@discordjs/builders');
 const { MessageEmbed } = require('discord.js');
 const cooldown = new Set();
+const profileModel = require('../models/profileSchema');
 
 module.exports = {
 	data: new SlashCommandBuilder()
@@ -15,17 +16,17 @@ module.exports = {
 			.setDescription('__あなたは以下のログイン報酬を受け取りました！__\n**🪙250** *coins*')
 			.setFooter('Hitorin', client.user.displayAvatarURL({ format: 'png' }))
 			.setTimestamp();
-		await interaction.reply({ embeds: [login] });
-		const profileModel = require('../models/coins.js');
-		await profileModel.findOneAndUpdate(
-			{
-				userID: interaction.user.id,
-			},
-			{
-				$inc: {
-					coins: 250,
+		await interaction.reply({ embeds: [login] }).then(
+			profileModel.findOneAndUpdate(
+				{
+					userID: interaction.user.id,
 				},
-			},
+				{
+					$inc: {
+						coins: 250,
+					},
+				},
+			),
 		);
 		cooldown.add(interaction.user.id);
 		setTimeout(() => {

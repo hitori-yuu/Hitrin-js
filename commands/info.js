@@ -3,6 +3,7 @@ const { MessageEmbed } = require('discord.js');
 let bot = '🤖ボット';
 require('dotenv').config();
 const version = process.env.VERSION;
+const profileModel = require('../models/profileSchema');
 
 module.exports = {
 	data: new SlashCommandBuilder()
@@ -15,6 +16,13 @@ module.exports = {
 		const type = interaction.options.getString('種類');
 		if (type === 'user') {
 			const user = interaction.options.getUser('対象');
+			const profileData = await profileModel.findOne({ userID: user.id });
+			let coins, evaluation, mark = '';
+			if (!profileData) coins, evaluation = '不明', mark = '<:unknown:914315219453509644>';
+			else if (profileData) coins = profileData.coins, evaluation = profileData.evaluation;
+			if (evaluation >= 8 <= 10) mark = '<:check:914311403173740544>';
+			else if (evaluation >= 5 < 8) mark = '<:care:914311415345582152>';
+			else if (evaluation >= 0 < 5) mark = '<:cross:914311426955419648>';
 			if (!user.bot) bot = '👤ユーザー';
 			const u = new MessageEmbed()
 				.setColor('#89c3eb')
@@ -23,6 +31,7 @@ module.exports = {
 				.addFields(
 					{ name: '__**一般:**__', value: `**[名前]** ${user.tag}\n**[ID]** ${user.id}\n**[種類]]** ${bot}` },
 					{ name: '__**時間:**__', value: `**[作成日]** ${new Date(user.createdTimestamp).toLocaleDateString()}` },
+					{ name: '__**ボット内:**__', value: `**[コイン]** ${coins} *coins*\n**[Evaluation]** ${evaluation} ${mark}` },
 				)
 				.setThumbnail(user.displayAvatarURL({ format: 'png' }))
 				.setFooter('Hitorin', client.user.displayAvatarURL({ format: 'png' }))
@@ -32,6 +41,14 @@ module.exports = {
 
 		if (type === 'member') {
 			const member = interaction.options.getMember('対象');
+			const profileData = await profileModel.findOne({ userID: member.id });
+			let coins = '0';
+			if (profileData.coins) coins = profileData.coins;
+			let evaluation = '10';
+			if (profileData.evaluation) evaluation = profileData.evaluation;
+			let mark = '<:check:914311403173740544>';
+			if (evaluation >= 5 < 8) mark = '<:care:914311415345582152>';
+			else if (evaluation >= 0 < 5) mark = '<:cross:914311426955419648>';
 			if (!member.user.bot) bot = '👤ユーザー';
 			const period = Math.round((Date.now() - member.joinedAt) / 86400000);
 			let status = '🟢 オンライン 🟢';
@@ -46,6 +63,7 @@ module.exports = {
 					{ name: '__**一般:**__', value: `**[名前]** ${member.user.tag}\n**[ID]** ${member.id}\n**[ニックネーム]]** ${member.nickname || 'None'}\n**[種類]** ${bot}` },
 					{ name: '__**時間:**__', value: `**[作成日]** ${new Date(member.user.createdTimestamp).toLocaleDateString()}\n**[参加日]** ${new Date(member.joinedTimestamp).toLocaleDateString() || 'None'}\n**[参加期間]** ${period || 'None'} 日` },
 					{ name: '__**ステータス:**__', value: `**[一般]** ${status || 'None'}` },
+					{ name: '__**ボット内:**__', value: `**[コイン]** ${coins} *coins*\n**[Evaluation]** ${evaluation} ${mark}` },
 					{ name: '__**ロール:**__', value: `**[最上位ロール]**\n${member.roles.highest || 'None'}\n**[ロール (${member.roles.cache.size})]**\n${member.roles.cache.map(role => `${role}`).join(' , ') || 'None'}` },
 				)
 				.setThumbnail(member.displayAvatarURL({ format: 'png' }))

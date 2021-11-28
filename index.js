@@ -2,6 +2,7 @@ const fs = require('fs');
 const { Client, Collection } = require('discord.js');
 const mongoose = require('mongoose');
 require('dotenv').config();
+const profileModel = require('./models/profileSchema');
 
 const options = {
 	intents: ['GUILDS', 'GUILD_BANS', 'GUILD_MESSAGES', 'GUILD_MEMBERS', 'GUILD_PRESENCES'],
@@ -41,12 +42,11 @@ mongoose
 	});
 
 client.on('interactionCreate', async interaction => {
-	const profileModel = require('./models/coins.js');
 	const profileData = await profileModel.findOne({ userID: interaction.user.id });
 	if (!profileData) {
 		const profile = await profileModel.create({
 			userID: interaction.user.id,
-			coins: 2000,
+			coins: 1000,
 		});
 		profile.save();
 	}
