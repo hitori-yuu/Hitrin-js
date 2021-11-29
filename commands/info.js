@@ -83,6 +83,7 @@ module.exports = {
 					{ name: '__**一般:**__', value: `**[名前]** ${member.user.tag}\n**[ID]** ${member.id}\n**[ニックネーム]]** ${member.nickname || 'None'}\n**[種類]** ${bot}` },
 					{ name: '__**時間:**__', value: `**[作成日]** ${new Date(member.user.createdTimestamp).toLocaleDateString()}\n**[参加日]** ${new Date(member.joinedTimestamp).toLocaleDateString() || 'None'}\n**[参加期間]** ${period || 'None'} 日` },
 					{ name: '__**ステータス:**__', value: `**[一般]** ${status || 'None'}` },
+					{ name: '__**ボット内:**__', value: `**[コイン]** ${coins}\n**[Evaluation]** ${evaluation} ${mark}` },
 					{ name: '__**ロール:**__', value: `**[最上位ロール]**\n${member.roles.highest || 'None'}\n**[ロール (${member.roles.cache.size})]**\n${member.roles.cache.map(role => `${role}`).join(' , ') || 'None'}` },
 				)
 				.setThumbnail(member.displayAvatarURL({ format: 'png' }))
