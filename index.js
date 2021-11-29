@@ -46,7 +46,7 @@ client.on('interactionCreate', async interaction => {
 	if (!profileData) {
 		const profile = await profileModel.create({
 			userID: interaction.user.id,
-			coins: 1000,
+			coins: 2500,
 		});
 		profile.save();
 	}
@@ -62,7 +62,7 @@ client.on('interactionCreate', async interaction => {
 	}
 	catch (error) {
 		console.error(error);
-		await interaction.reply({ content: 'There was an error while executing this command!', ephemeral: true });
+		await interaction.reply({ content: 'コマンド実行時にエラーが発生しました。', ephemeral: true });
 	}
 });
 

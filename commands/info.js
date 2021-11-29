@@ -21,17 +21,17 @@ module.exports = {
 			const user = interaction.options.getUser('対象');
 
 			const profileData = await profileModel.findOne({ userID: user.id });
-			if (!profileData == undefined) {
-				coins = profileData.coins;
+			if (profileData) {
+				coins = profileData.coins + '*coins*';
 				evaluation = profileData.evaluation;
-				if (evaluation >= 8 <= 10) mark = '<:check:914311403173740544>';
-				else if (evaluation >= 5 < 8) mark = '<:care:914311415345582152>';
-				else if (evaluation >= 0 < 5) mark = '<:red-cross:914311426955419648>';
+				if (evaluation >= 8 && evaluation <= 10) mark = '<:check:914852919768125440>';
+				else if (evaluation >= 4 && evaluation < 8) mark = '<:care:914852933332500502>';
+				else if (evaluation >= 0 && evaluation < 4) mark = '<:red_cross:914852946481659904>';
 			}
 			else if (profileData == undefined) {
-				coins = '???';
-				evaluation = '???';
-				mark = '<:unknown:914315219453509644>';
+				coins = '不明';
+				evaluation = '不明';
+				mark = '<:unknown:914852959777615925>';
 			}
 
 			if (!user.bot) bot = '👤ユーザー';
@@ -42,7 +42,7 @@ module.exports = {
 				.addFields(
 					{ name: '__**一般:**__', value: `**[名前]** ${user.tag}\n**[ID]** ${user.id}\n**[種類]]** ${bot}` },
 					{ name: '__**時間:**__', value: `**[作成日]** ${new Date(user.createdTimestamp).toLocaleDateString()}` },
-					{ name: '__**ボット内:**__', value: `**[コイン]** ${coins} *coins*\n**[Evaluation]** ${evaluation} ${mark}` },
+					{ name: '__**ボット内:**__', value: `**[コイン]** ${coins}\n**[Evaluation]** ${evaluation} ${mark}` },
 				)
 				.setThumbnail(user.displayAvatarURL({ format: 'png' }))
 				.setFooter('Hitorin', client.user.displayAvatarURL({ format: 'png' }))
@@ -57,17 +57,17 @@ module.exports = {
 			const period = Math.round((Date.now() - member.joinedAt) / 86400000);
 
 			const profileData = await profileModel.findOne({ userID: member.id });
-			if (!profileData == undefined) {
-				coins = profileData.coins;
+			if (profileData) {
+				coins = profileData.coins + '*coins*';
 				evaluation = profileData.evaluation;
-				if (evaluation >= 8 <= 10) mark = '<:check:914311403173740544>';
-				else if (evaluation >= 5 < 8) mark = '<:care:914311415345582152>';
-				else if (evaluation >= 0 < 5) mark = '<:red-cross:914311426955419648>';
+				if (evaluation >= 8 && evaluation <= 10) mark = '<:check:914852919768125440>';
+				else if (evaluation >= 4 && evaluation < 8) mark = '<:care:914852933332500502>';
+				else if (evaluation >= 0 && evaluation < 4) mark = '<:red_cross:914852946481659904>';
 			}
 			else if (profileData == undefined) {
-				coins = '???';
-				evaluation = '???';
-				mark = '<:unknown:914315219453509644>';
+				coins = '不明';
+				evaluation = '不明';
+				mark = '<:unknown:914852959777615925>';
 			}
 
 			let status = '🟢 オンライン 🟢';

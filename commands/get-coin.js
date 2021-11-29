@@ -13,7 +13,7 @@ module.exports = {
 		if (type === 'work') {
 			const amount_w = Math.floor(Math.random() * (60 + 1 - 30)) + 30;
 			await interaction.reply(`あなたはお金を手に入れました！ -> **🪙${amount_w.toString()}** *coins*`);
-			await profileModel.findOneAndUpdate(
+			const profile = await profileModel.findOneAndUpdate(
 				{
 					userID: interaction.user.id,
 				},
@@ -23,6 +23,7 @@ module.exports = {
 					},
 				},
 			);
+			profile.save();
 			cooldown.add(interaction.user.id);
 			setTimeout(() => {
 				cooldown.delete(interaction.user.id);
@@ -31,7 +32,7 @@ module.exports = {
 
 		else if (type === 'assist') {
 			await interaction.reply('あなたはお金を手に入れました！ -> **🪙45** *coins*');
-			await profileModel.findOneAndUpdate(
+			const profile = await profileModel.findOneAndUpdate(
 				{
 					userID: interaction.user.id,
 				},
@@ -41,6 +42,7 @@ module.exports = {
 					},
 				},
 			);
+			profile.save();
 			cooldown.add(interaction.user.id);
 			setTimeout(() => {
 				cooldown.delete(interaction.user.id);
@@ -58,7 +60,7 @@ module.exports = {
 			else {
 				await interaction.reply('お金は増えなかった...');
 			}
-			await profileModel.findOneAndUpdate(
+			const profile = await profileModel.findOneAndUpdate(
 				{
 					userID: interaction.user.id,
 				},
@@ -68,6 +70,7 @@ module.exports = {
 					},
 				},
 			);
+			profile.save();
 			cooldown.add(interaction.user.id);
 			setTimeout(() => {
 				cooldown.delete(interaction.user.id);

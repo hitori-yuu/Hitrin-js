@@ -44,46 +44,46 @@ module.exports = {
 				.setFooter('Hitorin', client.user.displayAvatarURL({ format: 'png' }))
 				.setTimestamp();
 			if (change === 'set') {
-				await interaction.reply({ embeds: [coin] }).then(
-					profileModel.findOneAndUpdate(
-						{
-							userID: user.id,
+				await interaction.reply({ embeds: [coin] });
+				const profile = await profileModel.findOneAndUpdate(
+					{
+						userID: user.id,
+					},
+					{
+						$set: {
+							coins: number,
 						},
-						{
-							$set: {
-								coins: number,
-							},
-						},
-					),
+					},
 				);
+				profile.save();
 			}
 			else if (change === 'increase') {
-				await interaction.reply({ embeds: [coin] }).then(
-					profileModel.findOneAndUpdate(
-						{
-							userID: user.id,
+				await interaction.reply({ embeds: [coin] });
+				const profile = await profileModel.findOneAndUpdate(
+					{
+						userID: user.id,
+					},
+					{
+						$inc: {
+							coins: number,
 						},
-						{
-							$inc: {
-								coins: number,
-							},
-						},
-					),
+					},
 				);
+				profile.save();
 			}
 			else if (change === 'decrease') {
-				await interaction.reply({ embeds: [coin] }).then(
-					profileModel.findOneAndUpdate(
-						{
-							userID: user.id,
+				await interaction.reply({ embeds: [coin] });
+				const profile = await profileModel.findOneAndUpdate(
+					{
+						userID: user.id,
+					},
+					{
+						$inc: {
+							coins: -number,
 						},
-						{
-							$inc: {
-								coins: -number,
-							},
-						},
-					),
+					},
 				);
+				profile.save();
 			}
 			else {
 				return await interaction.reply({ embeds: [error] });
@@ -96,52 +96,52 @@ module.exports = {
 				.setAuthor(`${interaction.user.tag}`, interaction.user.displayAvatarURL({ format: 'png' }), interaction.user.displayAvatarURL({ format: 'png' }))
 				.addFields(
 					{ name: '__**Target:**__', value: `**[Name]** ${user.tag}\n**[ID]** ${user.id}\n**[Mention]** <@${user.id}>` },
-					{ name: '__**Body:**__', value: `**[Evaluation]** Changed the evaluation value: ${mark}${number} *coins*` },
+					{ name: '__**Body:**__', value: `**[Evaluation]** Changed the evaluation value: ${mark}${number}` },
 				)
 				.setThumbnail(interaction.user.displayAvatarURL({ format: 'png' }))
 				.setFooter('Hitorin', client.user.displayAvatarURL({ format: 'png' }))
 				.setTimestamp();
 			if (change === 'set') {
-				await interaction.reply({ embeds: [evaluation] }).then(
-					profileModel.findOneAndUpdate(
-						{
-							userID: user.id,
+				await interaction.reply({ embeds: [evaluation] });
+				const profile = await profileModel.findOneAndUpdate(
+					{
+						userID: user.id,
+					},
+					{
+						$set: {
+							evaluation: number,
 						},
-						{
-							$set: {
-								evaluation: number,
-							},
-						},
-					),
+					},
 				);
+				profile.save();
 			}
 			else if (change === 'increase') {
-				await interaction.reply({ embeds: [evaluation] }).then(
-					profileModel.findOneAndUpdate(
-						{
-							userID: user.id,
+				await interaction.reply({ embeds: [evaluation] });
+				const profile = await profileModel.findOneAndUpdate(
+					{
+						userID: user.id,
+					},
+					{
+						$inc: {
+							evaluation: number,
 						},
-						{
-							$inc: {
-								evaluation: number,
-							},
-						},
-					),
+					},
 				);
+				profile.save();
 			}
 			else if (change === 'decrease') {
-				await interaction.reply({ embeds: [evaluation] }).then(
-					profileModel.findOneAndUpdate(
-						{
-							userID: user.id,
+				await interaction.reply({ embeds: [evaluation] });
+				const profile = await profileModel.findOneAndUpdate(
+					{
+						userID: user.id,
+					},
+					{
+						$inc: {
+							evaluation: -number,
 						},
-						{
-							$inc: {
-								evaluation: -number,
-							},
-						},
-					),
+					},
 				);
+				profile.save();
 			}
 			else {
 				return await interaction.reply({ embeds: [error] });
