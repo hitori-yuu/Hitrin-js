@@ -2,6 +2,7 @@ const { SlashCommandBuilder } = require('@discordjs/builders');
 const { MessageEmbed } = require('discord.js');
 const cooldown = new Set();
 const profileModel = require('../models/profileSchema');
+require('dotenv').config();
 
 module.exports = {
 	data: new SlashCommandBuilder()

@@ -1,7 +1,7 @@
 const { SlashCommandBuilder } = require('@discordjs/builders');
 const { MessageEmbed } = require('discord.js');
-const profileModel = require('../models/profileSchema');
 const gbanModel = require('../models/globalbansSchema');
+require('dotenv').config();
 
 module.exports = {
 	data: new SlashCommandBuilder()
@@ -45,7 +45,7 @@ module.exports = {
 				.setTimestamp();
 			if (change === 'set') {
 				await interaction.reply({ embeds: [coin] });
-				const profile = await profileModel.findOneAndUpdate(
+				const gban = await gbanModel.findOneAndUpdate(
 					{
 						userID: user.id,
 					},
@@ -55,11 +55,11 @@ module.exports = {
 						},
 					},
 				);
-				profile.save();
+				gban.save();
 			}
 			else if (change === 'increase') {
 				await interaction.reply({ embeds: [coin] });
-				const profile = await profileModel.findOneAndUpdate(
+				const gban = await gbanModel.findOneAndUpdate(
 					{
 						userID: user.id,
 					},
@@ -69,11 +69,11 @@ module.exports = {
 						},
 					},
 				);
-				profile.save();
+				gban.save();
 			}
 			else if (change === 'decrease') {
 				await interaction.reply({ embeds: [coin] });
-				const profile = await profileModel.findOneAndUpdate(
+				const gban = await gbanModel.findOneAndUpdate(
 					{
 						userID: user.id,
 					},
@@ -83,7 +83,7 @@ module.exports = {
 						},
 					},
 				);
-				profile.save();
+				gban.save();
 			}
 			else {
 				return await interaction.reply({ embeds: [error] });
@@ -103,7 +103,7 @@ module.exports = {
 				.setTimestamp();
 			if (change === 'set') {
 				await interaction.reply({ embeds: [evaluation] });
-				const profile = await profileModel.findOneAndUpdate(
+				const gban = await gbanModel.findOneAndUpdate(
 					{
 						userID: user.id,
 					},
@@ -113,11 +113,11 @@ module.exports = {
 						},
 					},
 				);
-				profile.save();
+				gban.save();
 			}
 			else if (change === 'increase') {
 				await interaction.reply({ embeds: [evaluation] });
-				const profile = await profileModel.findOneAndUpdate(
+				const gban = await gbanModel.findOneAndUpdate(
 					{
 						userID: user.id,
 					},
@@ -127,11 +127,11 @@ module.exports = {
 						},
 					},
 				);
-				profile.save();
+				gban.save();
 			}
 			else if (change === 'decrease') {
 				await interaction.reply({ embeds: [evaluation] });
-				const profile = await profileModel.findOneAndUpdate(
+				const gban = await gbanModel.findOneAndUpdate(
 					{
 						userID: user.id,
 					},
@@ -141,7 +141,7 @@ module.exports = {
 						},
 					},
 				);
-				profile.save();
+				gban.save();
 			}
 			else {
 				return await interaction.reply({ embeds: [error] });
@@ -189,23 +189,42 @@ module.exports = {
 				.setThumbnail(interaction.user.displayAvatarURL({ format: 'png' }))
 				.setFooter('Hitorin', client.user.displayAvatarURL({ format: 'png' }))
 				.setTimestamp();
-			const GlobalBan = await gbanModel.create({
-				userID: user.id,
-				reason: string,
-				date: new Date(),
-			});
 			if (change === 'addition') {
-				await interaction.reply({ embeds: [g_ban] }).then(
-					GlobalBan.save(),
-				);
+				const gbanData = await gbanModel.findOne({ userID: user.id });
+				if (gbanData) {
+					await interaction.reply('そのユーザーは既にGlobalBanされています。');
+				}
+				else if (!gbanData) {
+					const gban = new gbanModel({
+						userID: user.id,
+						reason: string,
+						date: new Date(),
+					});
+					gban.save();
+
+					client.guilds.cache.forEach((guild) => {
+						guild.bans.create(user, { reason: 'HitorinGlobalBAN「' + string + '」', days: '7' });
+					});
+					await interaction.reply({ embeds: [g_ban] });
+				}
 			}
 			if (change === 'deletion') {
-				await interaction.reply({ embeds: [g_ban] }).then(
-					GlobalBan.delete(),
-				);
-			}
-			else {
-				return await interaction.reply({ embeds: [error] });
+				const gbanData = await gbanModel.findOne({ userID: user.id });
+				if (gbanData) {
+					gbanData.remove();
+					client.guilds.cache.forEach((guild) => {
+						try {
+							guild.bans.remove(user, { reason: 'HitorinGlobalBAN(REMOVE)「' + string + '」' });
+						}
+						catch (err) {
+							return console.log(err);
+						}
+					});
+					await interaction.reply({ embeds: [g_ban] });
+				}
+				else if (!gbanData) {
+					await interaction.reply('そのユーザーはGlobalBanされていません。');
+				}
 			}
 		}
 	},

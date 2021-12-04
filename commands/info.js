@@ -70,10 +70,10 @@ module.exports = {
 				mark = '<:unknown:914852959777615925>';
 			}
 
-			let status = '🟢 オンライン 🟢';
-			if (member.presence.status === 'idle') status = '🟡 退席中 🟡';
-			else if (member.presence.status === 'dnd') status = '🔴 取組中 🔴';
-			else if (member.presence.status === 'offline') status = '⚫ オフライン ⚫';
+			let status = '<:online:914864902160666634> オンライン';
+			if (member.presence.status === 'idle') status = '<:idle:914864915058151456> 退席中';
+			else if (member.presence.status === 'dnd') status = '<:dnd:914864927401988157> 取組中';
+			else if (member.presence.status === 'offline') status = '<:offline:914864945361985627> オフライン';
 
 			const m = new MessageEmbed()
 				.setColor('#89c3eb')

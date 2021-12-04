@@ -1,5 +1,6 @@
 const { SlashCommandBuilder } = require('@discordjs/builders');
 const profileModel = require('../models/profileSchema');
+require('dotenv').config();
 
 module.exports = {
 	data: new SlashCommandBuilder()

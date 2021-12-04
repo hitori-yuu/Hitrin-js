@@ -1,5 +1,6 @@
 const { SlashCommandBuilder } = require('@discordjs/builders');
 const translate = require('@imlinhanchao/google-translate-api');
+require('dotenv').config();
 
 module.exports = {
 	data: new SlashCommandBuilder()

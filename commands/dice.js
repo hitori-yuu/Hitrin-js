@@ -1,4 +1,5 @@
 const { SlashCommandBuilder } = require('@discordjs/builders');
+require('dotenv').config();
 
 module.exports = {
 	data: new SlashCommandBuilder()
