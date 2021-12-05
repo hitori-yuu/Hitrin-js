@@ -9,7 +9,7 @@ module.exports = {
 	async execute(interaction, client) {
 		const u = new MessageEmbed()
 			.setColor('#89c3eb')
-			.setTitle('Help')
+			.setTitle('ヘルプ')
 			.setAuthor(`${interaction.user.tag}`, interaction.user.displayAvatarURL({ format: 'png' }), interaction.user.displayAvatarURL({ format: 'png' }))
 			.addFields(
 				{ name: '__**ヘルプ:**__', value: '`help`: ヘルプを表示します。(このコマンド)\n`inquiry <種類> [内容] [対象]`: 運営に依頼や質問等を送信します。' },

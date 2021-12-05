@@ -6,7 +6,7 @@ module.exports = {
 	data: new SlashCommandBuilder()
 		.setName('set')
 		.setDescription('BOTに関することを設定します。')
-		.addStringOption(option => option.setName('種類').setDescription('種類を選択').addChoice('ニックネーム', 'nick').addChoice('お知らせ', 'announce'))
+		.addStringOption(option => option.setName('種類').setDescription('種類を選択').addChoice('ニックネーム', 'nick').addChoice('お知らせ', 'announce').addChoice('サーバー', 'server'))
 		.addUserOption(option => option.setName('ニックネーム').setDescription('任意の文字列を入力')),
 	async execute(interaction, client) {
 		const type = interaction.options.getString('種類');

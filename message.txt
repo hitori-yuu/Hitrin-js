@@ -1,0 +1,107 @@
+const { SlashCommandBuilder } = require('@discordjs/builders');
+const { MessageEmbed } = require('discord.js');
+const disbut = require('discord-buttons');
+const { MessageMenuOption, MessageMenu } = require('discord-buttons');
+require('dotenv').config();
+
+module.exports = {
+	data: new SlashCommandBuilder()
+		.setName('test')
+		.setDescription('test'),
+	async execute(interaction, client) {
+		disbut(client);
+		const home = new MessageEmbed()
+			.setColor('#89c3eb')
+			.setTitle('サーバー設定')
+			.setAuthor(`${interaction.user.tag}`, interaction.user.displayAvatarURL({ format: 'png' }), interaction.user.displayAvatarURL({ format: 'png' }))
+			.setDescription('サーバーの設定を開始します。下のセレクトメニューから任意のメニューを選択し、その指示に従ってください。')
+			.setThumbnail(client.user.displayAvatarURL({ format: 'png' }))
+			.setFooter('Hitorin', client.user.displayAvatarURL({ format: 'png' }))
+			.setTimestamp();
+
+		const global_ban = new MessageEmbed()
+			.setColor('#89c3eb')
+			.setTitle('サーバー設定 / グローバルBAN')
+			.setAuthor(`${interaction.user.tag}`, interaction.user.displayAvatarURL({ format: 'png' }), interaction.user.displayAvatarURL({ format: 'png' }))
+			.setDescription('**「グローバルBAN」の設定**\n「ヒトリン」では、危険なユーザーを事前にサーバーからBANをする機能があります。\nこの機能を__許可する場合__はxxxを\nこの機能を__禁止する場合__はxxxを')
+			.setThumbnail(client.user.displayAvatarURL({ format: 'png' }))
+			.setFooter('Hitorin', client.user.displayAvatarURL({ format: 'png' }))
+			.setTimestamp();
+
+		const welcome = new MessageEmbed()
+			.setColor('#89c3eb')
+			.setTitle('サーバー設定 / 新規メンバーお知らせ')
+			.setAuthor(`${interaction.user.tag}`, interaction.user.displayAvatarURL({ format: 'png' }), interaction.user.displayAvatarURL({ format: 'png' }))
+			.setDescription('**「新規メンバーお知らせ」の設定**\n「ヒトリン」では、サーバーにメンバーが加入したときにお知らせををする機能があります。\nこの機能を__許可する場合__はxxxを\nこの機能を__禁止する場合__はxxxを')
+			.setThumbnail(client.user.displayAvatarURL({ format: 'png' }))
+			.setFooter('Hitorin', client.user.displayAvatarURL({ format: 'png' }))
+			.setTimestamp();
+
+		const option1 = new MessageMenuOption()
+			.setLabel('グローバルBAN')
+			.setEmoji('1️⃣')
+			.setValue('global-ban');
+
+		const option2 = new MessageMenuOption()
+			.setLabel('新規メンバーお知らせ')
+			.setEmoji('2️⃣')
+			.setValue('welcome');
+
+		const select = new MessageMenu()
+			.setID('setting-menu')
+			.setPlaceholder('Click')
+			.setMaxValues(1)
+			.setMinValues(1)
+			.addOption(option1, option2);
+
+		const Home = await interaction.reply({ embeds: [home] }, select);
+
+		const filter = (button) => button.clicker.user.id === interaction.user.id;
+		const collector = Home.createMenuCollector(filter, { time: 80000 });
+
+		collector.on('collect', (b) => {
+			if (b.values[0] == 'global-ban') {
+				Home.followUp(global_ban);
+			}
+			else if (b.values[0] == 'welcome') {
+				Home.followUp(welcome);
+			}
+			b.reply.defer();
+		});
+
+		collector.on('end', () => {
+			Home.followUp('期間切れ');
+		});
+	},
+};
+
+/*
+
+		const select = new MessageSelectMenu()
+			.setCustomId('global_ban_select')
+			.setPlaceholder('設定をする種類')
+			.setMaxValues(1)
+			.addOptions({
+				label: 'グローバルBAN',
+				value: 'global-ban',
+				emoji: '🍎',
+			}, {
+				label: '新規加入お知らせ',
+				value: 'welcome',
+				emoji: '🍊',
+			});
+
+*/
+
+/*
+
+				const global_ban_ok = new MessageButton()
+					.setCustomId('global_ban_btn_ok')
+					.setStyle('SUCCESS')
+					.setLabel('🆗許可する');
+				const global_ban_no = new MessageButton()
+					.setCustomId('global_ban_btn_no')
+					.setStyle('DANGER')
+					.setLabel('⛔禁止する');
+
+*/

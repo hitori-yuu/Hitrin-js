@@ -3,7 +3,8 @@ const { MessageEmbed } = require('discord.js');
 module.exports = {
 	name: 'interactionCreate',
 	async execute(interaction, client) {
-		if (interaction.channel.type == 'GUILD_TEXT') {
+		if (!interaction.isCommand()) {return;}
+		else if (interaction.channel.type == 'GUILD_TEXT') {
 			const s = new MessageEmbed()
 				.setColor('#89c3eb')
 				.setTitle('Command Log')
@@ -18,7 +19,7 @@ module.exports = {
 				.setTimestamp();
 			await client.channels.cache.get('879943806118678528').send({ embeds: [s] });
 		}
-		if (interaction.channel.type == 'DM') {
+		else if (interaction.channel.type == 'DM') {
 			const d = new MessageEmbed()
 				.setColor('#89c3eb')
 				.setTitle('Command Log(DM)')
