@@ -59,6 +59,17 @@ client.on('interactionCreate', async interaction => {
 
 	try {
 		await command.execute(interaction, client);
+		const profile = await profileModel.findOneAndUpdate(
+			{
+				userID: interaction.user.id,
+			},
+			{
+				$inc: {
+					coins: 2,
+				},
+			},
+		);
+		profile.save();
 	}
 	catch (error) {
 		console.error(error);

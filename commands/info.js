@@ -102,7 +102,7 @@ module.exports = {
 				.addFields(
 					{ name: '__**一般:**__', value: `**[名前]** ${server.name}\n**[ID]** ${server.id}\n**[作成者]** <@${server.ownerId}>` },
 					{ name: '__**時間:**__', value: `**[作成日]** ${new Date(server.createdTimestamp).toLocaleDateString()}\n**[ボット参加日]** ${new Date(server.joinedTimestamp).toLocaleDateString()}` },
-					{ name: '__**数量:**__', value: `**[メンバー数]** ${server.memberCount}(👤:${members.filter(member => !member.user.bot).size}, 🤖:${members.filter(member => member.user.bot).size})\n**[テキストチャンネル数]** ${server.channels.cache.filter(ch => ch.type === 'GUILD_TEXT').size}\n**[ボイスチャンネル数]** ${server.channels.cache.filter(ch => ch.type === 'GUILD_VOICE').size}\n**[絵文字数]** ${server.emojis.cache.size}\n**[ブースト数]** (${server.premiumSubscriptionCount || '0'} ブースト)` },
+					{ name: '__**数量:**__', value: `**[メンバー数]** ${server.memberCount}(👤:${members.filter(member => !member.user.bot).size}, 🤖:${members.filter(member => member.user.bot).size})\n**[テキストチャンネル数]** ${server.channels.cache.filter(ch => ch.type === 'GUILD_TEXT').size}\n**[ボイスチャンネル数]** ${server.channels.cache.filter(ch => ch.type === 'GUILD_VOICE').size}\n**[絵文字数]** ${server.emojis.cache.size}\n**[ブースト数]** ${server.premiumSubscriptionCount || '0'} ブースト` },
 				)
 				.setThumbnail(server.iconURL({ format: 'png' }))
 				.setFooter('Hitorin', client.user.displayAvatarURL({ format: 'png' }))

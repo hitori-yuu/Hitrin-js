@@ -14,7 +14,7 @@ module.exports = {
 			.setColor('#ffdb4f')
 			.setTitle('ログイン報酬！')
 			.setAuthor(`${interaction.user.tag}`, interaction.user.displayAvatarURL({ format: 'png' }), interaction.user.displayAvatarURL({ format: 'png' }))
-			.setDescription('__あなたは以下のログイン報酬を受け取りました！__\n**🪙250** *coins*')
+			.setDescription('__あなたは以下のログイン報酬を受け取りました！__\n**🪙250** コイン')
 			.setFooter('Hitorin', client.user.displayAvatarURL({ format: 'png' }))
 			.setTimestamp();
 		await interaction.reply({ embeds: [login] }).then(
