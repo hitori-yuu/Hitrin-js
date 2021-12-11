@@ -22,7 +22,8 @@
     "google-translate-api": "^2.3.0",
     "mongoose": "^6.0.13",
     "node-fetch": "^2.6.5",
-    "uninstall": "^0.0.0"
+    "uninstall": "^0.0.0",
+    "weather-js": "^2.0.0"
   },
   "devDependencies": {
     "eslint": "^8.0.1",

@@ -16,3 +16,7 @@
 [RENAME] ファイル改名 ([RENAME] 「Hファイル」を「Iファイル」)
 ### お願い
 コミットする際のコメントには上記のプレフィックスと本文の入力などをよろしくお願いいたします。また、何故そのような変更等を加えたかの理由の入力もできればお願いしております。
+
+https://img.shields.io/github/stars/hitori-yuu/Hitorin-js
+https://img.shields.io/github/forks/hitori-yuu/Hitorin-js
+https://img.shields.io/github/issues/hitori-yuu/Hitorin-js

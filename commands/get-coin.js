@@ -16,7 +16,7 @@ module.exports = {
 			await interaction.reply(`あなたはお金を手に入れました！ -> **🪙${amount_w.toString()}** コイン`);
 			const profile = await profileModel.findOneAndUpdate(
 				{
-					userID: interaction.user.id,
+					_id: interaction.user.id,
 				},
 				{
 					$inc: {
@@ -35,7 +35,7 @@ module.exports = {
 			await interaction.reply('あなたはお金を手に入れました！ -> **🪙45** コイン');
 			const profile = await profileModel.findOneAndUpdate(
 				{
-					userID: interaction.user.id,
+					_id: interaction.user.id,
 				},
 				{
 					$inc: {
@@ -63,7 +63,7 @@ module.exports = {
 			}
 			const profile = await profileModel.findOneAndUpdate(
 				{
-					userID: interaction.user.id,
+					_id: interaction.user.id,
 				},
 				{
 					$inc: {

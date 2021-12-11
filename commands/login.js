@@ -20,7 +20,7 @@ module.exports = {
 		await interaction.reply({ embeds: [login] }).then(
 			profileModel.findOneAndUpdate(
 				{
-					userID: interaction.user.id,
+					_id: interaction.user.id,
 				},
 				{
 					$inc: {

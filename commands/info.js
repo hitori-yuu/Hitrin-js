@@ -20,7 +20,7 @@ module.exports = {
 		if (type === 'user') {
 			const user = interaction.options.getUser('対象');
 
-			const profileData = await profileModel.findOne({ userID: user.id });
+			const profileData = await profileModel.findOne({ _id: user.id });
 			if (profileData) {
 				coins = profileData.coins + '*coins*';
 				evaluation = profileData.evaluation;
@@ -56,7 +56,7 @@ module.exports = {
 			if (!member.user.bot) bot = '👤ユーザー';
 			const period = Math.round((Date.now() - member.joinedAt) / 86400000);
 
-			const profileData = await profileModel.findOne({ userID: member.id });
+			const profileData = await profileModel.findOne({ _id: member.id });
 			if (profileData) {
 				coins = profileData.coins + '*coins*';
 				evaluation = profileData.evaluation;

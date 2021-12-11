@@ -105,3 +105,39 @@ module.exports = {
 					.setLabel('⛔禁止する');
 
 */
+
+
+const { MessageAttachment, MessageEmbed } = require('discord.js');
+const img = new MessageAttachment('../materials/bump.png');
+function sleep(waitSec, callback) {
+	setTimeout(callback, waitSec);
+}
+
+module.exports = {
+	name: 'interactionCreate',
+	async execute(client, interaction) {
+		if (interaction.user.id == '302050872383242240') {
+			if (interaction.embeds[0].description.match(/表示順をアップしたよ/) || interaction.embeds[0].description.match(/Bump done/)) {
+				const embed = new MessageEmbed()
+					.setColor('#89c3eb')
+					.setTitle('Bumpを検知！')
+					.setAuthor(`${interaction.user.tag}`, interaction.user.displayAvatarURL({ format: 'png' }), interaction.user.displayAvatarURL({ format: 'png' }))
+					.setDescription(`${new Date() + 2} にbumpができることをお知らせします！`)
+					.setThumbnail(img)
+					.setFooter('Hitorin', client.user.displayAvatarURL({ format: 'png' }))
+					.setTimestamp();
+				interaction.channel.send({ embeds: [embed] });
+				sleep(60000 * 120, function() {
+					const embed_2 = new MessageEmbed()
+						.setColor('#89c3eb')
+						.setTitle('Bumpをしましょう！')
+						.setDescription('今ならBumpができます！！レッツBUMP!')
+						.setThumbnail(img)
+						.setFooter('Hitorin', client.user.displayAvatarURL({ format: 'png' }))
+						.setTimestamp();
+					interaction.channel.send({ embeds: [embed_2] });
+				});
+			}
+		}
+	},
+};

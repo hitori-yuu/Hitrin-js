@@ -2,7 +2,7 @@ const { MessageEmbed } = require('discord.js');
 
 module.exports = {
 	name: 'interactionCreate',
-	async execute(interaction, client) {
+	async execute(client, interaction) {
 		if (!interaction.isCommand()) {return;}
 		else if (interaction.channel.type == 'GUILD_TEXT') {
 			const s = new MessageEmbed()

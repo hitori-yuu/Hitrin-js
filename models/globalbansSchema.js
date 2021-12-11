@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 
 const globalbansSchema = new mongoose.Schema({
-	userID: { type: String, require: true, unique: true },
+	_id: { type: String, require: true },
 	reason: { type: String },
 	date: { type: Date },
 });

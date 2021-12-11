@@ -2,7 +2,7 @@ const { MessageEmbed } = require('discord.js');
 
 module.exports = {
 	name: 'guildCreate',
-	async execute(guild, client) {
+	async execute(client, guild) {
 		const log = new MessageEmbed()
 			.setColor('#98d98e')
 			.setTitle('Joined Log')

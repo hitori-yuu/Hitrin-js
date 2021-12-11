@@ -1,6 +1,8 @@
 const { SlashCommandBuilder } = require('@discordjs/builders');
 const { MessageEmbed } = require('discord.js');
 const gbanModel = require('../models/globalbansSchema');
+const profileModel = require('../models/profileSchema');
+const guildsModel = require('../models/guildsSchema');
 require('dotenv').config();
 
 module.exports = {
@@ -45,9 +47,9 @@ module.exports = {
 				.setTimestamp();
 			if (change === 'set') {
 				await interaction.reply({ embeds: [coin] });
-				const gban = await gbanModel.findOneAndUpdate(
+				const profile = await profileModel.findOneAndUpdate(
 					{
-						userID: user.id,
+						_id: user.id,
 					},
 					{
 						$set: {
@@ -55,13 +57,13 @@ module.exports = {
 						},
 					},
 				);
-				gban.save();
+				profile.save();
 			}
 			else if (change === 'increase') {
 				await interaction.reply({ embeds: [coin] });
-				const gban = await gbanModel.findOneAndUpdate(
+				const profile = await profileModel.findOneAndUpdate(
 					{
-						userID: user.id,
+						_id: user.id,
 					},
 					{
 						$inc: {
@@ -69,13 +71,13 @@ module.exports = {
 						},
 					},
 				);
-				gban.save();
+				profile.save();
 			}
 			else if (change === 'decrease') {
 				await interaction.reply({ embeds: [coin] });
-				const gban = await gbanModel.findOneAndUpdate(
+				const profile = await profileModel.findOneAndUpdate(
 					{
-						userID: user.id,
+						_id: user.id,
 					},
 					{
 						$inc: {
@@ -83,7 +85,7 @@ module.exports = {
 						},
 					},
 				);
-				gban.save();
+				profile.save();
 			}
 			else {
 				return await interaction.reply({ embeds: [error] });
@@ -103,9 +105,9 @@ module.exports = {
 				.setTimestamp();
 			if (change === 'set') {
 				await interaction.reply({ embeds: [evaluation] });
-				const gban = await gbanModel.findOneAndUpdate(
+				const profile = await profileModel.findOneAndUpdate(
 					{
-						userID: user.id,
+						_id: user.id,
 					},
 					{
 						$set: {
@@ -113,13 +115,13 @@ module.exports = {
 						},
 					},
 				);
-				gban.save();
+				profile.save();
 			}
 			else if (change === 'increase') {
 				await interaction.reply({ embeds: [evaluation] });
-				const gban = await gbanModel.findOneAndUpdate(
+				const profile = await profileModel.findOneAndUpdate(
 					{
-						userID: user.id,
+						_id: user.id,
 					},
 					{
 						$inc: {
@@ -127,13 +129,13 @@ module.exports = {
 						},
 					},
 				);
-				gban.save();
+				profile.save();
 			}
 			else if (change === 'decrease') {
 				await interaction.reply({ embeds: [evaluation] });
-				const gban = await gbanModel.findOneAndUpdate(
+				const profile = await profileModel.findOneAndUpdate(
 					{
-						userID: user.id,
+						_id: user.id,
 					},
 					{
 						$inc: {
@@ -141,7 +143,7 @@ module.exports = {
 						},
 					},
 				);
-				gban.save();
+				profile.save();
 			}
 			else {
 				return await interaction.reply({ embeds: [error] });
@@ -190,26 +192,30 @@ module.exports = {
 				.setFooter('Hitorin', client.user.displayAvatarURL({ format: 'png' }))
 				.setTimestamp();
 			if (change === 'addition') {
-				const gbanData = await gbanModel.findOne({ userID: user.id });
+				const gbanData = await gbanModel.findOne({ _id: user.id });
 				if (gbanData) {
 					await interaction.reply('そのユーザーは既にGlobalBanされています。');
 				}
 				else if (!gbanData) {
 					const gban = new gbanModel({
-						userID: user.id,
+						_id: user.id,
 						reason: string,
 						date: new Date(),
 					});
 					gban.save();
 
 					client.guilds.cache.forEach((guild) => {
-						guild.bans.create(user, { reason: 'HitorinGlobalBAN「' + string + '」', days: '7' });
+						const guildsData = guildsModel.findOne({ _id: interaction.guild.id });
+						if (guildsData.globalBan === true) {
+							guild.bans.create(user, { reason: 'HitorinGlobalBAN「' + string + '」', days: '7' });
+						}
+						else {return;}
 					});
 					await interaction.reply({ embeds: [g_ban] });
 				}
 			}
 			if (change === 'deletion') {
-				const gbanData = await gbanModel.findOne({ userID: user.id });
+				const gbanData = await gbanModel.findOne({ _id: user.id });
 				if (gbanData) {
 					gbanData.remove();
 					client.guilds.cache.forEach((guild) => {

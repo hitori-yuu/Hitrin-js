@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 
 const profileSchema = new mongoose.Schema({
-	userID: { type: String, require: true, unique: true },
+	_id: { type: String, require: true },
 	evaluation: { type: Number, default: 10 },
 	coins: { type: Number, default: 2500 },
 });

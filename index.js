@@ -3,6 +3,8 @@ const { Client, Collection } = require('discord.js');
 const mongoose = require('mongoose');
 require('dotenv').config();
 const profileModel = require('./models/profileSchema');
+const guildsModel = require('./models/guildsSchema');
+
 
 const options = {
 	intents: ['GUILDS', 'GUILD_BANS', 'GUILD_MESSAGES', 'GUILD_MEMBERS', 'GUILD_PRESENCES'],
@@ -14,10 +16,10 @@ const eventFiles = fs.readdirSync('./events').filter(file => file.endsWith('.js'
 for (const file of eventFiles) {
 	const event = require(`./events/${file}`);
 	if (event.once) {
-		client.once(event.name, (...args) => event.execute(...args, client));
+		client.once(event.name, (...args) => event.execute(client, ...args));
 	}
 	else {
-		client.on(event.name, (...args) => event.execute(...args, client));
+		client.on(event.name, (...args) => event.execute(client, ...args));
 	}
 }
 
@@ -42,13 +44,22 @@ mongoose
 	});
 
 client.on('interactionCreate', async interaction => {
-	const profileData = await profileModel.findOne({ userID: interaction.user.id });
+	const profileData = await profileModel.findOne({ _id: interaction.user.id });
+	const guildsData = await guildsModel.findOne({ _id: interaction.guild.id });
 	if (!profileData) {
 		const profile = await profileModel.create({
-			userID: interaction.user.id,
+			_id: interaction.user.id,
 			coins: 2500,
 		});
 		profile.save();
+	}
+	if (!guildsData) {
+		const guild = await guildsModel.create({
+			_id: interaction.guild.id,
+			ownerID: interaction.guild.ownerId,
+			welcomeCh: null,
+		});
+		guild.save();
 	}
 
 	if (!interaction.isCommand()) return;
