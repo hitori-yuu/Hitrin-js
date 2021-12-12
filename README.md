@@ -1,7 +1,7 @@
-![avatar](https://user-images.githubusercontent.com/89414334/145695368-bef31b6e-256d-4812-8156-382402e60fc7.png)
+<img src="https://user-images.githubusercontent.com/89414334/145695368-bef31b6e-256d-4812-8156-382402e60fc7.png" width="250px">
 # Hitorin-js
-オープンソースで開発しているDiscordのBotです。JavaScriptで開発しています。
-![stars](https://img.shields.io/github/stars/hitori-yuu/Hitorin-js) ![forks](https://img.shields.io/github/forks/hitori-yuu/Hitorin-js) ![issues](https://img.shields.io/github/issues/hitori-yuu/Hitorin-js)
+オープンソースで開発しているDiscordのBotです。JavaScriptで開発しています。  
+![stars](https://img.shields.io/github/stars/hitori-yuu/Hitorin-js?style=for-the-badge) ![forks](https://img.shields.io/github/forks/hitori-yuu/Hitorin-js?style=for-the-badge) ![issues](https://img.shields.io/github/issues/hitori-yuu/Hitorin-js?style=for-the-badge)
 
 
 <!-- 
@@ -20,7 +20,4 @@
 [RENAME] ファイル改名 ([RENAME] 「Hファイル」を「Iファイル」)
 ### お願い
 コミットする際のコメントには上記のプレフィックスと本文の入力などをよろしくお願いいたします。また、何故そのような変更等を加えたかの理由の入力もできればお願いしております。
-
-https://img.shields.io/github/stars/hitori-yuu/Hitorin-js
-https://img.shields.io/github/forks/hitori-yuu/Hitorin-js
-https://img.shields.io/github/issues/hitori-yuu/Hitorin-js -->
+ -->
