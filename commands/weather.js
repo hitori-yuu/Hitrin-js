@@ -15,7 +15,7 @@ module.exports = {
 		.addStringOption(option => option.setName('温度の種類').setDescription('種類を選択').addChoice('摂氏℃', 'C').addChoice('華氏℉', 'F')),
 	async execute(interaction, client) {
 		const location = interaction.options.getString('地名');
-		const type = interaction.options.getString('日付');
+		const type = interaction.options.getString('日付') || 'today';
 		const type_2 = interaction.options.getString('温度の種類') || 'C';
 		let mark = '℃';
 		if (type_2 == 'F') mark = '℉';
