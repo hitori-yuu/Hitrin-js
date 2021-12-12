@@ -1,6 +1,10 @@
+![avatar](https://user-images.githubusercontent.com/89414334/145695368-bef31b6e-256d-4812-8156-382402e60fc7.png)
 # Hitorin-js
 オープンソースで開発しているDiscordのBotです。JavaScriptで開発しています。
+![stars](https://img.shields.io/github/stars/hitori-yuu/Hitorin-js) ![forks](https://img.shields.io/github/forks/hitori-yuu/Hitorin-js) ![issues](https://img.shields.io/github/issues/hitori-yuu/Hitorin-js)
 
+
+<!-- 
 # 開発をする際などの注意事項
 もし編集を加える際等は以下の文章を読むことを推奨します。
 ## プレフィックス（接頭辞）
@@ -19,4 +23,4 @@
 
 https://img.shields.io/github/stars/hitori-yuu/Hitorin-js
 https://img.shields.io/github/forks/hitori-yuu/Hitorin-js
-https://img.shields.io/github/issues/hitori-yuu/Hitorin-js
+https://img.shields.io/github/issues/hitori-yuu/Hitorin-js -->
