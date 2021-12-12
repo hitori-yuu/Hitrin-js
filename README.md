@@ -1,14 +1,10 @@
 <div align="center">
-  <br />
-  <p>
+  <br>
   <img src="https://user-images.githubusercontent.com/89414334/145695368-bef31b6e-256d-4812-8156-382402e60fc7.png"alt="Hitorin-bot" width="250px">
-  </p>
-  <br />
-  <p>
+  <br>
   <img src="https://img.shields.io/github/stars/hitori-yuu/Hitorin-js?style=for-the-badge">
   <img src="https://img.shields.io/github/forks/hitori-yuu/Hitorin-js?style=for-the-badge">
   <img src="https://img.shields.io/github/issues/hitori-yuu/Hitorin-js?style=for-the-badge">
-  </p>
 </div>
 
 # Hitorin-js
