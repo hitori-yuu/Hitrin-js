@@ -1,13 +1,9 @@
-<<<<<<< HEAD
 <div align="center">
   <img src="https://user-images.githubusercontent.com/89414334/145695368-bef31b6e-256d-4812-8156-382402e60fc7.png" width="250px">
   <img src="https://img.shields.io/github/stars/hitori-yuu/Hitorin-js?style=for-the-badge">
   <img src="https://img.shields.io/github/forks/hitori-yuu/Hitorin-js?style=for-the-badge">
   <img src="https://img.shields.io/github/issues/hitori-yuu/Hitorin-js?style=for-the-badge">
 </div>
-=======
-<img src="https://user-images.githubusercontent.com/89414334/145695368-bef31b6e-256d-4812-8156-382402e60fc7.png" width="250px">
->>>>>>> 092e2294b9ad1a81dd89874571ce36a46f5c5566
 
 # Hitorin-js
 オープンソースで開発しているDiscordのBotです。JavaScriptで開発しています。  
