@@ -1,5 +1,6 @@
 const fs = require('fs');
-const { Client, Collection } = require('discord.js');
+const { Client, Collection, MessageEmbed } = require('discord.js');
+const { codeBlock } = require('@discordjs/builders');
 const mongoose = require('mongoose');
 require('dotenv').config();
 const profileModel = require('./models/profileSchema');
@@ -57,8 +58,9 @@ client.on('interactionCreate', async interaction => {
 		const guild = await guildsModel.create({
 			_id: interaction.guild.id,
 			ownerID: interaction.guild.ownerId,
-			welcomeCh: 'None',
+			welcomeCh: null,
 			globalBan: true,
+			autoMod: true,
 		});
 		guild.save();
 	}
@@ -85,8 +87,26 @@ client.on('interactionCreate', async interaction => {
 	}
 	catch (error) {
 		console.error(error);
-		await interaction.reply({ content: 'コマンド実行時にエラーが発生しました。', ephemeral: true });
+		error_unknown(interaction, error);
 	}
 });
+
+function error_unknown(interaction, error) {
+	const err = new MessageEmbed()
+		.setColor('#ba2636')
+		.setTitle('実行失敗')
+		.setAuthor(`${interaction.user.tag}`, interaction.user.displayAvatarURL({ format: 'png' }), interaction.user.displayAvatarURL({ format: 'png' }))
+		.setDescription('無知のエラーが発生しました。既に開発者に報告されています。')
+		.setFooter('Hitorin', client.user.displayAvatarURL({ format: 'png' }))
+		.setTimestamp();
+	const error_log = new MessageEmbed()
+		.setColor('#ba2636')
+		.setTitle('エラー')
+		.setDescription('【エラー内容】\n' + codeBlock('js', error))
+		.setFooter('Hitorin', client.user.displayAvatarURL({ format: 'png' }))
+		.setTimestamp();
+	const log = client.channels.cache.get('919599721184628807').send({ embeds: [error_log] });
+	return interaction.reply({ embeds: [err] }), log;
+}
 
 client.login(process.env.TOKEN);

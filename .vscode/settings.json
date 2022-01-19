@@ -1,9 +1,11 @@
 {
     "cSpell.words": [
+        "automod",
         "cooldown",
         "discordjs",
         "feelslike",
         "gban",
+        "globalban",
         "globalbans",
         "Hitori",
         "imagerelativeurl",
@@ -13,6 +15,7 @@
         "redcross",
         "skytext",
         "skytextday",
+        "welcomech",
         "winddisplay"
     ]
 }

@@ -7,7 +7,7 @@ module.exports = {
 	data: new SlashCommandBuilder()
 		.setName('set')
 		.setDescription('BOTに関することを設定します。')
-		.addStringOption(option => option.setName('種類').setDescription('種類を選択').addChoice('ニックネーム', 'string').addChoice('お知らせ', 'announce').addChoice('サーバー', 'server').addChoice('加入お知らせ', 'welcome').addChoice('グローバルBAN', 'globalban').addChoice('現在の状態', 'status'))
+		.addStringOption(option => option.setName('種類').setDescription('種類を選択').addChoice('ニックネーム', 'string').addChoice('お知らせ', 'announce').addChoice('サーバー', 'server').addChoice('加入お知らせ', 'welcome').addChoice('グローバルBAN', 'globalban').addChoice('自動管理', 'automod').addChoice('現在の状態', 'status'))
 		.addStringOption(option => option.setName('文字').setDescription('任意の文字列を入力'))
 		.addStringOption(option => option.setName('設定').setDescription('「許可」か「禁止」のどちらかを選択').addChoice('許可', 'approval').addChoice('禁止', 'disapproval'))
 		.addChannelOption(option => option.setName('チャンネル').setDescription('任意のチャンネルを選択')),
@@ -17,6 +17,18 @@ module.exports = {
 		const channel = interaction.options.getChannel('チャンネル');
 		let string = interaction.options.getString('文字');
 		if (string == 'none' || null) string = 'ヒトリン';
+
+		const guildsData = await guildsModel.findOne({ _id: interaction.guild.id });
+		if (!guildsData) {
+			const guild = await guildsModel.create({
+				_id: interaction.guild.id,
+				ownerID: interaction.guild.ownerId,
+				welcomeCh: null,
+				globalBan: true,
+				autoMod: true,
+			});
+			guild.save();
+		}
 
 		const permission = new MessageEmbed()
 			.setColor('#ba2636')
@@ -111,14 +123,51 @@ module.exports = {
 			}
 			await interaction.reply(`グローバルBANを設定しました -> ${discrimination}`);
 		}
+		else if (type === 'automod') {
+			if (!interaction.member.permissions.has('MANAGE_GUILD')) {return await interaction.reply({ embeds: [permission] });}
+			else if (discrimination === 'approval') {
+				const guild = await guildsModel.findOneAndUpdate(
+					{
+						_id: interaction.guild.id,
+					},
+					{
+						$set: {
+							autoMod: true,
+						},
+					},
+				);
+				guild.save();
+			}
+			else if (discrimination === 'disapproval') {
+				const guild = await guildsModel.findOneAndUpdate(
+					{
+						_id: interaction.guild.id,
+					},
+					{
+						$set: {
+							autoMod: false,
+						},
+					},
+				);
+				guild.save();
+			}
+			else {
+				return await interaction.reply({ embeds: [error] });
+			}
+			await interaction.reply(`自動管理を設定しました -> ${discrimination}`);
+		}
 		else if (type === 'status') {
 			const guild = await guildsModel.findOne({ _id: interaction.guild.id });
-			const welcomech = interaction.guild.channels.cache.get(guild.welcomeCh);
+			let welcomech;
+			if (guild.welcomeCh) welcomech = interaction.guild.channels.cache.get(guild.welcomeCh);
+			if (!guild.welcomeCh) welcomech = '❌None❌';
+			let autoMod = '許可';
+			if (!guild.autoMod) autoMod = '禁止';
 			const embed = new MessageEmbed()
 				.setColor('#89c3eb')
 				.setTitle('このサーバーの設定の一覧')
 				.setAuthor(`${interaction.user.tag}`, interaction.user.displayAvatarURL({ format: 'png' }), interaction.user.displayAvatarURL({ format: 'png' }))
-				.setDescription(`加入お知らせ： \`${welcomech.name || '❌None❌'}\``)
+				.setDescription(`加入お知らせ: \`${welcomech.name || '❌None❌'}\`\n自動管理: \`${autoMod || '❌None❌'}\``)
 				.setThumbnail(interaction.user.displayAvatarURL({ format: 'png' }))
 				.setFooter('Hitorin', client.user.displayAvatarURL({ format: 'png' }))
 				.setTimestamp();
