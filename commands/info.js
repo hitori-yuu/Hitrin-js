@@ -22,8 +22,8 @@ module.exports = {
 		let mark;
 		let bot = '🤖ボット';
 
-		if (user.bot) bot = '👤ユーザー';
-		if (member.user.bot) bot = '👤ユーザー';
+		if (!user.bot) bot = '👤ユーザー';
+		if (!member.user.bot) bot = '👤ユーザー';
 
 		const profileData = await profileModel.findOne({ _id: user.id || member.id });
 		if (profileData) {

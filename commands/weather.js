@@ -115,7 +115,6 @@ module.exports = {
 					.setTimestamp();
 				interaction.reply({ embeds: [embed] });
 			}
-			console.log(result);
 		});
 	},
 };
