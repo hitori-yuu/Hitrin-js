@@ -28,22 +28,22 @@ module.exports = {
 		const error = new MessageEmbed()
 			.setColor('#ba2636')
 			.setTitle('実行に失敗')
-			.setAuthor(`${interaction.user.tag}`, interaction.user.displayAvatarURL({ format: 'png' }), interaction.user.displayAvatarURL({ format: 'png' }))
+			.setAuthor({ name: interaction.user.tag, iconURL: interaction.user.displayAvatarURL({ format: 'png' }), url: interaction.user.displayAvatarURL({ format: 'png' }) })
 			.setDescription('その種類は選択できません。')
-			.setFooter('Hitorin', client.user.displayAvatarURL({ format: 'png' }))
+			.setFooter({ text: 'Hitorin', iconURL: client.user.displayAvatarURL({ format: 'png' }) })
 			.setTimestamp();
 
 		if (type === 'coin') {
 			const coin = new MessageEmbed()
 				.setColor('#89c3eb')
 				.setTitle('ボット管理')
-				.setAuthor(`${interaction.user.tag}`, interaction.user.displayAvatarURL({ format: 'png' }), interaction.user.displayAvatarURL({ format: 'png' }))
+				.setAuthor({ name: interaction.user.tag, iconURL: interaction.user.displayAvatarURL({ format: 'png' }), url: interaction.user.displayAvatarURL({ format: 'png' }) })
 				.addFields(
 					{ name: '__**Target:**__', value: `**[Name]** ${user.tag}\n**[ID]** ${user.id}\n**[Mention]** <@${user.id}>` },
 					{ name: '__**Body:**__', value: `**[Coins]** Changed the coin: ${mark}${number} *coins*` },
 				)
 				.setThumbnail(interaction.user.displayAvatarURL({ format: 'png' }))
-				.setFooter('Hitorin', client.user.displayAvatarURL({ format: 'png' }))
+				.setFooter({ text: 'Hitorin', iconURL: client.user.displayAvatarURL({ format: 'png' }) })
 				.setTimestamp();
 			if (change === 'set') {
 				await interaction.reply({ embeds: [coin] });
@@ -95,13 +95,13 @@ module.exports = {
 			const evaluation = new MessageEmbed()
 				.setColor('#89c3eb')
 				.setTitle('ボット管理')
-				.setAuthor(`${interaction.user.tag}`, interaction.user.displayAvatarURL({ format: 'png' }), interaction.user.displayAvatarURL({ format: 'png' }))
+				.setAuthor({ name: interaction.user.tag, iconURL: interaction.user.displayAvatarURL({ format: 'png' }), url: interaction.user.displayAvatarURL({ format: 'png' }) })
 				.addFields(
 					{ name: '__**Target:**__', value: `**[Name]** ${user.tag}\n**[ID]** ${user.id}\n**[Mention]** <@${user.id}>` },
 					{ name: '__**Body:**__', value: `**[Evaluation]** Changed the evaluation value: ${mark}${number}` },
 				)
 				.setThumbnail(interaction.user.displayAvatarURL({ format: 'png' }))
-				.setFooter('Hitorin', client.user.displayAvatarURL({ format: 'png' }))
+				.setFooter({ text: 'Hitorin', iconURL: client.user.displayAvatarURL({ format: 'png' }) })
 				.setTimestamp();
 			if (change === 'set') {
 				await interaction.reply({ embeds: [evaluation] });
@@ -155,13 +155,13 @@ module.exports = {
 			const bot = new MessageEmbed()
 				.setColor('#89c3eb')
 				.setTitle('ボット管理')
-				.setAuthor(`${interaction.user.tag}`, interaction.user.displayAvatarURL({ format: 'png' }), interaction.user.displayAvatarURL({ format: 'png' }))
+				.setAuthor({ name: interaction.user.tag, iconURL: interaction.user.displayAvatarURL({ format: 'png' }), url: interaction.user.displayAvatarURL({ format: 'png' }) })
 				.addFields(
 					{ name: '__**Target:**__', value: `**[Name]** ${user.tag}\n**[ID]** ${user.id}\n**[Mention]** <@${user.id}>` },
 					{ name: '__**Body:**__', value: `**[${change_type}]** Changed: ${string}` },
 				)
 				.setThumbnail(interaction.user.displayAvatarURL({ format: 'png' }))
-				.setFooter('Hitorin', client.user.displayAvatarURL({ format: 'png' }))
+				.setFooter({ text: 'Hitorin', iconURL: client.user.displayAvatarURL({ format: 'png' }) })
 				.setTimestamp();
 			if (change === 'username') {
 				await client.user.setUsername(string).then(
@@ -183,13 +183,13 @@ module.exports = {
 			const g_ban = new MessageEmbed()
 				.setColor('#89c3eb')
 				.setTitle('ボット管理')
-				.setAuthor(`${interaction.user.tag}`, interaction.user.displayAvatarURL({ format: 'png' }), interaction.user.displayAvatarURL({ format: 'png' }))
+				.setAuthor({ name: interaction.user.tag, iconURL: interaction.user.displayAvatarURL({ format: 'png' }), url: interaction.user.displayAvatarURL({ format: 'png' }) })
 				.addFields(
 					{ name: '__**Target:**__', value: `**[Name]** ${user.tag}\n**[ID]** ${user.id}\n**[Mention]** <@${user.id}>` },
 					{ name: '__**Body:**__', value: `**[GlobalBan]** ${global_ban}: ${user.tag}\n**[Reason]**\n${string}` },
 				)
 				.setThumbnail(interaction.user.displayAvatarURL({ format: 'png' }))
-				.setFooter('Hitorin', client.user.displayAvatarURL({ format: 'png' }))
+				.setFooter({ text: 'Hitorin', iconURL: client.user.displayAvatarURL({ format: 'png' }) })
 				.setTimestamp();
 			if (change === 'addition') {
 				const gbanData = await gbanModel.findOne({ _id: user.id });

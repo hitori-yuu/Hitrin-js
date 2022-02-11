@@ -89,14 +89,14 @@ module.exports = {
 				const embed = new MessageEmbed()
 					.setColor('#89c3eb')
 					.setTitle(`${location.name}の天気`)
-					.setAuthor(`${interaction.user.tag}`, interaction.user.displayAvatarURL({ format: 'png' }), interaction.user.displayAvatarURL({ format: 'png' }))
+					.setAuthor({ name: interaction.user.tag, iconURL: interaction.user.displayAvatarURL({ format: 'png' }), url: interaction.user.displayAvatarURL({ format: 'png' }) })
 					.addFields(
 						{ name: '__**一般:**__', value: `**[天気]** ${skytext}\n**[湿度]** ${current.humidity}%\n**[風]** ${current.winddisplay}` },
 						{ name: '__**気温:**__', value: `**[気温]** ${current.temperature + mark}\n**[体感]** ${current.feelslike + mark}` },
 						{ name: '__**時間:**__', value: `**[日付]** ${current.date} ${day}\n**[最終更新]**${current.observationtime}` },
 					)
 					.setThumbnail(current.imageUrl)
-					.setFooter('Hitorin', client.user.displayAvatarURL({ format: 'png' }))
+					.setFooter({ text: 'Hitorin', iconURL: client.user.displayAvatarURL({ format: 'png' }) })
 					.setTimestamp();
 				interaction.reply({ embeds: [embed] });
 			}
@@ -104,14 +104,14 @@ module.exports = {
 				const embed = new MessageEmbed()
 					.setColor('#89c3eb')
 					.setTitle(`${location.name}の天気`)
-					.setAuthor(`${interaction.user.tag}`, interaction.user.displayAvatarURL({ format: 'png' }), interaction.user.displayAvatarURL({ format: 'png' }))
+					.setAuthor({ name: interaction.user.tag, iconURL: interaction.user.displayAvatarURL({ format: 'png' }), url: interaction.user.displayAvatarURL({ format: 'png' }) })
 					.addFields(
 						{ name: '__**一般:**__', value: `**[天気]** ${skytext}\n**[降水量]** ${tomorrow.precip || 'None'}` },
 						{ name: '__**気温:**__', value: `**[最高]** ${tomorrow.high + mark}\n**[最低]** ${tomorrow.low + mark}` },
 						{ name: '__**時間:**__', value: `**[日付]** ${tomorrow.date} ${day}` },
 					)
 					.setThumbnail(location.imagerelativeurl)
-					.setFooter('Hitorin', client.user.displayAvatarURL({ format: 'png' }))
+					.setFooter({ text: 'Hitorin', iconURL: client.user.displayAvatarURL({ format: 'png' }) })
 					.setTimestamp();
 				interaction.reply({ embeds: [embed] });
 			}

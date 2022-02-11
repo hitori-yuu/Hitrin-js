@@ -13,9 +13,9 @@ module.exports = {
 		const login = new MessageEmbed()
 			.setColor('#ffdb4f')
 			.setTitle('ログイン報酬！')
-			.setAuthor(`${interaction.user.tag}`, interaction.user.displayAvatarURL({ format: 'png' }), interaction.user.displayAvatarURL({ format: 'png' }))
+			.setAuthor({ name: interaction.user.tag, iconURL: interaction.user.displayAvatarURL({ format: 'png' }), url: interaction.user.displayAvatarURL({ format: 'png' }) })
 			.setDescription('__あなたは以下のログイン報酬を受け取りました！__\n**🪙250** コイン')
-			.setFooter('Hitorin', client.user.displayAvatarURL({ format: 'png' }))
+			.setFooter({ text: 'Hitorin', iconURL: client.user.displayAvatarURL({ format: 'png' }) })
 			.setTimestamp();
 		await interaction.reply({ embeds: [login] }).then(
 			profileModel.findOneAndUpdate(

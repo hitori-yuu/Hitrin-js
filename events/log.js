@@ -9,14 +9,14 @@ module.exports = {
 			const s = new MessageEmbed()
 				.setColor('#89c3eb')
 				.setTitle('Command Log')
-				.setAuthor('/' + `${client.commands.get(interaction.commandName).data.name}`)
+				.setAuthor({ name: '/' + `${client.commands.get(interaction.commandName).data.name}`, iconURL: interaction.user.displayAvatarURL({ format: 'png' }), url: interaction.user.displayAvatarURL({ format: 'png' }) })
 				.addFields(
 					{ name: '__**Executor:**__', value: `**[Name]** ${interaction.user.tag}\n**[ID]** ${interaction.user.id}\n**[Mention]** <@${interaction.user.id}>` },
 					{ name: '__**Server:**__', value: `**[Name]** ${interaction.guild.name}\n**[ID]** ${interaction.guild.id}\n**[Owner]** <@${interaction.guild.ownerId}>` },
 					{ name: '__**Channel:**__', value: `**[Name]** ${interaction.channel.name}\n**[ID]** ${interaction.channel.id}` },
 				)
 				.setThumbnail(interaction.user.displayAvatarURL({ format: 'png' }))
-				.setFooter('Hitorin', client.user.displayAvatarURL({ format: 'png' }))
+				.setFooter({ text: 'Hitorin', iconURL: client.user.displayAvatarURL({ format: 'png' }) })
 				.setTimestamp();
 			await client.channels.cache.get('879943806118678528').send({ embeds: [s] });
 		}
@@ -24,12 +24,12 @@ module.exports = {
 			const d = new MessageEmbed()
 				.setColor('#89c3eb')
 				.setTitle('Command Log(DM)')
-				.setAuthor(`${interaction.content}`)
+				.setAuthor({ name: interaction.content })
 				.addFields(
 					{ name: '__**Executor:**__', value: `**[Name]** ${interaction.user.tag}\n**[ID]** ${interaction.user.id}\n**[Mention]** <@${interaction.user.id}>` },
 				)
 				.setThumbnail(interaction.user.displayAvatarURL({ format: 'png' }))
-				.setFooter('Hitorin', client.user.displayAvatarURL({ format: 'png' }))
+				.setFooter({ text: 'Hitorin', iconURL: client.user.displayAvatarURL({ format: 'png' }) })
 				.setTimestamp();
 			await client.channels.cache.get('879943806118678528').send({ embeds: [d] });
 		}

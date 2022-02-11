@@ -10,7 +10,7 @@ module.exports = {
 		const u = new MessageEmbed()
 			.setColor('#89c3eb')
 			.setTitle('ヘルプ')
-			.setAuthor(`${interaction.user.tag}`, interaction.user.displayAvatarURL({ format: 'png' }), interaction.user.displayAvatarURL({ format: 'png' }))
+			.setAuthor({ name: interaction.user.tag, iconURL: interaction.user.displayAvatarURL({ format: 'png' }), url: interaction.user.displayAvatarURL({ format: 'png' }) })
 			.addFields(
 				{ name: '__**ヘルプ:**__', value: '`help`: ヘルプを表示します。(このコマンド)\n`inquiry <種類> [内容] [対象]`: 運営に依頼や質問等を送信します。' },
 				{ name: '__**設定:**__', value: '`set <種類> [任意の文字列]`: BOTに関することを設定します。' },
@@ -19,7 +19,7 @@ module.exports = {
 				{ name: '__**管理:**__', value: '`kick <対象> [理由]`: そのメンバーをサーバーから追放します。\n`ban <対象> [理由] [日数]`: そのメンバーをサーバーから禁止します。\n`unban <対象> [理由]`: そのユーザーの禁止を解除します。' },
 			)
 			.setThumbnail(client.user.displayAvatarURL({ format: 'png' }))
-			.setFooter('Hitorin', client.user.displayAvatarURL({ format: 'png' }))
+			.setFooter({ text: 'Hitorin', iconURL: client.user.displayAvatarURL({ format: 'png' }) })
 			.setTimestamp();
 		await interaction.reply({ embeds: [u] });
 	},
