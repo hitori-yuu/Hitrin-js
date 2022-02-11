@@ -7,7 +7,7 @@
   <img src="https://img.shields.io/github/issues/hitori-yuu/Hitorin-js?style=for-the-badge">
 </div>
 
-# Hitorin-js
+# Hitrin-js
 オープンソースで開発しているDiscordのBotです。JavaScriptで開発しています。  
 開発者「ヒトリユウ」
 
