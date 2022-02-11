@@ -4,11 +4,12 @@ require('dotenv').config();
 const version = process.env.VERSION;
 const profileModel = require('../models/profileSchema');
 
+
 module.exports = {
 	data: new SlashCommandBuilder()
 		.setName('info')
 		.setDescription('指定したものの詳細を表示します。')
-		.addStringOption(option => option.setName('種類').setDescription('種類を選択').addChoice('ボット', 'bot').addChoice('ユーザー', 'user').addChoice('メンバー', 'member').addChoice('サーバー', 'server'))
+		.addStringOption(option => option.setName('種類').setDescription('種類を選択').addChoice('ボット', 'Bot').addChoice('ユーザー', 'User').addChoice('メンバー', 'Member').addChoice('サーバー', 'Server'))
 		.addUserOption(option => option.setName('対象').setDescription('ユーザーかメンバーを選択')),
 	async execute(interaction, client) {
 		const type = interaction.options.getString('種類');
@@ -47,47 +48,47 @@ module.exports = {
 		const u = new MessageEmbed()
 			.setColor('#89c3eb')
 			.setTitle('ユーザーの詳細')
-			.setAuthor(`${interaction.user.tag}`, interaction.user.displayAvatarURL({ format: 'png' }), interaction.user.displayAvatarURL({ format: 'png' }))
+			.setAuthor({ name: interaction.user.tag, iconURL: interaction.user.displayAvatarURL({ format: 'png' }), url: interaction.user.displayAvatarURL({ format: 'png' }) })
 			.addFields(
 				{ name: '__**一般:**__', value: `**[名前]** ${user.tag}\n**[ID]** ${user.id}\n**[種類]]** ${bot}` },
 				{ name: '__**時間:**__', value: `**[作成日]** ${new Date(user.createdTimestamp).toLocaleDateString()}` },
 				{ name: '__**ボット内:**__', value: `**[コイン]** ${coins}\n**[評価値]** ${evaluation} ${mark}` },
 			)
 			.setThumbnail(user.displayAvatarURL({ format: 'png' }))
-			.setFooter('Hitorin', client.user.displayAvatarURL({ format: 'png' }))
+			.setFooter({ text: 'Hitorin', iconURL: client.user.displayAvatarURL({ format: 'png' }) })
 			.setTimestamp();
 		const m = new MessageEmbed()
 			.setColor('#89c3eb')
 			.setTitle('メンバーの詳細')
-			.setAuthor(`${interaction.user.tag}`, interaction.user.displayAvatarURL({ format: 'png' }), interaction.user.displayAvatarURL({ format: 'png' }))
+			.setAuthor({ name: interaction.user.tag, iconURL: interaction.user.displayAvatarURL({ format: 'png' }), url: interaction.user.displayAvatarURL({ format: 'png' }) })
 			.addFields(
-				{ name: '__**一般:**__', value: `**[名前]** ${member.user.tag}\n**[ID]** ${member.id}\n**[ニックネーム]]** ${member.nickname || 'None'}\n**[種類]** ${bot}` },
+				{ name: '__**一般:**__', value: `**[名前]** ${member.user.tag}\n**[ID]** ${member.id}\n**[ニックネーム]** ${member.nickname || 'None'}\n**[種類]** ${bot}` },
 				{ name: '__**時間:**__', value: `**[作成日]** ${new Date(member.user.createdTimestamp).toLocaleDateString()}\n**[参加日]** ${new Date(member.joinedTimestamp).toLocaleDateString() || 'None'}\n**[参加期間]** ${period || 'None'} 日` },
 				{ name: '__**ステータス:**__', value: `**[一般]** ${status || 'None'}` },
 				{ name: '__**ボット内:**__', value: `**[コイン]** ${coins}\n**[評価値]** ${evaluation} ${mark}` },
 				{ name: '__**ロール:**__', value: `**[最上位ロール]**\n${member.roles.highest || 'None'}\n**[ロール (${member.roles.cache.size})]**\n${member.roles.cache.map(role => `${role}`).join(' , ') || 'None'}` },
 			)
 			.setThumbnail(member.displayAvatarURL({ format: 'png' }))
-			.setFooter('Hitorin', client.user.displayAvatarURL({ format: 'png' }))
+			.setFooter({ text: 'Hitorin', iconURL: client.user.displayAvatarURL({ format: 'png' }) })
 			.setTimestamp();
 
 		const s = new MessageEmbed()
 			.setColor('#89c3eb')
 			.setTitle('サーバーの詳細')
-			.setAuthor(`${interaction.user.tag}`, interaction.user.displayAvatarURL({ format: 'png' }), interaction.user.displayAvatarURL({ format: 'png' }))
+			.setAuthor({ name: interaction.user.tag, iconURL: interaction.user.displayAvatarURL({ format: 'png' }), url: interaction.user.displayAvatarURL({ format: 'png' }) })
 			.addFields(
 				{ name: '__**一般:**__', value: `**[名前]** ${server.name}\n**[ID]** ${server.id}\n**[作成者]** <@${server.ownerId}>` },
 				{ name: '__**時間:**__', value: `**[作成日]** ${new Date(server.createdTimestamp).toLocaleDateString()}\n**[ボット参加日]** ${new Date(server.joinedTimestamp).toLocaleDateString()}` },
 				{ name: '__**数量:**__', value: `**[メンバー数]** ${server.memberCount}(👤:${members.filter(mem => !mem.user.bot).size}, 🤖:${members.filter(mem => mem.user.bot).size})\n**[テキストチャンネル数]** ${server.channels.cache.filter(ch => ch.type === 'GUILD_TEXT').size}\n**[ボイスチャンネル数]** ${server.channels.cache.filter(ch => ch.type === 'GUILD_VOICE').size}\n**[絵文字数]** ${server.emojis.cache.size}\n**[ブースト数]** ${server.premiumSubscriptionCount || '0'} ブースト` },
 			)
 			.setThumbnail(server.iconURL({ format: 'png' }))
-			.setFooter('Hitorin', client.user.displayAvatarURL({ format: 'png' }))
+			.setFooter({ text: 'Hitorin', iconURL: client.user.displayAvatarURL({ format: 'png' }) })
 			.setTimestamp();
 
 		const b = new MessageEmbed()
 			.setColor('#89c3eb')
 			.setTitle('Bot Details')
-			.setAuthor(`${interaction.user.tag}`, interaction.user.displayAvatarURL({ format: 'png' }), interaction.user.displayAvatarURL({ format: 'png' }))
+			.setAuthor({ name: interaction.user.tag, iconURL: interaction.user.displayAvatarURL({ format: 'png' }), url: interaction.user.displayAvatarURL({ format: 'png' }) })
 			.addFields(
 				{ name: '__**一般:**__', value: `**[名前]** ${client.user.tag}\n**[ID]** ${client.user.id}\n**[作成者]** <@${author.id}>` },
 				{ name: '__**時間:**__', value: `**[作成日]** ${new Date(client.user.createdTimestamp).toLocaleDateString()}` },
@@ -95,21 +96,21 @@ module.exports = {
 				{ name: '__**ステータス:**__', value: `**[反応速度]** ws:${client.ws.ping}ms\n**[サーバー数]** ${client.guilds.cache.size} サーバー\n**[ユーザー数]** ${client.users.cache.size} ユーザー` },
 			)
 			.setThumbnail(client.user.displayAvatarURL({ format: 'png' }))
-			.setFooter('Hitorin', client.user.displayAvatarURL({ format: 'png' }))
+			.setFooter({ text: 'Hitorin', iconURL: client.user.displayAvatarURL({ format: 'png' }) })
 			.setTimestamp();
 
 		try {
 			switch (type) {
-			case 'user':
+			case 'User':
 				await interaction.reply({ embeds: [u] });
 				break;
-			case 'member':
+			case 'Member':
 				await interaction.reply({ embeds: [m] });
 				break;
-			case 'server':
+			case 'Server':
 				await interaction.reply({ embeds: [s] });
 				break;
-			case 'bot':
+			case 'Bot':
 				await interaction.reply({ embeds: [b] });
 				break;
 			default:
@@ -126,9 +127,9 @@ function error_invalid(interaction, client, invalid) {
 	const error = new MessageEmbed()
 		.setColor('#ba2636')
 		.setTitle('実行失敗')
-		.setAuthor(`${interaction.user.tag}`, interaction.user.displayAvatarURL({ format: 'png' }), interaction.user.displayAvatarURL({ format: 'png' }))
+		.setAuthor({ name: interaction.user.tag, iconURL: interaction.user.displayAvatarURL({ format: 'png' }), url: interaction.user.displayAvatarURL({ format: 'png' }) })
 		.setDescription(`実行に必須なパラメータが無効です: \`${invalid || 'None'}\``)
-		.setFooter('Hitorin', client.user.displayAvatarURL({ format: 'png' }))
+		.setFooter({ text: 'Hitorin', iconURL: client.user.displayAvatarURL({ format: 'png' }) })
 		.setTimestamp();
 	return interaction.reply({ embeds: [error] });
 }
@@ -136,15 +137,15 @@ function error_unknown(interaction, client, error) {
 	const err = new MessageEmbed()
 		.setColor('#ba2636')
 		.setTitle('実行失敗')
-		.setAuthor(`${interaction.user.tag}`, interaction.user.displayAvatarURL({ format: 'png' }), interaction.user.displayAvatarURL({ format: 'png' }))
+		.setAuthor({ name: interaction.user.tag, iconURL: interaction.user.displayAvatarURL({ format: 'png' }), url: interaction.user.displayAvatarURL({ format: 'png' }) })
 		.setDescription('無知のエラーが発生しました。既に開発者に報告されています。')
-		.setFooter('Hitorin', client.user.displayAvatarURL({ format: 'png' }))
+		.setFooter({ text: 'Hitorin', iconURL: client.user.displayAvatarURL({ format: 'png' }) })
 		.setTimestamp();
 	const error_log = new MessageEmbed()
 		.setColor('#ba2636')
 		.setTitle('エラー')
 		.setDescription('【エラー内容】\n' + codeBlock('js', error))
-		.setFooter('Hitorin', client.user.displayAvatarURL({ format: 'png' }))
+		.setFooter({ text: 'Hitorin', iconURL: client.user.displayAvatarURL({ format: 'png' }) })
 		.setTimestamp();
 	const log = client.channels.cache.get('919599721184628807').send({ embeds: [error_log] });
 	return interaction.reply({ embeds: [err] }), log;
