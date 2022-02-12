@@ -154,18 +154,18 @@ module.exports = {
 		// else if (type === 'automod') {
 		// 	if (!interaction.member.permissions.has('MANAGE_GUILD')) {return await interaction.reply({ embeds: [permission] });}
 		// 	else if (discrimination === 'approval') {
-		// 		const guild = await guildsModel.findOneAndUpdate(
-		// 			{
-		// 				_id: interaction.guild.id,
-		// 			},
-		// 			{
-		// 				$set: {
-		// 					autoMod: true,
-		// 				},
-		// 			},
-		// 		);
-		// 		guild.save();
-		// 	}
+			// 	const guild = await guildsModel.findOneAndUpdate(
+			// 		{
+			// 			_id: interaction.guild.id,
+			// 		},
+			// 		{
+			// 			$set: {
+			// 				autoMod: true,
+			// 			},
+			// 		},
+			// 	);
+			// 	guild.save();
+			// }
 		// 	else if (discrimination === 'disapproval') {
 		// 		const guild = await guildsModel.findOneAndUpdate(
 		// 			{

@@ -1,8 +1,17 @@
 const { MessageEmbed } = require('discord.js');
+const guildsModel = require('../models/guildsSchema');
 
 module.exports = {
 	name: 'interactionCreate',
 	async execute(client, interaction) {
+		const guildsData = await guildsModel.findOne({ _id: interaction.guild.id });
+		if (!guildsData) {
+			const guild = await guildsModel.create({
+				_id: interaction.guild.id,
+				ownerID: interaction.guild.ownerId,
+			});
+			guild.save();
+		}
 		if (interaction.user.bot) return;
 		if (!interaction.isCommand()) {return;}
 		else if (interaction.channel.type == 'GUILD_TEXT') {

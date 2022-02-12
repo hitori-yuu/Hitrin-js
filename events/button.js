@@ -1,4 +1,5 @@
 const { MessageEmbed, MessageButton, MessageActionRow, MessageAttachment } = require('discord.js');
+const guildsModel = require('../models/guildsSchema');
 
 module.exports = {
 	name: 'interactionCreate',
@@ -22,7 +23,7 @@ module.exports = {
 			.setColor('#89c3eb')
 			.setTitle('お知らせ')
 			.setAuthor({ name: interaction.user.tag, iconURL: interaction.user.displayAvatarURL({ format: 'png' }), url: interaction.user.displayAvatarURL({ format: 'png' }) })
-			.setDescription('このサーバーでボットのお知らせを受け取りますか？以下のボタンをクリックし設定てください。')
+			.setDescription('このサーバーでボットのお知らせを受け取りますか？以下のボタンをクリックし設定してください。')
 			.setThumbnail(client.user.displayAvatarURL({ format: 'png' }))
 			.setFooter({ text: 'Hitorin', iconURL: client.user.displayAvatarURL({ format: 'png' }) })
 			.setTimestamp();
@@ -55,6 +56,47 @@ module.exports = {
 			.setThumbnail(client.user.displayAvatarURL({ format: 'png' }))
 			.setFooter({ text: 'Hitorin', iconURL: client.user.displayAvatarURL({ format: 'png' }) })
 			.setTimestamp();
+		const welcome = new MessageEmbed()
+			.setColor('#89c3eb')
+			.setTitle('新規加入')
+			.setAuthor({ name: interaction.user.tag, iconURL: interaction.user.displayAvatarURL({ format: 'png' }), url: interaction.user.displayAvatarURL({ format: 'png' }) })
+			.setDescription('このサーバーで新規加入者の歓迎メッセージを有効にしますか？以下のボタンをクリックし設定してください。')
+			.setThumbnail(client.user.displayAvatarURL({ format: 'png' }))
+			.setFooter({ text: 'Hitorin', iconURL: client.user.displayAvatarURL({ format: 'png' }) })
+			.setTimestamp();
+		const welcome_2 = new MessageEmbed()
+			.setColor('#89c3eb')
+			.setTitle('新規加入')
+			.setAuthor({ name: interaction.user.tag, iconURL: interaction.user.displayAvatarURL({ format: 'png' }), url: interaction.user.displayAvatarURL({ format: 'png' }) })
+			.setDescription('__15秒以内に__設定したいチャンネルの名前またはIDを入力してください。')
+			.setThumbnail(client.user.displayAvatarURL({ format: 'png' }))
+			.setFooter({ text: 'Hitorin', iconURL: client.user.displayAvatarURL({ format: 'png' }) })
+			.setTimestamp();
+		const globalban = new MessageEmbed()
+			.setColor('#89c3eb')
+			.setTitle('グローバルBAN')
+			.setAuthor({ name: interaction.user.tag, iconURL: interaction.user.displayAvatarURL({ format: 'png' }), url: interaction.user.displayAvatarURL({ format: 'png' }) })
+			.setDescription('このサーバーでグローバルBANを有効にしますか？以下のボタンをクリックし設定してください。')
+			.setThumbnail(client.user.displayAvatarURL({ format: 'png' }))
+			.setFooter({ text: 'Hitorin', iconURL: client.user.displayAvatarURL({ format: 'png' }) })
+			.setTimestamp();
+		const automod = new MessageEmbed()
+			.setColor('#89c3eb')
+			.setTitle('自動管理')
+			.setAuthor({ name: interaction.user.tag, iconURL: interaction.user.displayAvatarURL({ format: 'png' }), url: interaction.user.displayAvatarURL({ format: 'png' }) })
+			.setDescription('このサーバーでボットによる自動管理を有効にしますか？以下のボタンをクリックし設定してください。')
+			.setThumbnail(client.user.displayAvatarURL({ format: 'png' }))
+			.setFooter({ text: 'Hitorin', iconURL: client.user.displayAvatarURL({ format: 'png' }) })
+			.setTimestamp();
+		const automod_2 = new MessageEmbed()
+			.setColor('#89c3eb')
+			.setTitle('自動管理')
+			.setAuthor({ name: interaction.user.tag, iconURL: interaction.user.displayAvatarURL({ format: 'png' }), url: interaction.user.displayAvatarURL({ format: 'png' }) })
+			.setDescription('__15秒以内に__自動管理のログを送信するチャンネルをチャンネル名またはチャンネルIDで入力してください。')
+			.setThumbnail(client.user.displayAvatarURL({ format: 'png' }))
+			.setFooter({ text: 'Hitorin', iconURL: client.user.displayAvatarURL({ format: 'png' }) })
+			.setTimestamp();
+
 		const announce_ok = new MessageButton()
 			.setCustomId('announce_ok')
 			.setEmoji('<:app:941652983966478417>')
@@ -62,6 +104,36 @@ module.exports = {
 			.setLabel('許可');
 		const announce_no = new MessageButton()
 			.setCustomId('announce_no')
+			.setEmoji('<:pro:941652971018666024>')
+			.setStyle('DANGER')
+			.setLabel('禁止');
+		const welcome_ok = new MessageButton()
+			.setCustomId('welcome_ok')
+			.setEmoji('<:app:941652983966478417>')
+			.setStyle('SUCCESS')
+			.setLabel('許可');
+		const welcome_no = new MessageButton()
+			.setCustomId('welcome_no')
+			.setEmoji('<:pro:941652971018666024>')
+			.setStyle('DANGER')
+			.setLabel('禁止');
+		const globalban_ok = new MessageButton()
+			.setCustomId('globalban_ok')
+			.setEmoji('<:app:941652983966478417>')
+			.setStyle('SUCCESS')
+			.setLabel('許可');
+		const globalban_no = new MessageButton()
+			.setCustomId('globalban_no')
+			.setEmoji('<:pro:941652971018666024>')
+			.setStyle('DANGER')
+			.setLabel('禁止');
+		const automod_ok = new MessageButton()
+			.setCustomId('automod_ok')
+			.setEmoji('<:app:941652983966478417>')
+			.setStyle('SUCCESS')
+			.setLabel('許可');
+		const automod_no = new MessageButton()
+			.setCustomId('automod_no')
 			.setEmoji('<:pro:941652971018666024>')
 			.setStyle('DANGER')
 			.setLabel('禁止');
@@ -119,21 +191,52 @@ module.exports = {
 		}
 		else if (interaction.customId === 'welcome') {
 			await interaction.reply({
-				content: 'ボタンが押されました -> welcome',
+				embeds: [welcome],
+				components: [new MessageActionRow().addComponents([welcome_ok, welcome_no])],
 				ephemeral: true,
 			});
 		}
 		else if (interaction.customId === 'globalban') {
 			await interaction.reply({
-				content: 'ボタンが押されました -> globalban',
-				ephemeral: false,
+				embeds: [globalban],
+				components: [new MessageActionRow().addComponents([globalban_ok, globalban_no])],
+				ephemeral: true,
 			});
 		}
 		else if (interaction.customId === 'automod') {
 			await interaction.reply({
-				content: 'ボタンが押されました -> automod',
-				ephemeral: false,
+				embeds: [automod],
+				components: [new MessageActionRow().addComponents([automod_ok, automod_no])],
+				ephemeral: true,
 			});
+		}
+		else if (interaction.customId === 'automod_ok') {
+			interaction.channel.send('設定完了: このサーバでの自動管理を**有効**にしました。');
+			const guild = await guildsModel.findOneAndUpdate(
+				{
+					_id: interaction.guild.id,
+				},
+				{
+					$set: {
+						autoMod: true,
+					},
+				},
+			);
+			guild.save();
+		}
+		else if (interaction.customId === 'automod_no') {
+			interaction.channel.send('設定完了: このサーバでの自動管理を**無効**にしました。');
+			const guild = await guildsModel.findOneAndUpdate(
+				{
+					_id: interaction.guild.id,
+				},
+				{
+					$set: {
+						autoMod: false,
+					},
+				},
+			);
+			guild.save();
 		}
 	},
 };

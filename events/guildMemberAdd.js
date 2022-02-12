@@ -5,8 +5,7 @@ module.exports = {
 	name: 'guildMemberAdd',
 	async execute(client, interaction) {
 		const guildsData = await guildsModel.findOne({ _id: interaction.guild.id });
-		if (guildsData) {
-			if (guildsData.welcomeCh) {
+		if (!guildsData.welcomeCh === 'none') {
 				const welcome = new MessageEmbed()
 					.setColor('#88cb7f')
 					.setAuthor({ name: interaction.user.tag, iconURL: interaction.user.displayAvatarURL({ format: 'png' }), url: interaction.user.displayAvatarURL({ format: 'png' }) })
@@ -15,9 +14,7 @@ module.exports = {
 					.setFooter({ text: 'Hitorin', iconURL: client.user.displayAvatarURL({ format: 'png' }) })
 					.setTimestamp();
 				await client.channels.cache.get(guildsData.welcomeCh).send({ embeds: [welcome] });
-			}
-			else {return;}
 		}
-		else {return;}
+		else return;
 	},
 };

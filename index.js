@@ -58,9 +58,6 @@ client.on('interactionCreate', async interaction => {
 		const guild = await guildsModel.create({
 			_id: interaction.guild.id,
 			ownerID: interaction.guild.ownerId,
-			welcomeCh: null,
-			globalBan: true,
-			autoMod: true,
 		});
 		guild.save();
 	}

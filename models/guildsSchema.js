@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 const guildsSchema = new mongoose.Schema({
 	_id: { type: String, require: true },
 	ownerID: { type: String },
-	welcomeCh: { type: String, unique: true, default: null },
+	welcomeCh: { type: String, unique: true, default: 'none' },
 	globalBan: { type: Boolean, default: true },
 	autoMod: { type: Boolean, default: true },
 });

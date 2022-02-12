@@ -1,8 +1,14 @@
 const { MessageEmbed } = require('discord.js');
+const guildsModel = require('../models/guildsSchema');
 
 module.exports = {
 	name: 'guildCreate',
 	async execute(client, guild) {
+		const Guild = await guildsModel.create({
+				_id: interaction.guild.id,
+				ownerID: interaction.guild.ownerId,
+		});
+		Guild.save();
 		const log = new MessageEmbed()
 			.setColor('#98d98e')
 			.setTitle('Joined Log')
