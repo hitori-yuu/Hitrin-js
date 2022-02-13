@@ -19,7 +19,7 @@ module.exports = {
 			.setColor('#ba2636')
 			.setTitle('実行に失敗')
 			.setAuthor({ name: interaction.user.tag, iconURL: interaction.user.displayAvatarURL({ format: 'png' }), url: interaction.user.displayAvatarURL({ format: 'png' }) })
-			.setDescription('あなたは実行に必要な権限を持っていません。 実行に必要な権限： `BAN_MEMBERS`')
+			.setDescription('あなたは実行に必要な権限を持っていません。 実行に必要な権限: `BAN_MEMBERS`')
 			.setFooter({ text: 'Hitorin', iconURL: client.user.displayAvatarURL({ format: 'png' }) })
 			.setTimestamp();
 

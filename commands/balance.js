@@ -8,6 +8,6 @@ module.exports = {
 		.setDescription('あなたの残金を表示します。'),
 	async execute(interaction) {
 		const profileData = await profileModel.findOne({ userID: interaction.user.id });
-		await interaction.reply(`あなたの残金は： **🪙${profileData.coins}** コイン`);
+		await interaction.reply(`あなたの残金は: **🪙${profileData.coins}** コイン`);
 	},
 };

@@ -25,7 +25,7 @@ module.exports = {
 				.setFooter({ text: 'Hitorin', iconURL: client.user.displayAvatarURL({ format: 'png' }) })
 				.setTimestamp();
 			const in_1 = new MessageEmbed()
-				.setColor('#89c3eb')
+				.setColor('#f5e56b')
 				.setTitle(`Inquiry [${t}]`)
 				.setAuthor({ name: interaction.user.tag, iconURL: interaction.user.displayAvatarURL({ format: 'png' }), url: interaction.user.displayAvatarURL({ format: 'png' }) })
 				.addFields(
@@ -48,7 +48,7 @@ module.exports = {
 				.setFooter({ text: 'Hitorin', iconURL: client.user.displayAvatarURL({ format: 'png' }) })
 				.setTimestamp();
 			const in_2 = new MessageEmbed()
-				.setColor('#89c3eb')
+				.setColor('#f5e56b')
 				.setTitle('Inquiry [Report]')
 				.setAuthor({ name: interaction.user.tag, iconURL: interaction.user.displayAvatarURL({ format: 'png' }), url: interaction.user.displayAvatarURL({ format: 'png' }) })
 				.addFields(

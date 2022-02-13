@@ -34,7 +34,7 @@ module.exports = {
 			else if (evaluation >= 4 && evaluation < 8) mark = '<:care:914852933332500502>';
 			else if (evaluation >= 0 && evaluation < 4) mark = '<:red_cross:914852946481659904>';
 		}
-		else if (profileData == undefined) {
+		else if (profileData == null) {
 			coins = '不明';
 			evaluation = '不明';
 			mark = '<:unknown:914852959777615925>';

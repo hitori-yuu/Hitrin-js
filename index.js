@@ -4,7 +4,6 @@ const { codeBlock } = require('@discordjs/builders');
 const mongoose = require('mongoose');
 require('dotenv').config();
 const profileModel = require('./models/profileSchema');
-const guildsModel = require('./models/guildsSchema');
 
 
 const options = {
@@ -45,23 +44,6 @@ mongoose
 	});
 
 client.on('interactionCreate', async interaction => {
-	const profileData = await profileModel.findOne({ _id: interaction.user.id });
-	const guildsData = await guildsModel.findOne({ _id: interaction.guild.id });
-	if (!profileData) {
-		const profile = await profileModel.create({
-			_id: interaction.user.id,
-			coins: 2500,
-		});
-		profile.save();
-	}
-	if (!guildsData) {
-		const guild = await guildsModel.create({
-			_id: interaction.guild.id,
-			ownerID: interaction.guild.ownerId,
-		});
-		guild.save();
-	}
-
 	if (!interaction.isCommand()) return;
 
 	const command = client.commands.get(interaction.commandName);
@@ -72,7 +54,7 @@ client.on('interactionCreate', async interaction => {
 		await command.execute(interaction, client);
 		const profile = await profileModel.findOneAndUpdate(
 			{
-				userID: interaction.user.id,
+				_id: interaction.user.id,
 			},
 			{
 				$inc: {

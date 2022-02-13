@@ -5,6 +5,7 @@ module.exports = {
 	name: 'guildMemberAdd',
 	async execute(client, interaction) {
 		const guildsData = await guildsModel.findOne({ _id: interaction.guild.id });
+		if (!guildsData) return;
 		if (!guildsData.welcomeCh === 'none') {
 				const welcome = new MessageEmbed()
 					.setColor('#88cb7f')
