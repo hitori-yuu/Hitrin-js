@@ -4,6 +4,7 @@ const { codeBlock } = require('@discordjs/builders');
 const mongoose = require('mongoose');
 require('dotenv').config();
 const profileModel = require('./models/profileSchema');
+const guildsModel = require('./models/guildsSchema');
 
 
 const options = {
@@ -44,6 +45,34 @@ mongoose
 	});
 
 client.on('interactionCreate', async interaction => {
+	const profileData = profileModel.findOne({ _id: interaction.user.id });
+	const guildsData = guildsModel.findOne({ _id: interaction.guild.id });
+	if (!profileData) {
+		const profile = await profileModel.create({
+			_id: interaction.user.id,
+			name: interaction.user.username,
+			avatar: interaction.user.displayAvatarURL({ format: 'png' }),
+			color: 'DEFAULT',
+			birthday: {
+				date: null,
+				public: false,
+			},
+			description: null,
+			evaluation: 10,
+			coins: 1000,
+		});
+		profile.save();
+		console.log('(Member)初期設定が完了しました -> ' + interaction.user.tag);
+	}
+	if (!guildsData) {
+		const guild = await guildsModel.create({
+			_id: interaction.guild.id,
+			ownerID: interaction.guild.ownerId,
+		});
+		guild.save();
+		console.log('(Guild)初期設定が完了しました -> ' + interaction.guild.name);
+	}
+
 	if (!interaction.isCommand()) return;
 
 	const command = client.commands.get(interaction.commandName);
@@ -52,17 +81,6 @@ client.on('interactionCreate', async interaction => {
 
 	try {
 		await command.execute(interaction, client);
-		const profile = await profileModel.findOneAndUpdate(
-			{
-				_id: interaction.user.id,
-			},
-			{
-				$inc: {
-					coins: 2,
-				},
-			},
-		);
-		profile.save();
 	}
 	catch (error) {
 		console.error(error);
@@ -89,3 +107,15 @@ function error_unknown(interaction, error) {
 }
 
 client.login(process.env.TOKEN);
+
+// const profile = await profileModel.findOneAndUpdate(
+// 	{
+// 		_id: interaction.user.id,
+// 	},
+// 	{
+// 		$inc: {
+// 			coins: 2,
+// 		},
+// 	},
+// );
+// profile.save();

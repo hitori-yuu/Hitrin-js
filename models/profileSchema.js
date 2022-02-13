@@ -10,8 +10,8 @@ const profileSchema = new mongoose.Schema({
 		public: { type: Boolean },
 	},
 	description: { type: String },
-	evaluation: { type: Number, default: 10, required: true, min: 0, max: 10 },
-	coins: { type: Number, default: 1000 },
+	evaluation: { type: Number, required: true, min: 0, max: 10 },
+	coins: { type: Number},
 });
 
 const model = mongoose.model('Profiles', profileSchema);
