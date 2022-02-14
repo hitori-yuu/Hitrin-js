@@ -45,8 +45,8 @@ mongoose
 	});
 
 client.on('interactionCreate', async interaction => {
-	const profileData = profileModel.findOne({ _id: interaction.user.id });
-	const guildsData = guildsModel.findOne({ _id: interaction.guild.id });
+	const profileData = await profileModel.findOne({ _id: interaction.user.id });
+	const guildsData = await guildsModel.findOne({ _id: interaction.guild.id });
 	if (!profileData) {
 		const profile = await profileModel.create({
 			_id: interaction.user.id,
@@ -62,15 +62,38 @@ client.on('interactionCreate', async interaction => {
 			coins: 1000,
 		});
 		profile.save();
+		const initial_profile = new MessageEmbed()
+			.setColor('#89c3eb')
+			.setTitle('InitialSettings')
+			.setAuthor({ name: interaction.user.tag, iconURL: interaction.user.displayAvatarURL({ format: 'png' }), url: interaction.user.displayAvatarURL({ format: 'png' }) })
+			.setDescription(`**[_id]** ${interaction.user.id}\n**[Evaluation]** 10\n**[Coins]** 1000\n**[Avatar]** [URL](${interaction.user.displayAvatarURL({ format: 'png' })})\n**[Description]** None\n**[Birthday]** None`)
+			.setThumbnail(interaction.user.displayAvatarURL({ format: 'png' }))
+			.setFooter({ text: 'Hitorin', iconURL: client.user.displayAvatarURL({ format: 'png' }) })
+			.setTimestamp();
 		console.log('(Member)初期設定が完了しました -> ' + interaction.user.tag);
+		client.channels.cache.get('879943806118678528').send({ embeds: [initial_profile] });
 	}
 	if (!guildsData) {
 		const guild = await guildsModel.create({
 			_id: interaction.guild.id,
 			ownerID: interaction.guild.ownerId,
+			welcomeCh: 'none',
+			setting: {
+				log: 'none',
+				level: 'normal',
+			}
 		});
 		guild.save();
+		const initial_guild = new MessageEmbed()
+		.setColor('#89c3eb')
+		.setTitle('InitialSettings')
+		.setAuthor({ name: interaction.user.tag, iconURL: interaction.user.displayAvatarURL({ format: 'png' }), url: interaction.user.displayAvatarURL({ format: 'png' }) })
+		.setDescription(`**[_id]** ${interaction.guild.id}\n**[OwnerId]** ${interaction.guild.ownerId}\n**[GlobalBAN]** true\n**[AutoMod]** true\n**[Setting]** \n__Log:__ None\n__Level:__ normal`)
+		.setThumbnail(interaction.user.displayAvatarURL({ format: 'png' }))
+		.setFooter({ text: 'Hitorin', iconURL: client.user.displayAvatarURL({ format: 'png' }) })
+		.setTimestamp();
 		console.log('(Guild)初期設定が完了しました -> ' + interaction.guild.name);
+		client.channels.cache.get('879943806118678528').send({ embeds: [initial_guild] });
 	}
 
 	if (!interaction.isCommand()) return;
@@ -81,6 +104,17 @@ client.on('interactionCreate', async interaction => {
 
 	try {
 		await command.execute(interaction, client);
+		const profile = await profileModel.findOneAndUpdate(
+			{
+				_id: interaction.user.id,
+			},
+			{
+				$inc: {
+					coins: 2,
+				},
+			},
+		);
+		profile.save();
 	}
 	catch (error) {
 		console.error(error);
@@ -107,15 +141,3 @@ function error_unknown(interaction, error) {
 }
 
 client.login(process.env.TOKEN);
-
-// const profile = await profileModel.findOneAndUpdate(
-// 	{
-// 		_id: interaction.user.id,
-// 	},
-// 	{
-// 		$inc: {
-// 			coins: 2,
-// 		},
-// 	},
-// );
-// profile.save();

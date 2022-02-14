@@ -142,12 +142,11 @@ module.exports = {
 		if (interaction.customId === 'nick') {
 			await interaction.reply({
 				embeds: [nick],
-				ephemeral: false,
 			});
 			const filter = msg => msg.author.id === interaction.user.id;
 			interaction.channel.awaitMessages({ filter, max: 1, time: 10000 })
 				.then(collected => {
-					if (!collected.size) {return interaction.channel.send('タイムアウト');}
+					if (!collected.size) return interaction.channel.send('タイムアウト');
 					else if (collected.first().content === '-reset') {
 						interaction.channel.send('設定完了: ニックネームをリセットしました。');
 						interaction.guild.me.setNickname('');
@@ -158,7 +157,6 @@ module.exports = {
 					}
 				});
 		}
-		// message.guild.channels.cache.find((channel) => channel.name === "foo")
 		else if (interaction.customId === 'announce') {
 			await interaction.reply({
 				embeds: [announce],
@@ -177,9 +175,9 @@ module.exports = {
 					if (!collected.size) return interaction.channel.send('タイムアウト');
 					const channel = interaction.guild.channels.cache.find((ch) => ch.name === collected.first().content) || interaction.guild.channels.cache.get(collected.first().content);
 					if (!channel) return interaction.channel.send({ embeds: [invalid] });
-					interaction.channel.send('設定完了: **' + channel.name + '** でお知らせを受け取ります。');
 					client.channels.cache.get('879943806118678528').send({ embeds: [announce_log] });
 					client.channels.cache.get('913821026377420910').addFollower(channel.id);
+					interaction.channel.send('設定完了: **' + channel.name + '** でお知らせを受け取ります。', { ephemeral: true });
 				});
 		}
 		else if (interaction.customId === 'announce_no') {
@@ -196,12 +194,79 @@ module.exports = {
 				ephemeral: true,
 			});
 		}
+		else if (interaction.customId === 'welcome_ok') {
+			await interaction.reply({
+				embeds: [welcome_2],
+				ephemeral: true,
+			});
+			const filter = msg => msg.author.id === interaction.user.id;
+			interaction.channel.awaitMessages({ filter, max: 1, time: 15000 })
+				.then(async collected => {
+					if (!collected.size) return interaction.channel.send('タイムアウト');
+					const channel = interaction.guild.channels.cache.find((ch) => ch.name === collected.first().content) || interaction.guild.channels.cache.get(collected.first().content);
+					if (!channel) return interaction.channel.send({ embeds: [invalid] });
+					const guild = await guildsModel.findOneAndUpdate(
+						{
+							_id: interaction.guild.id,
+						},
+						{
+							$set: {
+								welcomeCh: channel.id,
+							},
+						},
+					);
+					guild.save();
+					interaction.channel.send('設定完了: **' + channel.name + '** で新規メンバーへの歓迎メッセージを送ります。', { ephemeral: true });
+			});
+		}
+		else if (interaction.customId === 'welcome_no') {
+			const guild = await guildsModel.findOneAndUpdate(
+				{
+					_id: interaction.guild.id,
+				},
+				{
+					$set: {
+						welcomeCh: 'none',
+					},
+				},
+			);
+			guild.save();
+			interaction.channel.send('設定完了: このサーバでの新規メンバーへの歓迎メッセージを**無効**にしました', { ephemeral: true });
+		}
 		else if (interaction.customId === 'globalban') {
 			await interaction.reply({
 				embeds: [globalban],
 				components: [new MessageActionRow().addComponents([globalban_ok, globalban_no])],
 				ephemeral: true,
 			});
+		}
+		else if (interaction.customId === 'globalban_ok') {
+			const guild = await guildsModel.findOneAndUpdate(
+				{
+					_id: interaction.guild.id,
+				},
+				{
+					$set: {
+						globalban: true,
+					},
+				},
+			);
+			guild.save();
+			interaction.channel.send('設定完了: このサーバでのグローバルBANを**有効**にしました。', { ephemeral: true });
+		}
+		else if (interaction.customId === 'globalban_no') {
+			const guild = await guildsModel.findOneAndUpdate(
+				{
+					_id: interaction.guild.id,
+				},
+				{
+					$set: {
+						globalban: false,
+					},
+				},
+			);
+			guild.save();
+			interaction.channel.send('設定完了: このサーバでのグローバルBANを**無効**にしました。', { ephemeral: true });
 		}
 		else if (interaction.customId === 'automod') {
 			await interaction.reply({
@@ -211,7 +276,6 @@ module.exports = {
 			});
 		}
 		else if (interaction.customId === 'automod_ok') {
-			interaction.channel.send('設定完了: このサーバでの自動管理を**有効**にしました。');
 			const guild = await guildsModel.findOneAndUpdate(
 				{
 					_id: interaction.guild.id,
@@ -223,9 +287,9 @@ module.exports = {
 				},
 			);
 			guild.save();
+			interaction.channel.send('設定完了: このサーバでの自動管理を**有効**にしました。', { ephemeral: true });
 		}
 		else if (interaction.customId === 'automod_no') {
-			interaction.channel.send('設定完了: このサーバでの自動管理を**無効**にしました。');
 			const guild = await guildsModel.findOneAndUpdate(
 				{
 					_id: interaction.guild.id,
@@ -237,6 +301,7 @@ module.exports = {
 				},
 			);
 			guild.save();
+			interaction.channel.send('設定完了: このサーバでの自動管理を**無効**にしました。', { ephemeral: true });
 		}
 	},
 };

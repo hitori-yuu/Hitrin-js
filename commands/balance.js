@@ -7,7 +7,7 @@ module.exports = {
 		.setName('balance')
 		.setDescription('あなたの残金を表示します。'),
 	async execute(interaction) {
-		const profileData = await profileModel.findOne({ userID: interaction.user.id });
+		const profileData = await profileModel.findOne({ _id: interaction.user.id });
 		await interaction.reply(`あなたの残金は: **🪙${profileData.coins}** コイン`);
 	},
 };

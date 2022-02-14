@@ -13,8 +13,8 @@ module.exports = {
 		.addUserOption(option => option.setName('対象').setDescription('ユーザーかメンバーを選択')),
 	async execute(interaction, client) {
 		const type = interaction.options.getString('種類');
-		const user = interaction.options.getUser('対象');
-		const member = interaction.options.getMember('対象');
+		let user = interaction.options.getUser('対象');
+		let member = interaction.options.getMember('対象');
 		const server = interaction.guild;
 		const members = interaction.guild.members.cache;
 		const author = client.users.cache.get('874184214130602015');
@@ -23,8 +23,10 @@ module.exports = {
 		let mark;
 		let bot = '🤖ボット';
 
-		if (!user.bot) bot = '👤ユーザー';
-		if (!member.user.bot) bot = '👤ユーザー';
+
+		if (type == 'Bot') user = client.user;
+		else if (!user.bot) bot = '👤ユーザー';
+		else if (!member.user.bot) bot = '👤ユーザー';
 
 		const profileData = await profileModel.findOne({ _id: user.id || member.id });
 		if (profileData) {
@@ -50,7 +52,7 @@ module.exports = {
 			.setTitle('ユーザーの詳細')
 			.setAuthor({ name: interaction.user.tag, iconURL: interaction.user.displayAvatarURL({ format: 'png' }), url: interaction.user.displayAvatarURL({ format: 'png' }) })
 			.addFields(
-				{ name: '__**一般:**__', value: `**[名前]** ${user.tag}\n**[ID]** ${user.id}\n**[種類]]** ${bot}` },
+				{ name: '__**一般:**__', value: `**[名前]** ${user.tag}\n**[ID]** ${user.id}\n**[種類]** ${bot}` },
 				{ name: '__**時間:**__', value: `**[作成日]** ${new Date(user.createdTimestamp).toLocaleDateString()}` },
 				{ name: '__**ボット内:**__', value: `**[コイン]** ${coins}\n**[評価値]** ${evaluation} ${mark}` },
 			)
@@ -101,9 +103,6 @@ module.exports = {
 
 		try {
 			switch (type) {
-			case 'User':
-				await interaction.reply({ embeds: [u] });
-				break;
 			case 'Member':
 				await interaction.reply({ embeds: [m] });
 				break;
@@ -113,8 +112,12 @@ module.exports = {
 			case 'Bot':
 				await interaction.reply({ embeds: [b] });
 				break;
+			case '':
+				error_invalid(interaction, client, '種類')
+				break;
 			default:
-				error_invalid(interaction, client, '種類');
+				await interaction.reply({ embeds: [u] });
+				break;
 			}
 		}
 		catch (error) {

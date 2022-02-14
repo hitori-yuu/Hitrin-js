@@ -17,7 +17,7 @@ module.exports = {
             .addFields(
                 { name: '__**名前:**__', value: 'プロフィールに載せる名前を設定します。' },
                 { name: '__**アバター:**__', value: 'プロフィールに載せるアバターを設定します。' },
-                { name: '__**色:**__', value: 'プロフィールに載せる色を設定します。' },
+                { name: '__**カラー:**__', value: 'プロフィールに載せる色を設定します。' },
                 { name: '__**誕生日:**__', value: 'プロフィールに載せる誕生日を設定します。' },
                 { name: '__**紹介文:**__', value: 'プロフィールに載せる紹介文を設定します。' },
             )
@@ -35,15 +35,71 @@ module.exports = {
         const setting_color = new MessageButton()
 			.setCustomId('setting_color')
 			.setStyle('PRIMARY')
-			.setLabel('色');
+			.setLabel('カラー');
         const setting_birthday = new MessageButton()
 			.setCustomId('setting_birthday')
 			.setStyle('PRIMARY')
 			.setLabel('誕生日');
+        const setting_birthday_release = new MessageButton()
+			.setCustomId('setting_birthday_release')
+			.setStyle('SUCCESS')
+			.setLabel('公開');
+        const setting_birthday_private = new MessageButton()
+			.setCustomId('setting_birthday_private ')
+			.setStyle('DANGER')
+			.setLabel('非公開');
         const setting_description = new MessageButton()
 			.setCustomId('setting_description')
 			.setStyle('PRIMARY')
 			.setLabel('紹介文');
+        const setting_name_2 = new MessageEmbed()
+            .setColor('#89c3eb')
+            .setTitle('プロフィール > 設定 > 名前')
+            .setAuthor({ name: interaction.user.tag, iconURL: interaction.user.displayAvatarURL({ format: 'png' }), url: interaction.user.displayAvatarURL({ format: 'png' }) })
+            .setDescription('__15秒以内__に、プロフィールに載せたい任意の**名前**を入力してください。')
+            .setThumbnail(client.user.displayAvatarURL({ format: 'png' }))
+            .setFooter({ text: 'Hitorin', iconURL: client.user.displayAvatarURL({ format: 'png' }) })
+            .setTimestamp();
+        const setting_avatar_2 = new MessageEmbed()
+            .setColor('#89c3eb')
+            .setTitle('プロフィール > 設定 > アバター')
+            .setAuthor({ name: interaction.user.tag, iconURL: interaction.user.displayAvatarURL({ format: 'png' }), url: interaction.user.displayAvatarURL({ format: 'png' }) })
+            .setDescription('__15秒以内__に、プロフィールに載せたい任意の**アバターのURL**を入力または**画像を添付**してください。')
+            .setThumbnail(client.user.displayAvatarURL({ format: 'png' }))
+            .setFooter({ text: 'Hitorin', iconURL: client.user.displayAvatarURL({ format: 'png' }) })
+            .setTimestamp();
+        const setting_color_2 = new MessageEmbed()
+            .setColor('#89c3eb')
+            .setTitle('プロフィール > 設定 > カラー')
+            .setAuthor({ name: interaction.user.tag, iconURL: interaction.user.displayAvatarURL({ format: 'png' }), url: interaction.user.displayAvatarURL({ format: 'png' }) })
+            .setDescription('__15秒以内__に、プロフィールの**色を__16進数__カラーコードで**入力してください。')
+            .setThumbnail(client.user.displayAvatarURL({ format: 'png' }))
+            .setFooter({ text: 'Hitorin', iconURL: client.user.displayAvatarURL({ format: 'png' }) })
+            .setTimestamp();
+        const setting_birthday_2 = new MessageEmbed()
+            .setColor('#89c3eb')
+            .setTitle('プロフィール > 設定 > 誕生日')
+            .setAuthor({ name: interaction.user.tag, iconURL: interaction.user.displayAvatarURL({ format: 'png' }), url: interaction.user.displayAvatarURL({ format: 'png' }) })
+            .setDescription('誕生日を公開しますか？以下のボタンをクリックしてください。')
+            .setThumbnail(client.user.displayAvatarURL({ format: 'png' }))
+            .setFooter({ text: 'Hitorin', iconURL: client.user.displayAvatarURL({ format: 'png' }) })
+            .setTimestamp();
+        const setting_birthday_3 = new MessageEmbed()
+            .setColor('#89c3eb')
+            .setTitle('プロフィール > 設定 > 誕生日')
+            .setAuthor({ name: interaction.user.tag, iconURL: interaction.user.displayAvatarURL({ format: 'png' }), url: interaction.user.displayAvatarURL({ format: 'png' }) })
+            .setDescription('__15秒以内__に、プロフィールに載せたい任意の**誕生日**を入力してください。\n例: ドラえもんの誕生日「2112年9月3日」なら ⇒ `2112/09/03`')
+            .setThumbnail(client.user.displayAvatarURL({ format: 'png' }))
+            .setFooter({ text: 'Hitorin', iconURL: client.user.displayAvatarURL({ format: 'png' }) })
+            .setTimestamp();
+        const setting_description_2 = new MessageEmbed()
+            .setColor('#89c3eb')
+            .setTitle('プロフィール > 設定 > 紹介文')
+            .setAuthor({ name: interaction.user.tag, iconURL: interaction.user.displayAvatarURL({ format: 'png' }), url: interaction.user.displayAvatarURL({ format: 'png' }) })
+            .setDescription('__60秒以内__に、プロフィールに載せたい任意の**紹介文**を入力してください。')
+            .setThumbnail(client.user.displayAvatarURL({ format: 'png' }))
+            .setFooter({ text: 'Hitorin', iconURL: client.user.displayAvatarURL({ format: 'png' }) })
+            .setTimestamp();
         const status = new MessageEmbed()
             .setColor(profileData.color)
             .setTitle('あなたのプロフィール')
@@ -67,6 +123,99 @@ module.exports = {
                 components: [new MessageActionRow().addComponents([setting_name, setting_avatar, setting_color, setting_birthday, setting_description])],
             });
         }
+        if (interaction.customId === 'setting_name') {
+            await interaction.reply({
+                embeds: [setting_name_2],
+            });
+        }
+        if (interaction.customId === 'setting_avatar') {
+            await interaction.reply({
+                embeds: [setting_avatar_2],
+                components: [new MessageActionRow().addComponents([setting_name, setting_avatar, setting_color, setting_birthday, setting_description])],
+            });
+        }
+        if (interaction.customId === 'setting_color') {
+            await interaction.reply({
+                embeds: [setting_color_2],
+                components: [new MessageActionRow().addComponents([setting_name, setting_avatar, setting_color, setting_birthday, setting_description])],
+            });
+        }
+        if (interaction.customId === 'setting_birthday') {
+            await interaction.reply({
+                embeds: [setting_birthday_2],
+                components: [new MessageActionRow().addComponents([setting_birthday_release, setting_birthday_private])],
+            });
+        }
+        if (interaction.customId === 'setting_birthday_release') {
+            await interaction.reply({
+                embeds: [setting_birthday_3],
+            });
+            const filter = msg => msg.author.id === interaction.user.id;
+            interaction.channel.awaitMessages({ filter, max: 1, time: 10000 })
+                .then(async collected => {
+                    if (!collected.size) return interaction.channel.send('タイムアウト');
+                    else if (collected) {
+                        var date = Date.parse(collected.first().content);
+                        const profile = await profileModel.findOneAndUpdate(
+                            {
+                                _id: interaction.user.id,
+                            },
+                            {
+                                $set: {
+                                    birthday: {
+                                        date: date,
+                                        public: true
+                                    }
+                                },
+                            },
+                        );
+                        profile.save();
+                        interaction.channel.send(`設定完了: 誕生日を**公開**、「${date.toString()}」に変更しました。`, { ephemeral: true });
+                    }
+                });
+        }
+        if (interaction.customId === 'setting_birthday_private') {
+            const profile = await profileModel.findOneAndUpdate(
+                {
+                    _id: interaction.user.id,
+                },
+                {
+                    $set: {
+                        birthday: {
+                            date: date,
+                            public: false
+                        }
+                    },
+                },
+            );
+            profile.save();
+            await interaction.channel.send(`設定完了: 誕生日を**非公開**に変更しました。`, { ephemeral: true });
+        }
+        if (interaction.customId === 'setting_description') {
+            await interaction.reply({
+                embeds: [setting_description_2],
+            });
+            const filter = msg => msg.author.id === interaction.user.id;
+            interaction.channel.awaitMessages({ filter, max: 1, time: 10000 })
+                .then(async collected => {
+                    if (!collected.size) return interaction.channel.send('タイムアウト');
+                    else if (collected) {
+                        var date = Date.parse(collected.first().content);
+                        const profile = await profileModel.findOneAndUpdate(
+                            {
+                                _id: interaction.user.id,
+                            },
+                            {
+                                $set: {
+                                    description: collected.first().content
+                                },
+                            },
+                        );
+                        profile.save();
+                        interaction.channel.send(`設定完了: 紹介文を`, { ephemeral: true });
+                    }
+                });
+        }
         else if (interaction.customId === 'profile_status') {
             await interaction.reply({
                 embeds: [status],
@@ -78,12 +227,12 @@ module.exports = {
             });
             const filter = msg => msg.author.id === interaction.user.id;
             interaction.channel.awaitMessages({ filter, max: 1, time: 10000 })
-                .then(collected => {
+                .then(async collected => {
                     if (!collected.size) {return interaction.channel.send('タイムアウト');}
                     else if (collected) {
-                        const target = client.users.cache.find((user) => user.user.tag === collected.first().content) || client.users.cache.get(collected.first().content)
-                        const Profile = profileModel.findOne({ _id: target.user.id });
-                        if (Profile) return interaction.reply('そのユーザーのプロフィールは見つかりませんでした。')
+                        const target = client.users.cache.find((user) => user.tag === collected.first().content) || client.users.cache.get(collected.first().content)
+                        const Profile = profileModel.findOne({ _id: target.id });
+                        if (!Profile) return interaction.reply('そのユーザーのプロフィールは見つかりませんでした。')
                         let birth = '非公開';
                         if (Profile.birthday.public === true) birth = Profile.birthday;
                         const embed = new MessageEmbed()
@@ -104,7 +253,7 @@ module.exports = {
 const filter = msg => msg.author.id === interaction.user.id;
 interaction.channel.awaitMessages({ filter, max: 1, time: 10000 })
     .then(collected => {
-        if (!collected.size) {return interaction.channel.send('タイムアウト');}
+        if (!collected.size) return interaction.channel.send('タイムアウト');
         else if (collected.first().content === '-reset') {
             interaction.channel.send('設定完了: ニックネームをリセットしました。');
             interaction.guild.me.setNickname('');
