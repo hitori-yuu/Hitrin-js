@@ -1,13 +1,15 @@
 <div align="center">
   <br>
-  <img src="https://user-images.githubusercontent.com/89414334/145695368-bef31b6e-256d-4812-8156-382402e60fc7.png"alt="Hitorin-bot" width="250px">
+  <img src="https://user-images.githubusercontent.com/89414334/145695368-bef31b6e-256d-4812-8156-382402e60fc7.png"alt="Hitrin-bot" width="200px">
+  <img src="https://user-images.githubusercontent.com/89414334/153596103-4e5dbe22-928e-42d3-b4b3-325a31bc853b.png"alt="Hitrin" width="200px">
+
   <br>
   <img src="https://img.shields.io/github/stars/hitori-yuu/Hitorin-js?style=for-the-badge">
   <img src="https://img.shields.io/github/forks/hitori-yuu/Hitorin-js?style=for-the-badge">
   <img src="https://img.shields.io/github/issues/hitori-yuu/Hitorin-js?style=for-the-badge">
 </div>
 
-# Hitorin-js
+# Hitrin-js
 オープンソースで開発しているDiscordのBotです。JavaScriptで開発しています。  
 開発者「ヒトリユウ」
 
