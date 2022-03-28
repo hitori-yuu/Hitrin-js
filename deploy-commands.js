@@ -14,10 +14,10 @@ for (const file of commandFiles) {
 
 const rest = new REST({ version: '9' }).setToken(process.env.TOKEN);
 
-// rest.put(Routes.applicationCommands(client_id), { body: commands })
-// 	.then(() => console.log('Successfully registered application commands.'))
-// 	.catch(console.error);
-
-rest.put(Routes.applicationGuildCommands(client_id, '914150885473542175'), { body: commands })
-	.then(() => console.log('Successfully registered application guild commands.'))
+rest.put(Routes.applicationCommands(client_id), { body: commands })
+	.then(() => console.log('Successfully registered application commands.'))
 	.catch(console.error);
+
+// rest.put(Routes.applicationGuildCommands(client_id, '914150885473542175'), { body: commands })
+// 	.then(() => console.log('Successfully registered application guild commands.'))
+// 	.catch(console.error);

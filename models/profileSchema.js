@@ -12,6 +12,7 @@ const profileSchema = new mongoose.Schema({
 	description: { type: String },
 	evaluation: { type: Number, min: 0, max: 10 },
 	coins: { type: Number},
+	tos: { type: Boolean },
 });
 
 const model = mongoose.model('Profiles', profileSchema);

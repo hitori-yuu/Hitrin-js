@@ -21,12 +21,12 @@ module.exports = {
 		let coins;
 		let evaluation;
 		let mark;
-		let bot = '🤖ボット';
+		let bot = '<:bot:957073326520533033> ボット';
 
 
 		if (type == 'Bot') user = client.user;
-		else if (!user.bot) bot = '👤ユーザー';
-		else if (!member.user.bot) bot = '👤ユーザー';
+		else if (!user.bot) bot = '<:user:957073328059842590> ユーザー';
+		else if (!member.user.bot) bot = '<:user:957073328059842590> ユーザー';
 
 		const profileData = await profileModel.findOne({ _id: user.id || member.id });
 		if (profileData) {
@@ -81,7 +81,7 @@ module.exports = {
 			.addFields(
 				{ name: '__**一般:**__', value: `**[名前]** ${server.name}\n**[ID]** ${server.id}\n**[作成者]** <@${server.ownerId}>` },
 				{ name: '__**時間:**__', value: `**[作成日]** ${new Date(server.createdTimestamp).toLocaleDateString()}\n**[ボット参加日]** ${new Date(server.joinedTimestamp).toLocaleDateString()}` },
-				{ name: '__**数量:**__', value: `**[メンバー数]** ${server.memberCount}(👤:${members.filter(mem => !mem.user.bot).size}, 🤖:${members.filter(mem => mem.user.bot).size})\n**[テキストチャンネル数]** ${server.channels.cache.filter(ch => ch.type === 'GUILD_TEXT').size}\n**[ボイスチャンネル数]** ${server.channels.cache.filter(ch => ch.type === 'GUILD_VOICE').size}\n**[絵文字数]** ${server.emojis.cache.size}\n**[ブースト数]** ${server.premiumSubscriptionCount || '0'} ブースト` },
+				{ name: '__**数量:**__', value: `**[メンバー数]** ${server.memberCount}(<:user:957073328059842590> :${members.filter(mem => !mem.user.bot).size}, 🤖:${members.filter(mem => mem.user.bot).size})\n**[テキストチャンネル数]** ${server.channels.cache.filter(ch => ch.type === 'GUILD_TEXT').size}\n**[ボイスチャンネル数]** ${server.channels.cache.filter(ch => ch.type === 'GUILD_VOICE').size}\n**[絵文字数]** ${server.emojis.cache.size}\n**[ブースト数]** ${server.premiumSubscriptionCount || '0'} ブースト` },
 			)
 			.setThumbnail(server.iconURL({ format: 'png' }))
 			.setFooter({ text: 'Hitorin', iconURL: client.user.displayAvatarURL({ format: 'png' }) })
