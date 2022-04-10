@@ -1,6 +1,7 @@
 const fs = require('fs');
 const { Client, Collection, MessageEmbed, MessageButton, MessageActionRow, MessageAttachment } = require('discord.js');
 const { codeBlock } = require('@discordjs/builders');
+const { DisTube } = require('distube');
 const mongoose = require('mongoose');
 require('dotenv').config();
 const profileModel = require('./models/profileSchema');
@@ -10,7 +11,16 @@ const guildsModel = require('./models/guildsSchema');
 const options = {
 	intents: ['GUILDS', 'GUILD_BANS', 'GUILD_MESSAGES', 'GUILD_MEMBERS', 'GUILD_PRESENCES', 'GUILD_VOICE_STATES'],
 };
+
 const client = new Client(options);
+client.distube = new DisTube(client, {
+	leaveOnStop: false,
+	searchSongs: 5,
+	emitNewSongOnly: true,
+	emitAddSongWhenCreatingQueue: false,
+	emitAddListWhenCreatingQueue: false,
+})
+
 
 const eventFiles = fs.readdirSync('./events').filter(file => file.endsWith('.js'));
 
@@ -134,6 +144,7 @@ client.on('interactionCreate', async interaction => {
 				.setTimestamp();
 			return interaction.reply({ embeds: [tos], components: [new MessageActionRow().addComponents([tos_ok, tos_no])] });
 		}
+
 		await command.execute(interaction, client);
 		const profile = await profileModel.findOneAndUpdate(
 			{
@@ -152,6 +163,109 @@ client.on('interactionCreate', async interaction => {
 		error_unknown(interaction, error);
 	}
 });
+
+const file = new MessageAttachment('D:/folder/Hitrin/bot/js/v1/materials/music.png');
+
+client.distube
+	.on('initQueue', (queue) => {
+    	queue.autoplay = true;
+    	queue.volume = 25;
+	})
+	.on('playSong', (queue, song) => {
+		const embed = new MessageEmbed()
+			.setColor('#89c3eb')
+			.setAuthor({ name: 'ステータス', iconURL: 'attachment://music.png'})
+			.addFields(
+				{ name: '__**音量:**__', value: `${queue.volume}%`, inline: true },
+				{ name: '__**加工:**__', value: queue.filters.join(', ') || 'オフ', inline: true },
+				{ name: '__**リピート:**__', value: queue.repeatMode ? (queue.repeatMode === 2 ? '再生リスト' : '現在の曲') : 'オフ', inline: true },
+				{ name: '__**自動再生:**__', value: queue.autoplay ? 'オン' : 'オフ', inline: true },
+			)
+			.setFooter({ text: 'Hitorin', iconURL: client.user.displayAvatarURL({ format: 'png' }) })
+			.setTimestamp();
+
+		const playing = new MessageEmbed()
+			.setColor('#89c3eb')
+			.setAuthor({ name: '再生中', iconURL: 'attachment://music.png'})
+			.setDescription(`[${song.name}](${song.url})`)
+			.addFields(
+				{ name: '__**投稿者:**__', value: `[${song.uploader.name}](${song.uploader.url})`, inline: true },
+				{ name: '__**長さ:**__', value: song.formattedDuration, inline: true },
+				{ name: '__**再生:**__', value: song.user.tag, inline: true },
+			)
+			.setThumbnail(song.thumbnail)
+			.setFooter({ text: 'Hitorin', iconURL: client.user.displayAvatarURL({ format: 'png' }) })
+			.setTimestamp();
+		queue.textChannel.send({embeds: [playing], files: [file]});
+		queue.textChannel.send({embeds: [embed], files: [file]});
+	})
+  	.on('addSong', (queue, song) =>{
+		const addsong = new MessageEmbed()
+			.setColor('#89c3eb')
+			.setAuthor({ name: '再生リストに追加', iconURL: 'attachment://music.png'})
+			.setDescription(`[${song.name}](${song.url})`)
+			.addFields(
+				{ name: '__**投稿者:**__', value: `[${song.uploader.name}](${song.uploader.url})`, inline: true },
+				{ name: '__**長さ:**__', value: song.formattedDuration, inline: true },
+				{ name: '__**再生:**__', value: song.user.tag, inline: true },
+			)
+			.setThumbnail(song.thumbnail)
+			.setFooter({ text: 'Hitorin', iconURL: client.user.displayAvatarURL({ format: 'png' }) })
+			.setTimestamp();
+		queue.textChannel.send({embeds: [addsong], files: [file]});
+	})
+  	.on('addList', (queue, playlist) => {
+	  	const addlist = new MessageEmbed()
+			.setColor('#89c3eb')
+			.setAuthor({ name: '再生リストに追加(プレイリスト)', iconURL: 'attachment://music.png'})
+			.setDescription(`[${playlist.name}](${playlist.url})`)
+			.addFields(
+				{ name: '__**投稿者:**__', value: `[${song.uploader.name}](${song.uploader.url})`, inline: true },
+				{ name: '__**動画数:**__', value: playlist.songs.length, inline: true },
+				{ name: '__**再生:**__', value: song.user.tag, inline: true },
+			)
+			.setThumbnail(song.thumbnail)
+			.setFooter({ text: 'Hitorin', iconURL: client.user.displayAvatarURL({ format: 'png' }) })
+			.setTimestamp();
+		queue.textChannel.send({embeds: [addlist], files: [file]});
+ 	})
+	.on('error', (channel, e) => {
+		channel.send(`エラーが発生しました。`)
+		console.error(e)
+	})
+	.on('empty', channel => channel.send('ボイスチャンネルに誰もいないため退出します。'))
+	.on('searchNoResult', (interaction, query) =>
+		interaction.channel.send(`該当する結果は見つかりませんでした。 \`${query}\`!`)
+	)
+	.on('finish', queue => queue.textChannel.send('再生が終了しました。'))
+	.on('disconnect', queue =>
+		queue.textChannel.send('切断しました。'),
+	)
+	.on('searchResult', (interaction, result) => {
+        let i = 0
+        interaction.channel.send(
+            `**下記の中から1つ選んでください。**\n${result
+                .map(
+                    song =>
+                        `**${++i}:**  [${song.name}](${song.url}) - \`${
+                            song.formattedDuration
+                        }\``,
+                )
+                .join(
+                    '\n',
+                )}\n*他に何か入力するか、30秒待つとキャンセルされます*`,
+        )
+    })
+    .on('searchCancel', interaction =>
+        interaction.channel.send('検索をキャンセルしました。'),
+    )
+    .on('searchInvalidAnswer', interaction =>
+        interaction.channel.send('無効な数字を入力しました。'),
+    )
+    .on('searchNoResult', interaction =>
+        interaction.channel.send('該当する結果は見つかりませんでした。'),
+    )
+    .on('searchDone', () => {})
 
 function error_unknown(interaction, error) {
 	const err = new MessageEmbed()
@@ -172,7 +286,3 @@ function error_unknown(interaction, error) {
 }
 
 client.login(process.env.TOKEN);
-
-/*
-
-*/
