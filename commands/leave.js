@@ -6,7 +6,7 @@ module.exports = {
 	data: new SlashCommandBuilder()
 		.setName('leave')
 		.setDescription('参加しているボイスチャンネルから切断します。'),
-	async execute(interaction) {
+	async execute(interaction, client) {
         const channel = interaction.guild.me.voice.channel;
         if (!channel) return interaction.reply('ボイスチャンネルに参加していません。');
 		const connection = joinVoiceChannel({
@@ -17,6 +17,7 @@ module.exports = {
             selfMute: false,
         });
 		connection.disconnect();
+        client.distube.voices.leave(interaction)
 		await interaction.reply(`<#${channel.id}> から切断しました。`);
 	},
 };
