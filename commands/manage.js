@@ -30,7 +30,7 @@ module.exports = {
 			.setTitle('実行に失敗')
 			.setAuthor({ name: interaction.user.tag, iconURL: interaction.user.displayAvatarURL({ format: 'png' }), url: interaction.user.displayAvatarURL({ format: 'png' }) })
 			.setDescription('その種類は選択できません。')
-			.setFooter({ text: 'Hitorin', iconURL: client.user.displayAvatarURL({ format: 'png' }) })
+			.setFooter({ text: 'Hitrin', iconURL: client.user.displayAvatarURL({ format: 'png' }) })
 			.setTimestamp();
 
 		if (type === 'coin') {
@@ -43,7 +43,7 @@ module.exports = {
 					{ name: '__**Body:**__', value: `**[Coins]** Changed the coin: ${mark}${number} *coins*` },
 				)
 				.setThumbnail(interaction.user.displayAvatarURL({ format: 'png' }))
-				.setFooter({ text: 'Hitorin', iconURL: client.user.displayAvatarURL({ format: 'png' }) })
+				.setFooter({ text: 'Hitrin', iconURL: client.user.displayAvatarURL({ format: 'png' }) })
 				.setTimestamp();
 			if (change === 'set') {
 				await interaction.reply({ embeds: [coin] });
@@ -101,7 +101,7 @@ module.exports = {
 					{ name: '__**Body:**__', value: `**[Evaluation]** Changed the evaluation value: ${mark}${number}` },
 				)
 				.setThumbnail(interaction.user.displayAvatarURL({ format: 'png' }))
-				.setFooter({ text: 'Hitorin', iconURL: client.user.displayAvatarURL({ format: 'png' }) })
+				.setFooter({ text: 'Hitrin', iconURL: client.user.displayAvatarURL({ format: 'png' }) })
 				.setTimestamp();
 			if (change === 'set') {
 				await interaction.reply({ embeds: [evaluation] });
@@ -161,7 +161,7 @@ module.exports = {
 					{ name: '__**Body:**__', value: `**[${change_type}]** Changed: ${string}` },
 				)
 				.setThumbnail(interaction.user.displayAvatarURL({ format: 'png' }))
-				.setFooter({ text: 'Hitorin', iconURL: client.user.displayAvatarURL({ format: 'png' }) })
+				.setFooter({ text: 'Hitrin', iconURL: client.user.displayAvatarURL({ format: 'png' }) })
 				.setTimestamp();
 			if (change === 'username') {
 				await client.user.setUsername(string).then(
@@ -189,7 +189,7 @@ module.exports = {
 					{ name: '__**Body:**__', value: `**[GlobalBan]** ${global_ban}: ${user.tag}\n**[Reason]**\n${string}` },
 				)
 				.setThumbnail(interaction.user.displayAvatarURL({ format: 'png' }))
-				.setFooter({ text: 'Hitorin', iconURL: client.user.displayAvatarURL({ format: 'png' }) })
+				.setFooter({ text: 'Hitrin', iconURL: client.user.displayAvatarURL({ format: 'png' }) })
 				.setTimestamp();
 			if (change === 'addition') {
 				const gbanData = await gbanModel.findOne({ _id: user.id });

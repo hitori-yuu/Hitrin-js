@@ -9,7 +9,7 @@ module.exports = {
 			.setTitle('実行に失敗')
 			.setAuthor({ name: interaction.user.tag, iconURL: interaction.user.displayAvatarURL({ format: 'png' }), url: interaction.user.displayAvatarURL({ format: 'png' }) })
 			.setDescription('存在しないものを指定しています')
-			.setFooter({ text: 'Hitorin', iconURL: client.user.displayAvatarURL({ format: 'png' }) })
+			.setFooter({ text: 'Hitrin', iconURL: client.user.displayAvatarURL({ format: 'png' }) })
 			.setTimestamp();
 		const nick = new MessageEmbed()
 			.setColor('#89c3eb')
@@ -17,7 +17,7 @@ module.exports = {
 			.setAuthor({ name: interaction.user.tag, iconURL: interaction.user.displayAvatarURL({ format: 'png' }), url: interaction.user.displayAvatarURL({ format: 'png' }) })
 			.setDescription('__10秒以内に__設定したいニックネームを入力してください。\n**`-reset`** と入力するとニックネームをリセットします。')
 			.setThumbnail(client.user.displayAvatarURL({ format: 'png' }))
-			.setFooter({ text: 'Hitorin', iconURL: client.user.displayAvatarURL({ format: 'png' }) })
+			.setFooter({ text: 'Hitrin', iconURL: client.user.displayAvatarURL({ format: 'png' }) })
 			.setTimestamp();
 		const announce = new MessageEmbed()
 			.setColor('#89c3eb')
@@ -25,7 +25,7 @@ module.exports = {
 			.setAuthor({ name: interaction.user.tag, iconURL: interaction.user.displayAvatarURL({ format: 'png' }), url: interaction.user.displayAvatarURL({ format: 'png' }) })
 			.setDescription('このサーバーでボットのお知らせを受け取りますか？以下のボタンをクリックし設定してください。')
 			.setThumbnail(client.user.displayAvatarURL({ format: 'png' }))
-			.setFooter({ text: 'Hitorin', iconURL: client.user.displayAvatarURL({ format: 'png' }) })
+			.setFooter({ text: 'Hitrin', iconURL: client.user.displayAvatarURL({ format: 'png' }) })
 			.setTimestamp();
 		const announce_2 = new MessageEmbed()
 			.setColor('#89c3eb')
@@ -33,16 +33,16 @@ module.exports = {
 			.setAuthor({ name: interaction.user.tag, iconURL: interaction.user.displayAvatarURL({ format: 'png' }), url: interaction.user.displayAvatarURL({ format: 'png' }) })
 			.setDescription('__15秒以内に__設定したいチャンネルの名前またはIDを入力してください。')
 			.setThumbnail(client.user.displayAvatarURL({ format: 'png' }))
-			.setFooter({ text: 'Hitorin', iconURL: client.user.displayAvatarURL({ format: 'png' }) })
+			.setFooter({ text: 'Hitrin', iconURL: client.user.displayAvatarURL({ format: 'png' }) })
 			.setTimestamp();
-		const file = new MessageAttachment('D:/folder/Hitorin/bot/js/v1/materials/sry.png');
+		const file = new MessageAttachment('D:/folder/Hitrin/bot/js/v1/materials/sry.png');
 		const announce_3 = new MessageEmbed()
 			.setColor('#89c3eb')
 			.setTitle('申し訳ございません...')
 			.setAuthor({ name: interaction.user.tag, iconURL: interaction.user.displayAvatarURL({ format: 'png' }), url: interaction.user.displayAvatarURL({ format: 'png' }) })
 			.setDescription('__現在この機能は使用することができません__(´;ω;｀)\nそもそもできるのかすらわかりません。\nお知らせ機能を解除したい場合は\n`[設定中のチャンネル] -> [チャンネルの編集]\n -> [連携サービス] -> [フォロー中チャンネル]`\nから__手動で解除__をお願いいたします。\nご不便をおかけしてしまい申し訳ございません。')
 			.setThumbnail('attachment://sry.png')
-			.setFooter({ text: 'Hitorin', iconURL: client.user.displayAvatarURL({ format: 'png' }) })
+			.setFooter({ text: 'Hitrin', iconURL: client.user.displayAvatarURL({ format: 'png' }) })
 			.setTimestamp();
 		const announce_log = new MessageEmbed()
 			.setColor('#89c3eb')
@@ -54,7 +54,7 @@ module.exports = {
 				{ name: '__**Channel:**__', value: `**[Name]** ${interaction.channel.name}\n**[ID]** ${interaction.channel.id}` },
 			)
 			.setThumbnail(client.user.displayAvatarURL({ format: 'png' }))
-			.setFooter({ text: 'Hitorin', iconURL: client.user.displayAvatarURL({ format: 'png' }) })
+			.setFooter({ text: 'Hitrin', iconURL: client.user.displayAvatarURL({ format: 'png' }) })
 			.setTimestamp();
 		const welcome = new MessageEmbed()
 			.setColor('#89c3eb')
@@ -62,7 +62,7 @@ module.exports = {
 			.setAuthor({ name: interaction.user.tag, iconURL: interaction.user.displayAvatarURL({ format: 'png' }), url: interaction.user.displayAvatarURL({ format: 'png' }) })
 			.setDescription('このサーバーで新規加入者の歓迎メッセージを有効にしますか？以下のボタンをクリックし設定してください。')
 			.setThumbnail(client.user.displayAvatarURL({ format: 'png' }))
-			.setFooter({ text: 'Hitorin', iconURL: client.user.displayAvatarURL({ format: 'png' }) })
+			.setFooter({ text: 'Hitrin', iconURL: client.user.displayAvatarURL({ format: 'png' }) })
 			.setTimestamp();
 		const welcome_2 = new MessageEmbed()
 			.setColor('#89c3eb')
@@ -70,7 +70,7 @@ module.exports = {
 			.setAuthor({ name: interaction.user.tag, iconURL: interaction.user.displayAvatarURL({ format: 'png' }), url: interaction.user.displayAvatarURL({ format: 'png' }) })
 			.setDescription('__15秒以内に__設定したいチャンネルの名前またはIDを入力してください。')
 			.setThumbnail(client.user.displayAvatarURL({ format: 'png' }))
-			.setFooter({ text: 'Hitorin', iconURL: client.user.displayAvatarURL({ format: 'png' }) })
+			.setFooter({ text: 'Hitrin', iconURL: client.user.displayAvatarURL({ format: 'png' }) })
 			.setTimestamp();
 		const globalban = new MessageEmbed()
 			.setColor('#89c3eb')
@@ -78,7 +78,7 @@ module.exports = {
 			.setAuthor({ name: interaction.user.tag, iconURL: interaction.user.displayAvatarURL({ format: 'png' }), url: interaction.user.displayAvatarURL({ format: 'png' }) })
 			.setDescription('このサーバーでグローバルBANを有効にしますか？以下のボタンをクリックし設定してください。')
 			.setThumbnail(client.user.displayAvatarURL({ format: 'png' }))
-			.setFooter({ text: 'Hitorin', iconURL: client.user.displayAvatarURL({ format: 'png' }) })
+			.setFooter({ text: 'Hitrin', iconURL: client.user.displayAvatarURL({ format: 'png' }) })
 			.setTimestamp();
 		const automod = new MessageEmbed()
 			.setColor('#89c3eb')
@@ -86,7 +86,7 @@ module.exports = {
 			.setAuthor({ name: interaction.user.tag, iconURL: interaction.user.displayAvatarURL({ format: 'png' }), url: interaction.user.displayAvatarURL({ format: 'png' }) })
 			.setDescription('このサーバーでボットによる自動管理を有効にしますか？以下のボタンをクリックし設定してください。')
 			.setThumbnail(client.user.displayAvatarURL({ format: 'png' }))
-			.setFooter({ text: 'Hitorin', iconURL: client.user.displayAvatarURL({ format: 'png' }) })
+			.setFooter({ text: 'Hitrin', iconURL: client.user.displayAvatarURL({ format: 'png' }) })
 			.setTimestamp();
 		const automod_2 = new MessageEmbed()
 			.setColor('#89c3eb')
@@ -94,7 +94,7 @@ module.exports = {
 			.setAuthor({ name: interaction.user.tag, iconURL: interaction.user.displayAvatarURL({ format: 'png' }), url: interaction.user.displayAvatarURL({ format: 'png' }) })
 			.setDescription('__15秒以内に__自動管理のログを送信するチャンネルをチャンネル名またはチャンネルIDで入力してください。')
 			.setThumbnail(client.user.displayAvatarURL({ format: 'png' }))
-			.setFooter({ text: 'Hitorin', iconURL: client.user.displayAvatarURL({ format: 'png' }) })
+			.setFooter({ text: 'Hitrin', iconURL: client.user.displayAvatarURL({ format: 'png' }) })
 			.setTimestamp();
 
 		const announce_ok = new MessageButton()

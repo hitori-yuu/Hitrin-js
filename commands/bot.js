@@ -22,7 +22,7 @@ module.exports = {
                 { name: '__**使用素材等:**__', value: `**[画像]** [ICOOON MONO](https://icooon-mono.com/)\n` },
 			)
 			.setThumbnail(client.user.displayAvatarURL({ format: 'png' }))
-			.setFooter({ text: 'Hitorin', iconURL: client.user.displayAvatarURL({ format: 'png' }) })
+			.setFooter({ text: 'Hitrin', iconURL: client.user.displayAvatarURL({ format: 'png' }) })
 			.setTimestamp();
         await interaction.reply({ embeds: [embed] });
 	},

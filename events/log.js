@@ -17,7 +17,7 @@ module.exports = {
 					{ name: '__**Channel:**__', value: `**[Name]** ${interaction.channel.name}\n**[ID]** ${interaction.channel.id}` },
 				)
 				.setThumbnail(interaction.user.displayAvatarURL({ format: 'png' }))
-				.setFooter({ text: 'Hitorin', iconURL: client.user.displayAvatarURL({ format: 'png' }) })
+				.setFooter({ text: 'Hitrin', iconURL: client.user.displayAvatarURL({ format: 'png' }) })
 				.setTimestamp();
 			await client.channels.cache.get('879943806118678528').send({ embeds: [s] });
 		}
@@ -30,7 +30,7 @@ module.exports = {
 					{ name: '__**Executor:**__', value: `**[Name]** ${interaction.user.tag}\n**[ID]** ${interaction.user.id}\n**[Mention]** <@${interaction.user.id}>` },
 				)
 				.setThumbnail(interaction.user.displayAvatarURL({ format: 'png' }))
-				.setFooter({ text: 'Hitorin', iconURL: client.user.displayAvatarURL({ format: 'png' }) })
+				.setFooter({ text: 'Hitrin', iconURL: client.user.displayAvatarURL({ format: 'png' }) })
 				.setTimestamp();
 			await client.channels.cache.get('879943806118678528').send({ embeds: [d] });
 		}

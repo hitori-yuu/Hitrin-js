@@ -28,7 +28,7 @@ module.exports = {
                 { name: '__**紹介文:**__', value: 'プロフィールに載せる紹介文を設定します。' },
             )
             .setThumbnail(client.user.displayAvatarURL({ format: 'png' }))
-            .setFooter({ text: 'Hitorin', iconURL: client.user.displayAvatarURL({ format: 'png' }) })
+            .setFooter({ text: 'Hitrin', iconURL: client.user.displayAvatarURL({ format: 'png' }) })
             .setTimestamp();
         const setting_name = new MessageButton()
 			.setCustomId('setting_name')
@@ -64,7 +64,7 @@ module.exports = {
             .setAuthor({ name: interaction.user.tag, iconURL: interaction.user.displayAvatarURL({ format: 'png' }), url: interaction.user.displayAvatarURL({ format: 'png' }) })
             .setDescription('__15秒以内__に、プロフィールに載せたい任意の**名前**を入力してください。')
             .setThumbnail(client.user.displayAvatarURL({ format: 'png' }))
-            .setFooter({ text: 'Hitorin', iconURL: client.user.displayAvatarURL({ format: 'png' }) })
+            .setFooter({ text: 'Hitrin', iconURL: client.user.displayAvatarURL({ format: 'png' }) })
             .setTimestamp();
         const setting_avatar_2 = new MessageEmbed()
             .setColor('#89c3eb')
@@ -72,7 +72,7 @@ module.exports = {
             .setAuthor({ name: interaction.user.tag, iconURL: interaction.user.displayAvatarURL({ format: 'png' }), url: interaction.user.displayAvatarURL({ format: 'png' }) })
             .setDescription('__15秒以内__に、プロフィールに載せたい任意の**アバターのURL**を入力または**画像を添付**してください。')
             .setThumbnail(client.user.displayAvatarURL({ format: 'png' }))
-            .setFooter({ text: 'Hitorin', iconURL: client.user.displayAvatarURL({ format: 'png' }) })
+            .setFooter({ text: 'Hitrin', iconURL: client.user.displayAvatarURL({ format: 'png' }) })
             .setTimestamp();
         const setting_color_2 = new MessageEmbed()
             .setColor('#89c3eb')
@@ -80,7 +80,7 @@ module.exports = {
             .setAuthor({ name: interaction.user.tag, iconURL: interaction.user.displayAvatarURL({ format: 'png' }), url: interaction.user.displayAvatarURL({ format: 'png' }) })
             .setDescription('__15秒以内__に、プロフィールの**色を__16進数__カラーコードで**入力してください。')
             .setThumbnail(client.user.displayAvatarURL({ format: 'png' }))
-            .setFooter({ text: 'Hitorin', iconURL: client.user.displayAvatarURL({ format: 'png' }) })
+            .setFooter({ text: 'Hitrin', iconURL: client.user.displayAvatarURL({ format: 'png' }) })
             .setTimestamp();
         const setting_birthday_2 = new MessageEmbed()
             .setColor('#89c3eb')
@@ -88,7 +88,7 @@ module.exports = {
             .setAuthor({ name: interaction.user.tag, iconURL: interaction.user.displayAvatarURL({ format: 'png' }), url: interaction.user.displayAvatarURL({ format: 'png' }) })
             .setDescription('誕生日を公開しますか？以下のボタンをクリックしてください。')
             .setThumbnail(client.user.displayAvatarURL({ format: 'png' }))
-            .setFooter({ text: 'Hitorin', iconURL: client.user.displayAvatarURL({ format: 'png' }) })
+            .setFooter({ text: 'Hitrin', iconURL: client.user.displayAvatarURL({ format: 'png' }) })
             .setTimestamp();
         const setting_birthday_3 = new MessageEmbed()
             .setColor('#89c3eb')
@@ -96,7 +96,7 @@ module.exports = {
             .setAuthor({ name: interaction.user.tag, iconURL: interaction.user.displayAvatarURL({ format: 'png' }), url: interaction.user.displayAvatarURL({ format: 'png' }) })
             .setDescription('__20秒以内__に、プロフィールに載せたい任意の**誕生日**を入力してください。\n例: ド〇えもんの誕生日「2112年9月3日」なら ⇒ `2112/09/03`')
             .setThumbnail(client.user.displayAvatarURL({ format: 'png' }))
-            .setFooter({ text: 'Hitorin', iconURL: client.user.displayAvatarURL({ format: 'png' }) })
+            .setFooter({ text: 'Hitrin', iconURL: client.user.displayAvatarURL({ format: 'png' }) })
             .setTimestamp();
         const setting_description_2 = new MessageEmbed()
             .setColor('#89c3eb')
@@ -104,7 +104,7 @@ module.exports = {
             .setAuthor({ name: interaction.user.tag, iconURL: interaction.user.displayAvatarURL({ format: 'png' }), url: interaction.user.displayAvatarURL({ format: 'png' }) })
             .setDescription('__60秒以内__に、プロフィールに載せたい任意の**紹介文**を入力してください。')
             .setThumbnail(client.user.displayAvatarURL({ format: 'png' }))
-            .setFooter({ text: 'Hitorin', iconURL: client.user.displayAvatarURL({ format: 'png' }) })
+            .setFooter({ text: 'Hitrin', iconURL: client.user.displayAvatarURL({ format: 'png' }) })
             .setTimestamp();
         const status = new MessageEmbed()
             .setColor(profileData.color)
@@ -112,7 +112,7 @@ module.exports = {
             .setAuthor({ name: interaction.user.tag, iconURL: interaction.user.displayAvatarURL({ format: 'png' }), url: interaction.user.displayAvatarURL({ format: 'png' }) })
             .setDescription(`**__一般:__**\n **[ID]** ${profileData.id}\n **[名前]** ${profileData.name}\n **[誕生日]** ${Birthday}\n\n${profileData.description}`)
             .setThumbnail(profileData.avatar)
-            .setFooter({ text: 'Hitorin', iconURL: client.user.displayAvatarURL({ format: 'png' }) })
+            .setFooter({ text: 'Hitrin', iconURL: client.user.displayAvatarURL({ format: 'png' }) })
             .setTimestamp();
         const search = new MessageEmbed()
             .setColor('#89c3eb')
@@ -120,7 +120,7 @@ module.exports = {
             .setAuthor({ name: interaction.user.tag, iconURL: interaction.user.displayAvatarURL({ format: 'png' }), url: interaction.user.displayAvatarURL({ format: 'png' }) })
             .setDescription('__10秒以内__に、閲覧したいプロフィールのユーザータグまたはユーザーIDを入力してください。')
             .setThumbnail(client.user.displayAvatarURL({ format: 'png' }))
-            .setFooter({ text: 'Hitorin', iconURL: client.user.displayAvatarURL({ format: 'png' }) })
+            .setFooter({ text: 'Hitrin', iconURL: client.user.displayAvatarURL({ format: 'png' }) })
             .setTimestamp();
         if (interaction.user.bot) return;
         if (interaction.customId === 'profile_setting') {
@@ -300,7 +300,7 @@ module.exports = {
                             .setAuthor({ name: target.tag, iconURL: target.displayAvatarURL({ format: 'png' }), url: target.displayAvatarURL({ format: 'png' }) })
                             .setDescription(`**__一般:__**\n **[ID]** ${profile._id}\n **[名前]** ${profile.name}\n **[誕生日]** ${Birthday}\n\n${profile.description}`)
                             .setThumbnail(profile.avatar)
-                            .setFooter({ text: 'Hitorin', iconURL: client.user.displayAvatarURL({ format: 'png' }) })
+                            .setFooter({ text: 'Hitrin', iconURL: client.user.displayAvatarURL({ format: 'png' }) })
                             .setTimestamp();
                         interaction.channel.send({ embeds: [embed]});
                     }

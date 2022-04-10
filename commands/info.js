@@ -57,7 +57,7 @@ module.exports = {
 				{ name: '__**ボット内:**__', value: `**[コイン]** ${coins}\n**[評価値]** ${evaluation} ${mark}` },
 			)
 			.setThumbnail(user.displayAvatarURL({ format: 'png' }))
-			.setFooter({ text: 'Hitorin', iconURL: client.user.displayAvatarURL({ format: 'png' }) })
+			.setFooter({ text: 'Hitrin', iconURL: client.user.displayAvatarURL({ format: 'png' }) })
 			.setTimestamp();
 		const m = new MessageEmbed()
 			.setColor('#89c3eb')
@@ -71,7 +71,7 @@ module.exports = {
 				{ name: '__**ロール:**__', value: `**[最上位ロール]**\n${member.roles.highest || 'None'}\n**[ロール (${member.roles.cache.size})]**\n${member.roles.cache.map(role => `${role}`).join(' , ') || 'None'}` },
 			)
 			.setThumbnail(member.displayAvatarURL({ format: 'png' }))
-			.setFooter({ text: 'Hitorin', iconURL: client.user.displayAvatarURL({ format: 'png' }) })
+			.setFooter({ text: 'Hitrin', iconURL: client.user.displayAvatarURL({ format: 'png' }) })
 			.setTimestamp();
 
 		const s = new MessageEmbed()
@@ -84,7 +84,7 @@ module.exports = {
 				{ name: '__**数量:**__', value: `**[メンバー数]** ${server.memberCount}(<:user:957073328059842590> :${members.filter(mem => !mem.user.bot).size}, 🤖:${members.filter(mem => mem.user.bot).size})\n**[テキストチャンネル数]** ${server.channels.cache.filter(ch => ch.type === 'GUILD_TEXT').size}\n**[ボイスチャンネル数]** ${server.channels.cache.filter(ch => ch.type === 'GUILD_VOICE').size}\n**[絵文字数]** ${server.emojis.cache.size}\n**[ブースト数]** ${server.premiumSubscriptionCount || '0'} ブースト` },
 			)
 			.setThumbnail(server.iconURL({ format: 'png' }))
-			.setFooter({ text: 'Hitorin', iconURL: client.user.displayAvatarURL({ format: 'png' }) })
+			.setFooter({ text: 'Hitrin', iconURL: client.user.displayAvatarURL({ format: 'png' }) })
 			.setTimestamp();
 
 		const b = new MessageEmbed()
@@ -98,7 +98,7 @@ module.exports = {
 				{ name: '__**ステータス:**__', value: `**[反応速度]** ws:${client.ws.ping}ms\n**[サーバー数]** ${client.guilds.cache.size} サーバー\n**[ユーザー数]** ${client.users.cache.size} ユーザー` },
 			)
 			.setThumbnail(client.user.displayAvatarURL({ format: 'png' }))
-			.setFooter({ text: 'Hitorin', iconURL: client.user.displayAvatarURL({ format: 'png' }) })
+			.setFooter({ text: 'Hitrin', iconURL: client.user.displayAvatarURL({ format: 'png' }) })
 			.setTimestamp();
 
 		try {
@@ -132,7 +132,7 @@ function error_invalid(interaction, client, invalid) {
 		.setTitle('実行失敗')
 		.setAuthor({ name: interaction.user.tag, iconURL: interaction.user.displayAvatarURL({ format: 'png' }), url: interaction.user.displayAvatarURL({ format: 'png' }) })
 		.setDescription(`実行に必須なパラメータが無効です: \`${invalid || 'None'}\``)
-		.setFooter({ text: 'Hitorin', iconURL: client.user.displayAvatarURL({ format: 'png' }) })
+		.setFooter({ text: 'Hitrin', iconURL: client.user.displayAvatarURL({ format: 'png' }) })
 		.setTimestamp();
 	return interaction.reply({ embeds: [error] });
 }
@@ -142,13 +142,13 @@ function error_unknown(interaction, client, error) {
 		.setTitle('実行失敗')
 		.setAuthor({ name: interaction.user.tag, iconURL: interaction.user.displayAvatarURL({ format: 'png' }), url: interaction.user.displayAvatarURL({ format: 'png' }) })
 		.setDescription('無知のエラーが発生しました。既に開発者に報告されています。')
-		.setFooter({ text: 'Hitorin', iconURL: client.user.displayAvatarURL({ format: 'png' }) })
+		.setFooter({ text: 'Hitrin', iconURL: client.user.displayAvatarURL({ format: 'png' }) })
 		.setTimestamp();
 	const error_log = new MessageEmbed()
 		.setColor('#ba2636')
 		.setTitle('エラー')
 		.setDescription('【エラー内容】\n' + codeBlock('js', error))
-		.setFooter({ text: 'Hitorin', iconURL: client.user.displayAvatarURL({ format: 'png' }) })
+		.setFooter({ text: 'Hitrin', iconURL: client.user.displayAvatarURL({ format: 'png' }) })
 		.setTimestamp();
 	const log = client.channels.cache.get('919599721184628807').send({ embeds: [error_log] });
 	return interaction.reply({ embeds: [err] }), log;

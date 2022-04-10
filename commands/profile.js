@@ -35,7 +35,7 @@ module.exports = {
                         { name: '__**ランキング:**__', value: 'いいね数が上位のプロフィールを表示します。__(β機能)__' },
                     )
                     .setThumbnail(client.user.displayAvatarURL({ format: 'png' }))
-                    .setFooter({ text: 'Hitorin', iconURL: client.user.displayAvatarURL({ format: 'png' }) })
+                    .setFooter({ text: 'Hitrin', iconURL: client.user.displayAvatarURL({ format: 'png' }) })
                     .setTimestamp();
 
                 await interaction.reply({ embeds: [home], components: [new MessageActionRow().addComponents([setting, status, search, ranking])] });

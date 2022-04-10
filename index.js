@@ -93,7 +93,7 @@ client.on('interactionCreate', async interaction => {
 				.setAuthor({ name: interaction.user.tag, iconURL: interaction.user.displayAvatarURL({ format: 'png' }), url: interaction.user.displayAvatarURL({ format: 'png' }) })
 				.setDescription(`**[_id]** ${interaction.guild.id}\n**[OwnerId]** ${interaction.guild.ownerId}\n**[GlobalBAN]** true\n**[AutoMod]** true\n**[Setting]** \n__Log:__ None\n__Level:__ normal`)
 				.setThumbnail(interaction.user.displayAvatarURL({ format: 'png' }))
-				.setFooter({ text: 'Hitorin', iconURL: client.user.displayAvatarURL({ format: 'png' }) })
+				.setFooter({ text: 'Hitrin', iconURL: client.user.displayAvatarURL({ format: 'png' }) })
 				.setTimestamp();
 			guild.save();
 			console.log('(Guild)初期設定が完了しました -> ' + interaction.guild.name);
@@ -105,7 +105,7 @@ client.on('interactionCreate', async interaction => {
 				.setTitle('利用規約')
 				.setAuthor({ name: interaction.user.tag, iconURL: interaction.user.displayAvatarURL({ format: 'png' }), url: interaction.user.displayAvatarURL({ format: 'png' }) })
 				.setDescription('第一項：なんちゃらなんちゃら......')
-				.setFooter({ text: 'Hitorin', iconURL: client.user.displayAvatarURL({ format: 'png' }) })
+				.setFooter({ text: 'Hitrin', iconURL: client.user.displayAvatarURL({ format: 'png' }) })
 				.setTimestamp();
 			const profile = await profileModel.create({
 				_id: interaction.user.id,
@@ -128,7 +128,7 @@ client.on('interactionCreate', async interaction => {
 				.setAuthor({ name: interaction.user.tag, iconURL: interaction.user.displayAvatarURL({ format: 'png' }), url: interaction.user.displayAvatarURL({ format: 'png' }) })
 				.setDescription(`**[_id]** ${interaction.user.id}\n**[Evaluation]** 10\n**[Coins]** 1000\n**[Avatar]** [URL](${interaction.user.displayAvatarURL({ format: 'png' })})\n**[Description]** None\n**[Birthday]** None`)
 				.setThumbnail(interaction.user.displayAvatarURL({ format: 'png' }))
-				.setFooter({ text: 'Hitorin', iconURL: client.user.displayAvatarURL({ format: 'png' }) })
+				.setFooter({ text: 'Hitrin', iconURL: client.user.displayAvatarURL({ format: 'png' }) })
 				.setTimestamp();
 			console.log('(Member)初期設定が完了しました -> ' + interaction.user.tag);
 			client.channels.cache.get('879943806118678528').send({ embeds: [initial_profile] });
@@ -140,7 +140,7 @@ client.on('interactionCreate', async interaction => {
 				.setTitle('利用規約')
 				.setAuthor({ name: interaction.user.tag, iconURL: interaction.user.displayAvatarURL({ format: 'png' }), url: interaction.user.displayAvatarURL({ format: 'png' }) })
 				.setDescription('第一項：なんちゃらなんちゃら......')
-				.setFooter({ text: 'Hitorin', iconURL: client.user.displayAvatarURL({ format: 'png' }) })
+				.setFooter({ text: 'Hitrin', iconURL: client.user.displayAvatarURL({ format: 'png' }) })
 				.setTimestamp();
 			return interaction.reply({ embeds: [tos], components: [new MessageActionRow().addComponents([tos_ok, tos_no])] });
 		}
@@ -181,7 +181,7 @@ client.distube
 				{ name: '__**リピート:**__', value: queue.repeatMode ? (queue.repeatMode === 2 ? '再生リスト' : '現在の曲') : 'オフ', inline: true },
 				{ name: '__**自動再生:**__', value: queue.autoplay ? 'オン' : 'オフ', inline: true },
 			)
-			.setFooter({ text: 'Hitorin', iconURL: client.user.displayAvatarURL({ format: 'png' }) })
+			.setFooter({ text: 'Hitrin', iconURL: client.user.displayAvatarURL({ format: 'png' }) })
 			.setTimestamp();
 
 		const playing = new MessageEmbed()
@@ -194,7 +194,7 @@ client.distube
 				{ name: '__**再生:**__', value: song.user.tag, inline: true },
 			)
 			.setThumbnail(song.thumbnail)
-			.setFooter({ text: 'Hitorin', iconURL: client.user.displayAvatarURL({ format: 'png' }) })
+			.setFooter({ text: 'Hitrin', iconURL: client.user.displayAvatarURL({ format: 'png' }) })
 			.setTimestamp();
 		queue.textChannel.send({embeds: [playing], files: [file]});
 		queue.textChannel.send({embeds: [embed], files: [file]});
@@ -210,7 +210,7 @@ client.distube
 				{ name: '__**再生:**__', value: song.user.tag, inline: true },
 			)
 			.setThumbnail(song.thumbnail)
-			.setFooter({ text: 'Hitorin', iconURL: client.user.displayAvatarURL({ format: 'png' }) })
+			.setFooter({ text: 'Hitrin', iconURL: client.user.displayAvatarURL({ format: 'png' }) })
 			.setTimestamp();
 		queue.textChannel.send({embeds: [addsong], files: [file]});
 	})
@@ -225,7 +225,7 @@ client.distube
 				{ name: '__**再生:**__', value: song.user.tag, inline: true },
 			)
 			.setThumbnail(song.thumbnail)
-			.setFooter({ text: 'Hitorin', iconURL: client.user.displayAvatarURL({ format: 'png' }) })
+			.setFooter({ text: 'Hitrin', iconURL: client.user.displayAvatarURL({ format: 'png' }) })
 			.setTimestamp();
 		queue.textChannel.send({embeds: [addlist], files: [file]});
  	})
@@ -273,13 +273,13 @@ function error_unknown(interaction, error) {
 		.setTitle('実行失敗')
 		.setAuthor({ name: interaction.user.tag, iconURL: interaction.user.displayAvatarURL({ format: 'png' }), url: interaction.user.displayAvatarURL({ format: 'png' }) })
 		.setDescription('無知のエラーが発生しました。既に開発者に報告されています。')
-		.setFooter({ text: 'Hitorin', iconURL: client.user.displayAvatarURL({ format: 'png' }) })
+		.setFooter({ text: 'Hitrin', iconURL: client.user.displayAvatarURL({ format: 'png' }) })
 		.setTimestamp();
 	const error_log = new MessageEmbed()
 		.setColor('#ba2636')
 		.setTitle('エラー')
 		.setDescription('【エラー内容】\n' + codeBlock('js', error))
-		.setFooter({ text: 'Hitorin', iconURL: client.user.displayAvatarURL({ format: 'png' }) })
+		.setFooter({ text: 'Hitrin', iconURL: client.user.displayAvatarURL({ format: 'png' }) })
 		.setTimestamp();
 	const log = client.channels.cache.get('919599721184628807').send({ embeds: [error_log] });
 	return interaction.reply({ embeds: [err] }), log;
