@@ -22,7 +22,7 @@ module.exports = {
 				.setTitle('送信完了')
 				.setAuthor({ name: interaction.user.tag, iconURL: interaction.user.displayAvatarURL({ format: 'png' }), url: interaction.user.displayAvatarURL({ format: 'png' }) })
 				.setDescription(`**[種類]** ${t}\n**[内容]** ${body}`)
-				.setFooter({ text: 'Hitorin', iconURL: client.user.displayAvatarURL({ format: 'png' }) })
+				.setFooter({ text: 'Hitrin', iconURL: client.user.displayAvatarURL({ format: 'png' }) })
 				.setTimestamp();
 			const in_1 = new MessageEmbed()
 				.setColor('#f5e56b')
@@ -33,7 +33,7 @@ module.exports = {
 					{ name: '__**Body:**__', value: `${body}` },
 				)
 				.setThumbnail(interaction.user.displayAvatarURL({ format: 'png' }))
-				.setFooter({ text: 'Hitorin', iconURL: client.user.displayAvatarURL({ format: 'png' }) })
+				.setFooter({ text: 'Hitrin', iconURL: client.user.displayAvatarURL({ format: 'png' }) })
 				.setTimestamp();
 			await interaction.reply({ embeds: [success_1] });
 			await client.channels.cache.get('912561215669149717').send({ embeds: [in_1] });
@@ -45,7 +45,7 @@ module.exports = {
 				.setTitle('送信完了')
 				.setAuthor({ name: interaction.user.tag, iconURL: interaction.user.displayAvatarURL({ format: 'png' }), url: interaction.user.displayAvatarURL({ format: 'png' }) })
 				.setDescription(`**[種類]** レポート\n**[内容]** ${body}\n**[対象]** <@${target.id}>`)
-				.setFooter({ text: 'Hitorin', iconURL: client.user.displayAvatarURL({ format: 'png' }) })
+				.setFooter({ text: 'Hitrin', iconURL: client.user.displayAvatarURL({ format: 'png' }) })
 				.setTimestamp();
 			const in_2 = new MessageEmbed()
 				.setColor('#f5e56b')
@@ -57,7 +57,7 @@ module.exports = {
 					{ name: '__**Body:**__', value: `${body}` },
 				)
 				.setThumbnail(interaction.user.displayAvatarURL({ format: 'png' }))
-				.setFooter({ text: 'Hitorin', iconURL: client.user.displayAvatarURL({ format: 'png' }) })
+				.setFooter({ text: 'Hitrin', iconURL: client.user.displayAvatarURL({ format: 'png' }) })
 				.setTimestamp();
 			await interaction.reply({ embeds: [success_2] });
 			await client.channels.cache.get('912561215669149717').send({ embeds: [in_2] });

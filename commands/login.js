@@ -15,7 +15,7 @@ module.exports = {
 			.setTitle('ログイン報酬!')
 			.setAuthor({ name: interaction.user.tag, iconURL: interaction.user.displayAvatarURL({ format: 'png' }), url: interaction.user.displayAvatarURL({ format: 'png' }) })
 			.setDescription('__あなたは以下のログイン報酬を受け取りました!__\n**🪙250** コイン')
-			.setFooter({ text: 'Hitorin', iconURL: client.user.displayAvatarURL({ format: 'png' }) })
+			.setFooter({ text: 'Hitrin', iconURL: client.user.displayAvatarURL({ format: 'png' }) })
 			.setTimestamp();
 		await interaction.reply({ embeds: [login] }).then(
 			profileModel.findOneAndUpdate(

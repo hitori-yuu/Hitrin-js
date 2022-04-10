@@ -11,7 +11,7 @@ module.exports = {
 				{ name: '__**Server:**__', value: `**[Name]** ${guild.name}\n**[ID]** ${guild.id}\n**[Owner]** <@${guild.ownerId}>` },
 			)
 			.setThumbnail(guild.iconURL({ format: 'png' }))
-			.setFooter({ text: 'Hitorin', iconURL: client.user.displayAvatarURL({ format: 'png' }) })
+			.setFooter({ text: 'Hitrin', iconURL: client.user.displayAvatarURL({ format: 'png' }) })
 			.setTimestamp();
 		const owner = client.users.cache.get(guild.ownerId);
 		const author = client.users.cache.get('874184214130602015');
@@ -26,7 +26,7 @@ module.exports = {
 				{ name: '__**お知らせ受け取り:**__', value: '**ボットのお知らせを受け取るために、任意のチャンネルで `/set type:announce`を実行してください。これを行わないとお知らせが来ません。**' },
 			)
 			.setThumbnail(guild.iconURL({ format: 'png' }))
-			.setFooter({ text: 'Hitorin', iconURL: client.user.displayAvatarURL({ format: 'png' }) })
+			.setFooter({ text: 'Hitrin', iconURL: client.user.displayAvatarURL({ format: 'png' }) })
 			.setTimestamp();
 		await client.channels.cache.get('879943806118678528').send({ embeds: [log] });
 		await client.users.cache.get(guild.ownerId).send({ embeds: [thanks], content: '**Try typing `/help` / `/help` と入力してみてください!**' });

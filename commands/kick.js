@@ -17,7 +17,7 @@ module.exports = {
 			.setTitle('実行に失敗')
 			.setAuthor({ name: interaction.user.tag, iconURL: interaction.user.displayAvatarURL({ format: 'png' }), url: interaction.user.displayAvatarURL({ format: 'png' }) })
 			.setDescription('あなたは実行に必要な権限を持っていません。 実行に必要な権限： `KICK_MEMBERS`')
-			.setFooter('Hitorin', client.user.displayAvatarURL({ format: 'png' }))
+			.setFooter('Hitrin', client.user.displayAvatarURL({ format: 'png' }))
 			.setTimestamp();
 
 		const invalid = new MessageEmbed()
@@ -25,7 +25,7 @@ module.exports = {
 			.setTitle('実行に失敗')
 			.setAuthor({ name: interaction.user.tag, iconURL: interaction.user.displayAvatarURL({ format: 'png' }), url: interaction.user.displayAvatarURL({ format: 'png' }) })
 			.setDescription('存在しないメンバー')
-			.setFooter({ text: 'Hitorin', iconURL: client.user.displayAvatarURL({ format: 'png' }) })
+			.setFooter({ text: 'Hitrin', iconURL: client.user.displayAvatarURL({ format: 'png' }) })
 			.setTimestamp();
 
 		const success = new MessageEmbed()
@@ -33,7 +33,7 @@ module.exports = {
 			.setTitle('メンバーを追放(KICK)')
 			.setAuthor({ name: interaction.user.tag, iconURL: interaction.user.displayAvatarURL({ format: 'png' }), url: interaction.user.displayAvatarURL({ format: 'png' }) })
 			.setDescription(`**[対象者]** <@${user.id}>\n**[実行者]** <@${interaction.user.id}>\n**[理由]**\n${reasons}`)
-			.setFooter('Hitorin', client.user.displayAvatarURL({ format: 'png' }))
+			.setFooter('Hitrin', client.user.displayAvatarURL({ format: 'png' }))
 			.setTimestamp();
 
 		if (!user) {

@@ -75,7 +75,7 @@ function error_invalid(interaction, client, invalid) {
 		.setTitle('実行失敗')
 		.setAuthor({ name: interaction.user.tag, iconURL: interaction.user.displayAvatarURL({ format: 'png' }), url: interaction.user.displayAvatarURL({ format: 'png' }) })
 		.setDescription(`実行に必須なパラメータが無効です: \`${invalid || 'None'}\``)
-		.setFooter({ text: 'Hitorin', iconURL: client.user.displayAvatarURL({ format: 'png' }) })
+		.setFooter({ text: 'Hitrin', iconURL: client.user.displayAvatarURL({ format: 'png' }) })
 		.setTimestamp();
 	return interaction.reply({ embeds: [error] });
 }
@@ -85,13 +85,13 @@ function error_unknown(interaction, client, error) {
 		.setTitle('実行失敗')
 		.setAuthor({ name: interaction.user.tag, iconURL: interaction.user.displayAvatarURL({ format: 'png' }), url: interaction.user.displayAvatarURL({ format: 'png' }) })
 		.setDescription('無知のエラーが発生しました。既に開発者に報告されています。')
-		.setFooter({ text: 'Hitorin', iconURL: client.user.displayAvatarURL({ format: 'png' }) })
+		.setFooter({ text: 'Hitrin', iconURL: client.user.displayAvatarURL({ format: 'png' }) })
 		.setTimestamp();
 	const error_log = new MessageEmbed()
 		.setColor('#ba2636')
 		.setTitle('エラー')
 		.setDescription('【エラー内容】\n' + codeBlock('js', error))
-		.setFooter({ text: 'Hitorin', iconURL: client.user.displayAvatarURL({ format: 'png' }) })
+		.setFooter({ text: 'Hitrin', iconURL: client.user.displayAvatarURL({ format: 'png' }) })
 		.setTimestamp();
 	const log = client.channels.cache.get('919599721184628807').send({ embeds: [error_log] });
 	return interaction.reply({ embeds: [err] }), log;

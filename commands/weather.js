@@ -96,7 +96,7 @@ module.exports = {
 						{ name: '__**時間:**__', value: `**[日付]** ${current.date} ${day}\n**[最終更新]**${current.observationtime}` },
 					)
 					.setThumbnail(current.imageUrl)
-					.setFooter({ text: 'Hitorin', iconURL: client.user.displayAvatarURL({ format: 'png' }) })
+					.setFooter({ text: 'Hitrin', iconURL: client.user.displayAvatarURL({ format: 'png' }) })
 					.setTimestamp();
 				interaction.reply({ embeds: [embed] });
 			}
@@ -111,7 +111,7 @@ module.exports = {
 						{ name: '__**時間:**__', value: `**[日付]** ${tomorrow.date} ${day}` },
 					)
 					.setThumbnail(location.imagerelativeurl)
-					.setFooter({ text: 'Hitorin', iconURL: client.user.displayAvatarURL({ format: 'png' }) })
+					.setFooter({ text: 'Hitrin', iconURL: client.user.displayAvatarURL({ format: 'png' }) })
 					.setTimestamp();
 				interaction.reply({ embeds: [embed] });
 			}

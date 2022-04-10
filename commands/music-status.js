@@ -20,7 +20,7 @@ module.exports = {
                 { name: '__**リピート:**__', value: queue.repeatMode ? (queue.repeatMode === 2 ? '再生リスト' : '現在の曲') : 'オフ', inline: true },
                 { name: '__**自動再生:**__', value: queue.autoplay ? 'オン' : 'オフ', inline: true },
             )
-            .setFooter({ text: 'Hitorin', iconURL: client.user.displayAvatarURL({ format: 'png' }) })
+            .setFooter({ text: 'Hitrin', iconURL: client.user.displayAvatarURL({ format: 'png' }) })
             .setTimestamp();
         await interaction.reply({embeds: [embed], files: [file]})
 	},

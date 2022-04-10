@@ -6,16 +6,16 @@ module.exports = {
 	data: new SlashCommandBuilder()
 		.setName('music-set')
 		.setDescription('曲の再生に関する設定をします。')
-		.addSubcommand(subcommand => subcommand.setName('volume').setDescription('音量を設定します。').addNumberOption(option => option.setName('音量').setDescription('1~100 の範囲で入力')))
+		.addSubcommand(subcommand => subcommand.setName('volume').setDescription('音量を設定します。').addNumberOption(option => option.setName('音量').setDescription('1~100の範囲で入力 ※体感では入力した音量 +70 くらいです。')))
 		.addSubcommand(subcommand => subcommand.setName('filter').setDescription('曲にかける加工を設定します。'))
-		.addSubcommand(subcommand => subcommand.setName('repeat').setDescription('リピートを設定します。').addStringOption(option => option.setName('リピートの種類').setDescription('1つを選択').addChoice('再生リスト', 'queue').addChoice('曲', 'song').addChoice('オフ', 'off')))
+		.addSubcommand(subcommand => subcommand.setName('repeat').setDescription('リピートを設定します。').addStringOption(option => option.setName('リピートの種類').setDescription('1つを選択').addChoice('再生リスト', 'list').addChoice('曲', 'song').addChoice('オフ', 'off')))
 		.addSubcommand(subcommand => subcommand.setName('autoplay').setDescription('自動再生を設定します。')),
 	async execute(interaction, client) {
 		const volume = interaction.options.getNumber('音量');
 		const loop_type = interaction.options.getString('リピートの種類');
 
         if (interaction.options.getSubcommand() === 'volume') {
-			if (volume < 1 || volume > 100) return interaction.reply('１～１００の範囲で指定してください。')
+			if (volume < 1 || volume > 100) return interaction.reply('1~100の範囲で指定してください。')
 			client.distube.setVolume(interaction, volume);
 			await interaction.reply(`音量の設定: \`${volume}\``)
         }
@@ -24,16 +24,16 @@ module.exports = {
 		else if (interaction.options.getSubcommand() === 'repeat') {
 			let mode;
 			switch(loop_type) {
-				case queue:
-					client.distube.setRepeatMode(message, 2)
+				case 'list':
+					client.distube.setRepeatMode(interaction, 2)
 					mode = 'リスト全体'
 					break;
-				case song:
-					client.distube.setRepeatMode(message, 1)
+				case 'song':
+					client.distube.setRepeatMode(interaction, 1)
 					mode = '曲'
 					break;
-				case off:
-					client.distube.setRepeatMode(message, 0)
+				case 'off':
+					client.distube.setRepeatMode(interaction, 0)
 					mode = 'オフ'
 					break;
 			}
@@ -57,7 +57,7 @@ module.exports = {
 				{ name: '__**リピート:**__', value: queue.repeatMode ? (queue.repeatMode === 2 ? 'キュー全体' : '現在の曲') : 'オフ' },
 				{ name: '__**自動再生:**__', value: queue.autoplay ? 'オン' : 'オフ' },
 			)
-			.setFooter({ text: 'Hitorin', iconURL: client.user.displayAvatarURL({ format: 'png' }) })
+			.setFooter({ text: 'Hitrin', iconURL: client.user.displayAvatarURL({ format: 'png' }) })
 			.setTimestamp();
 		await interaction.channel.send({embeds: [embed], files: [file]})
 	},

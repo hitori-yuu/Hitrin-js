@@ -12,7 +12,7 @@ module.exports = {
 					.setAuthor({ name: interaction.user.tag, iconURL: interaction.user.displayAvatarURL({ format: 'png' }), url: interaction.user.displayAvatarURL({ format: 'png' }) })
 					.setDescription(`<@${interaction.user.id}> さんがサーバーに参加しました！\n「__${interaction.guild.name}__」の **${interaction.guild.memberCount}番目** のメンバーです！`)
 					.setThumbnail(interaction.user.displayAvatarURL({ format: 'png' }))
-					.setFooter({ text: 'Hitorin', iconURL: client.user.displayAvatarURL({ format: 'png' }) })
+					.setFooter({ text: 'Hitrin', iconURL: client.user.displayAvatarURL({ format: 'png' }) })
 					.setTimestamp();
 				await client.channels.cache.get(guildsData.welcomeCh).send({ embeds: [welcome] });
 		}

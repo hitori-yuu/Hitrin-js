@@ -26,7 +26,6 @@ module.exports = {
             })
             const queue = client.distube.getQueue(interaction)
             if (!queue) interaction.reply('再生します。')
-            if (queue) interaction.reply('再生リストに追加しました。')
         } catch (e) {
             interaction.reply(`エラーが発生しました。`)
         }

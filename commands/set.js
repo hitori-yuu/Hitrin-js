@@ -40,14 +40,14 @@ module.exports = {
 				{ name: '__**自動管理:**__', value: 'サーバー内の様々な管理をボットが自動で行う機能を設定します。__(β機能)__' },
 			)
 			.setThumbnail(client.user.displayAvatarURL({ format: 'png' }))
-			.setFooter({ text: 'Hitorin', iconURL: client.user.displayAvatarURL({ format: 'png' }) })
+			.setFooter({ text: 'Hitrin', iconURL: client.user.displayAvatarURL({ format: 'png' }) })
 			.setTimestamp();
 		const permission = new MessageEmbed()
 			.setColor('#ba2636')
 			.setTitle('実行に失敗')
 			.setAuthor({ name: interaction.user.tag, iconURL: interaction.user.displayAvatarURL({ format: 'png' }), url: interaction.user.displayAvatarURL({ format: 'png' }) })
 			.setDescription('あなたは実行に必要な権限を持っていません。 実行に必要な権限: `MANAGE_GUILD`')
-			.setFooter({ text: 'Hitorin', iconURL: client.user.displayAvatarURL({ format: 'png' }) })
+			.setFooter({ text: 'Hitrin', iconURL: client.user.displayAvatarURL({ format: 'png' }) })
 			.setTimestamp();
 
 		if (!interaction.member.permissions.has('MANAGE_GUILD')) {
@@ -73,7 +73,7 @@ module.exports = {
 		// 	.setTitle('実行に失敗')
 		// 	.setAuthor({ name: interaction.user.tag, iconURL: interaction.user.displayAvatarURL({ format: 'png' }), url: interaction.user.displayAvatarURL({ format: 'png' }) })
 		// 	.setDescription('あなたは実行に必要な権限を持っていません。')
-		// 	.setFooter({ text: 'Hitorin', iconURL: client.user.displayAvatarURL({ format: 'png' }) })
+		// 	.setFooter({ text: 'Hitrin', iconURL: client.user.displayAvatarURL({ format: 'png' }) })
 		// 	.setTimestamp();
 
 		// const error = new MessageEmbed()
@@ -81,7 +81,7 @@ module.exports = {
 		// 	.setTitle('実行に失敗')
 		// 	.setAuthor({ name: interaction.user.tag, iconURL: interaction.user.displayAvatarURL({ format: 'png' }), url: interaction.user.displayAvatarURL({ format: 'png' }) })
 		// 	.setDescription('エラー')
-		// 	.setFooter({ text: 'Hitorin', iconURL: client.user.displayAvatarURL({ format: 'png' }) })
+		// 	.setFooter({ text: 'Hitrin', iconURL: client.user.displayAvatarURL({ format: 'png' }) })
 		// 	.setTimestamp();
 
 		// const announce = new MessageEmbed()
@@ -94,7 +94,7 @@ module.exports = {
 		// 		{ name: '__**Channel:**__', value: `**[Name]** ${interaction.channel.name}\n**[ID]** ${interaction.channel.id}` },
 		// 	)
 		// 	.setThumbnail(interaction.user.displayAvatarURL({ format: 'png' }))
-		// 	.setFooter({ text: 'Hitorin', iconURL: client.user.displayAvatarURL({ format: 'png' }) })
+		// 	.setFooter({ text: 'Hitrin', iconURL: client.user.displayAvatarURL({ format: 'png' }) })
 		// 	.setTimestamp();
 
 		// if (type === 'string') {
@@ -207,7 +207,7 @@ module.exports = {
 		// 		.setAuthor({ name: interaction.user.tag, iconURL: interaction.user.displayAvatarURL({ format: 'png' }), url: interaction.user.displayAvatarURL({ format: 'png' }) })
 		// 		.setDescription(`加入お知らせ: \`${welcomech.name || '❌None❌'}\`\n自動管理: \`${autoMod || '❌None❌'}\``)
 		// 		.setThumbnail(interaction.user.displayAvatarURL({ format: 'png' }))
-		// 		.setFooter({ text: 'Hitorin', iconURL: client.user.displayAvatarURL({ format: 'png' }) })
+		// 		.setFooter({ text: 'Hitrin', iconURL: client.user.displayAvatarURL({ format: 'png' }) })
 		// 		.setTimestamp();
 		// 	await interaction.reply({ embeds: [embed] });
 		// }

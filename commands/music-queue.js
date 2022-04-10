@@ -28,7 +28,7 @@ module.exports = {
             .setAuthor({ name: interaction.user.tag, iconURL: interaction.user.displayAvatarURL({ format: 'png' }), url: interaction.user.displayAvatarURL({ format: 'png' }) })
             .setDescription(`${q}`)
             .setThumbnail('attachment://music.png')
-            .setFooter({ text: 'Hitorin', iconURL: client.user.displayAvatarURL({ format: 'png' }) })
+            .setFooter({ text: 'Hitrin', iconURL: client.user.displayAvatarURL({ format: 'png' }) })
             .setTimestamp();
           interaction.reply({embeds: [embed], files: [file]});
         } catch (e) {
