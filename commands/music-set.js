@@ -25,15 +25,15 @@ module.exports = {
 			let mode;
 			switch(loop_type) {
 				case 'list':
-					client.distube.setRepeatMode(message, 2)
+					client.distube.setRepeatMode(interaction, 2)
 					mode = 'リスト全体'
 					break;
 				case 'song':
-					client.distube.setRepeatMode(message, 1)
+					client.distube.setRepeatMode(interaction, 1)
 					mode = '曲'
 					break;
 				case 'off':
-					client.distube.setRepeatMode(message, 0)
+					client.distube.setRepeatMode(interaction, 0)
 					mode = 'オフ'
 					break;
 			}
