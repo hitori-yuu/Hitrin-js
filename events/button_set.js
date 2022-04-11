@@ -216,7 +216,7 @@ module.exports = {
 						},
 					);
 					guild.save();
-					interaction.channel.send('設定完了: **' + channel.name + '** で新規メンバーへの歓迎メッセージを送ります。', { ephemeral: true });
+					interaction.channel.send('設定完了: <#' + channel.id + '> で新規メンバーへの歓迎メッセージを送ります。', { ephemeral: true });
 			});
 		}
 		else if (interaction.customId === 'welcome_no') {
