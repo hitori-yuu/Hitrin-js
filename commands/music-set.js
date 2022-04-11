@@ -22,7 +22,7 @@ module.exports = {
         }
 		else if (interaction.options.getSubcommand() === 'filter') {
 			const filters = client.distube.setFilter(interaction, type);
-			await interaction.reply(`加工の設定: \`${filters}\``)
+			await interaction.reply(`加工の設定: \`${filters || 'オフ'}\``)
         }
 		else if (interaction.options.getSubcommand() === 'repeat') {
 			let mode;
@@ -55,10 +55,10 @@ module.exports = {
 			.setColor('#89c3eb')
 			.setAuthor({ name: 'ステータス', iconURL: 'attachment://music.png'})
 			.addFields(
-				{ name: '__**volume:**__', value: `${queue.volume}%` },
-				{ name: '__**加工:**__', value: queue.filters.join(', ') || 'オフ' },
-				{ name: '__**リピート:**__', value: queue.repeatMode ? (queue.repeatMode === 2 ? 'キュー全体' : '現在の曲') : 'オフ' },
-				{ name: '__**自動再生:**__', value: queue.autoplay ? 'オン' : 'オフ' },
+				{ name: '__**音量:**__', value: `${queue.volume}%`, inline: true },
+				{ name: '__**リピート:**__', value: queue.repeatMode ? (queue.repeatMode === 2 ? 'キュー全体' : '現在の曲') : 'オフ', inline: true },
+				{ name: '__**自動再生:**__', value: queue.autoplay ? 'オン' : 'オフ', inline: true },
+				{ name: '__**加工:**__', value: queue.filters.join(', ') || 'オフ', inline: false },
 			)
 			.setFooter({ text: 'Hitrin', iconURL: client.user.displayAvatarURL({ format: 'png' }) })
 			.setTimestamp();

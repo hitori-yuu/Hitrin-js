@@ -32,7 +32,8 @@
     "tweetnacl": "^0.14.5",
     "uninstall": "^0.0.0",
     "weather-js": "^2.0.0",
-    "ytdl-core": "^4.11.0"
+    "ytdl-core": "^4.11.0",
+    "ytpl": "^2.3.0"
   },
   "devDependencies": {
     "eslint": "^8.0.1",

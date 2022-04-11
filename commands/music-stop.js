@@ -17,9 +17,9 @@ module.exports = {
         if (!queue) return interaction.reply('再生中の曲がありません。')
         try {
             queue.stop()
-            await interaction.reply(`停止しました。`)
+            await interaction.reply('停止しました。')
         } catch (e) {
-            interaction.reply(`エラーが発生しました。`)
+            interaction.reply('エラーが発生しました。')
         }
 	},
 };

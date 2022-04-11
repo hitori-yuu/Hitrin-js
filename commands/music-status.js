@@ -16,9 +16,9 @@ module.exports = {
             .setAuthor({ name: 'ステータス', iconURL: 'attachment://music.png'})
             .addFields(
                 { name: '__**音量:**__', value: `${queue.volume}%`, inline: true },
-                { name: '__**加工:**__', value: queue.filters.join(', ') || 'オフ', inline: true },
                 { name: '__**リピート:**__', value: queue.repeatMode ? (queue.repeatMode === 2 ? '再生リスト' : '現在の曲') : 'オフ', inline: true },
                 { name: '__**自動再生:**__', value: queue.autoplay ? 'オン' : 'オフ', inline: true },
+                { name: '__**加工:**__', value: queue.filters.join(', ') || 'オフ', inline: false },
             )
             .setFooter({ text: 'Hitrin', iconURL: client.user.displayAvatarURL({ format: 'png' }) })
             .setTimestamp();

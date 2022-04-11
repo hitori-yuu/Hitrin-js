@@ -24,10 +24,10 @@ module.exports = {
                 textChannel: interaction.channel,
                 interaction
             })
-            const queue = client.distube.getQueue(interaction)
-            if (!queue) interaction.reply('再生します。')
+            await interaction.reply('再生します。')
         } catch (e) {
-            interaction.reply(`エラーが発生しました。`)
+            await interaction.reply(`エラーが発生しました。`)
+            console.error('[異常]\n' + e)
         }
 	},
 };
