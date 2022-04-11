@@ -30,9 +30,10 @@ module.exports = {
             .setThumbnail('attachment://music.png')
             .setFooter({ text: 'Hitrin', iconURL: client.user.displayAvatarURL({ format: 'png' }) })
             .setTimestamp();
-          interaction.reply({embeds: [embed], files: [file]});
+          await interaction.reply({embeds: [embed], files: [file]});
         } catch (e) {
-          interaction.reply(`エラーが発生しました。`)
+          await interaction.reply(`エラーが発生しました。`)
+          console.error('[異常]\n' + e)
         }
 	},
 };

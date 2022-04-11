@@ -16,10 +16,11 @@ module.exports = {
         const queue = client.distube.getQueue(interaction)
         if (!queue) return interaction.reply(`キューに曲がありません。`)
         try {
-            queue.pause()
-            interaction.reply('再生中の曲を一時停止しました。')
+          queue.pause()
+          await interaction.reply('再生中の曲を一時停止しました。')
         } catch (e) {
-          interaction.reply(`エラーが発生しました。`)
+          await interaction.reply(`エラーが発生しました。`)
+          console.error('[異常]\n' + e)
         }
 	},
 };

@@ -54,7 +54,7 @@ mongoose
 		console.log('[起動] データベース接続完了');
 	})
 	.catch((error) => {
-		console.log(error);
+		console.error('[異常]\n' + error)
 	});
 
 client.on('interactionCreate', async interaction => {
