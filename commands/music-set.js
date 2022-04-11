@@ -7,11 +7,12 @@ module.exports = {
 		.setName('music-set')
 		.setDescription('曲の再生に関する設定をします。')
 		.addSubcommand(subcommand => subcommand.setName('volume').setDescription('音量を設定します。').addNumberOption(option => option.setName('音量').setDescription('1~100の範囲で入力 ※体感では入力した音量 +70 くらいです。')))
-		.addSubcommand(subcommand => subcommand.setName('filter').setDescription('曲にかける加工を設定します。'))
+		.addSubcommand(subcommand => subcommand.setName('filter').setDescription('曲にかける加工を設定します。').addStringOption(option => option.setName('種類').setDescription('1つ選択').addChoice('3D', '3d').addChoice('BASS BOOST', 'bassboost').addChoice('Echo', 'echo').addChoice('カラオケ', 'karaoke').addChoice('Nightcore', 'nightcore').addChoice('Vaporwave', 'vaporwave')))
 		.addSubcommand(subcommand => subcommand.setName('repeat').setDescription('リピートを設定します。').addStringOption(option => option.setName('リピートの種類').setDescription('1つを選択').addChoice('再生リスト', 'list').addChoice('曲', 'song').addChoice('オフ', 'off')))
 		.addSubcommand(subcommand => subcommand.setName('autoplay').setDescription('自動再生を設定します。')),
 	async execute(interaction, client) {
 		const volume = interaction.options.getNumber('音量');
+		const type = interaction.options.getString('種類');
 		const loop_type = interaction.options.getString('リピートの種類');
 
         if (interaction.options.getSubcommand() === 'volume') {
@@ -20,6 +21,8 @@ module.exports = {
 			await interaction.reply(`音量の設定: \`${volume}\``)
         }
 		else if (interaction.options.getSubcommand() === 'filter') {
+			const filters = client.distube.setFilter(interaction, type);
+			await interaction.reply(`加工の設定: \`${filters}\``)
         }
 		else if (interaction.options.getSubcommand() === 'repeat') {
 			let mode;

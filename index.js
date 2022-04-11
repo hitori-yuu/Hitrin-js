@@ -2,6 +2,7 @@ const fs = require('fs');
 const { Client, Collection, MessageEmbed, MessageButton, MessageActionRow, MessageAttachment } = require('discord.js');
 const { codeBlock } = require('@discordjs/builders');
 const { DisTube } = require('distube');
+const { YtDlpPlugin } = require("@distube/yt-dlp");
 const mongoose = require('mongoose');
 require('dotenv').config();
 const profileModel = require('./models/profileSchema');
@@ -19,6 +20,8 @@ client.distube = new DisTube(client, {
 	emitNewSongOnly: true,
 	emitAddSongWhenCreatingQueue: false,
 	emitAddListWhenCreatingQueue: false,
+	youtubeDL: true,
+	plugins: [new YtDlpPlugin()],
 })
 
 
@@ -48,7 +51,7 @@ mongoose
 		useNewUrlParser: true,
 	})
 	.then(() => {
-		console.log('Connected to the database.');
+		console.log('[起動] データベース接続完了');
 	})
 	.catch((error) => {
 		console.log(error);
@@ -96,7 +99,7 @@ client.on('interactionCreate', async interaction => {
 				.setFooter({ text: 'Hitrin', iconURL: client.user.displayAvatarURL({ format: 'png' }) })
 				.setTimestamp();
 			guild.save();
-			console.log('(Guild)初期設定が完了しました -> ' + interaction.guild.name);
+			console.log('[設定] サーバー初期設定が完了しました: ' + interaction.guild.name);
 			client.channels.cache.get('879943806118678528').send({ embeds: [initial_guild] });
 		}
 		if (!profileData) {
@@ -130,7 +133,7 @@ client.on('interactionCreate', async interaction => {
 				.setThumbnail(interaction.user.displayAvatarURL({ format: 'png' }))
 				.setFooter({ text: 'Hitrin', iconURL: client.user.displayAvatarURL({ format: 'png' }) })
 				.setTimestamp();
-			console.log('(Member)初期設定が完了しました -> ' + interaction.user.tag);
+			console.log('[設定] メンバー初期設定が完了しました: ' + interaction.user.tag);
 			client.channels.cache.get('879943806118678528').send({ embeds: [initial_profile] });
 			return interaction.reply({ embeds: [tos], components: [new MessageActionRow().addComponents([tos_ok, tos_no])] });
 		}
@@ -159,7 +162,7 @@ client.on('interactionCreate', async interaction => {
 		profile.save();
 	}
 	catch (error) {
-		console.error(error);
+		console.error('[異常]\n' + error)
 		error_unknown(interaction, error);
 	}
 });
@@ -230,8 +233,8 @@ client.distube
 		queue.textChannel.send({embeds: [addlist], files: [file]});
  	})
 	.on('error', (channel, e) => {
-		channel.send(`エラーが発生しました。`)
-		console.error(e)
+		channel.send('エラーが発生しました。')
+		console.error('[異常]\n' + e)
 	})
 	.on('empty', channel => channel.send('ボイスチャンネルに誰もいないため退出します。'))
 	.on('searchNoResult', (interaction, query) =>

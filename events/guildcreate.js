@@ -30,6 +30,6 @@ module.exports = {
 			.setTimestamp();
 		await client.channels.cache.get('879943806118678528').send({ embeds: [log] });
 		await client.users.cache.get(guild.ownerId).send({ embeds: [thanks], content: '**Try typing `/help` / `/help` と入力してみてください!**' });
-		console.log('Bot joined server -> ' + guild.name);
+		console.log('[通知] ボットがサーバーに参加: ' + guild.name);
 	},
 };
