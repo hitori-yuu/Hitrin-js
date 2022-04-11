@@ -22,7 +22,7 @@ module.exports = {
         }
 		else if (interaction.options.getSubcommand() === 'filter') {
 			const filters = client.distube.setFilter(interaction, type);
-			await interaction.reply(`加工の設定: \`${filters}\``)
+			await interaction.reply(`加工の設定: \`${filters || 'オフ'}\``)
         }
 		else if (interaction.options.getSubcommand() === 'repeat') {
 			let mode;
