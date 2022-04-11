@@ -169,24 +169,57 @@ client.on('interactionCreate', async interaction => {
 
 const file = new MessageAttachment('D:/folder/Hitrin/bot/js/v1/materials/music.png');
 
+const play = new MessageActionRow()
+	.addComponents(
+		new MessageButton()
+			.setCustomId('stop')
+			.setStyle('PRIMARY')
+			.setLabel('⏹'),
+		new MessageButton()
+			.setCustomId('pause_resume')
+			.setStyle('PRIMARY')
+			.setLabel('⏯'),
+		new MessageButton()
+			.setCustomId('skip')
+			.setStyle('PRIMARY')
+			.setLabel('⏭'),
+		new MessageButton()
+			.setCustomId('repeat')
+			.setStyle('PRIMARY')
+			.setLabel('🔁'),
+		new MessageButton()
+			.setCustomId('status')
+			.setStyle('PRIMARY')
+			.setLabel('⏏')
+);
+
+const add = new MessageActionRow()
+	.addComponents(
+		new MessageButton()
+			.setCustomId('stop')
+			.setStyle('PRIMARY')
+			.setLabel('⏹'),
+		new MessageButton()
+			.setCustomId('skip')
+			.setStyle('PRIMARY')
+			.setLabel('⏭'),
+		new MessageButton()
+			.setCustomId('repeat')
+			.setStyle('PRIMARY')
+			.setLabel('🔁'),
+		new MessageButton()
+			.setCustomId('status')
+			.setStyle('PRIMARY')
+			.setLabel('⏏')
+);
+
+
 client.distube
 	.on('initQueue', (queue) => {
     	queue.autoplay = true;
     	queue.volume = 25;
 	})
 	.on('playSong', (queue, song) => {
-		const embed = new MessageEmbed()
-			.setColor('#89c3eb')
-			.setAuthor({ name: 'ステータス', iconURL: 'attachment://music.png'})
-			.addFields(
-				{ name: '__**音量:**__', value: `${queue.volume}%`, inline: true },
-				{ name: '__**加工:**__', value: queue.filters.join(', ') || 'オフ', inline: true },
-				{ name: '__**リピート:**__', value: queue.repeatMode ? (queue.repeatMode === 2 ? '再生リスト' : '現在の曲') : 'オフ', inline: true },
-				{ name: '__**自動再生:**__', value: queue.autoplay ? 'オン' : 'オフ', inline: true },
-			)
-			.setFooter({ text: 'Hitrin', iconURL: client.user.displayAvatarURL({ format: 'png' }) })
-			.setTimestamp();
-
 		const playing = new MessageEmbed()
 			.setColor('#89c3eb')
 			.setAuthor({ name: '再生中', iconURL: 'attachment://music.png'})
@@ -199,8 +232,7 @@ client.distube
 			.setThumbnail(song.thumbnail)
 			.setFooter({ text: 'Hitrin', iconURL: client.user.displayAvatarURL({ format: 'png' }) })
 			.setTimestamp();
-		queue.textChannel.send({embeds: [playing], files: [file]});
-		queue.textChannel.send({embeds: [embed], files: [file]});
+		queue.textChannel.send({embeds: [playing], files: [file], components: [play]});
 	})
   	.on('addSong', (queue, song) =>{
 		const addsong = new MessageEmbed()
@@ -215,7 +247,7 @@ client.distube
 			.setThumbnail(song.thumbnail)
 			.setFooter({ text: 'Hitrin', iconURL: client.user.displayAvatarURL({ format: 'png' }) })
 			.setTimestamp();
-		queue.textChannel.send({embeds: [addsong], files: [file]});
+		queue.textChannel.send({embeds: [addsong], files: [file], components: [add]});
 	})
   	.on('addList', (queue, playlist) => {
 	  	const addlist = new MessageEmbed()
@@ -230,7 +262,7 @@ client.distube
 			.setThumbnail(song.thumbnail)
 			.setFooter({ text: 'Hitrin', iconURL: client.user.displayAvatarURL({ format: 'png' }) })
 			.setTimestamp();
-		queue.textChannel.send({embeds: [addlist], files: [file]});
+		queue.textChannel.send({embeds: [addlist], files: [file], components: [add]});
  	})
 	.on('error', (channel, e) => {
 		channel.send('エラーが発生しました。')

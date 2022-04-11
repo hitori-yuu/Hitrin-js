@@ -16,7 +16,7 @@ module.exports = {
         const queue = client.distube.getQueue(interaction)
         if (!queue) return interaction.reply(`キューに曲がありません。`)
         try {
-          const song = await queue.skip()
+          queue.skip()
           await interaction.reply(`スキップしました。`)
         } catch (e) {
             await interaction.reply(`エラーが発生しました。`)

@@ -19,7 +19,7 @@ module.exports = {
           queue.resume()
           await interaction.reply('一時停止中の曲を再生します。')
         } catch (e) {
-          await interaction.reply(`エラーが発生しました。`)
+          await interaction.reply('エラーが発生しました。')
           console.error('[異常]\n' + e)
         }
 	},

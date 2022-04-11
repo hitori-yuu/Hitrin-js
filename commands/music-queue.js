@@ -32,7 +32,7 @@ module.exports = {
             .setTimestamp();
           await interaction.reply({embeds: [embed], files: [file]});
         } catch (e) {
-          await interaction.reply(`エラーが発生しました。`)
+          await interaction.reply('エラーが発生しました。')
           console.error('[異常]\n' + e)
         }
 	},
