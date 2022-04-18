@@ -105,9 +105,9 @@ client.on('interactionCreate', async interaction => {
 		if (!profileData) {
 			const tos = new MessageEmbed()
 				.setColor('#89c3eb')
-				.setTitle('利用規約')
+				.setTitle('利用規約等への同意が必要です。')
 				.setAuthor({ name: interaction.user.tag, iconURL: interaction.user.displayAvatarURL({ format: 'png' }), url: interaction.user.displayAvatarURL({ format: 'png' }) })
-				.setDescription('第一項：なんちゃらなんちゃら......')
+				.setDescription('[Bot利用規約](https://hitori-yuu.github.io/Hitrin-web/terms.html)\n[プライバシーポリシー](https://hitori-yuu.github.io/Hitrin-web/privacy.html)')
 				.setFooter({ text: 'Hitrin', iconURL: client.user.displayAvatarURL({ format: 'png' }) })
 				.setTimestamp();
 			const profile = await profileModel.create({
@@ -140,9 +140,9 @@ client.on('interactionCreate', async interaction => {
 		if (profileData && !profileData.tos) {
 			const tos = new MessageEmbed()
 				.setColor('#89c3eb')
-				.setTitle('利用規約')
+				.setTitle('利用規約等への同意が必要です。')
 				.setAuthor({ name: interaction.user.tag, iconURL: interaction.user.displayAvatarURL({ format: 'png' }), url: interaction.user.displayAvatarURL({ format: 'png' }) })
-				.setDescription('第一項：なんちゃらなんちゃら......')
+				.setDescription('[Bot利用規約](https://hitori-yuu.github.io/Hitrin-web/terms.html)\n[プライバシーポリシー](https://hitori-yuu.github.io/Hitrin-web/privacy.html)')
 				.setFooter({ text: 'Hitrin', iconURL: client.user.displayAvatarURL({ format: 'png' }) })
 				.setTimestamp();
 			return interaction.reply({ embeds: [tos], components: [new MessageActionRow().addComponents([tos_ok, tos_no])] });
@@ -162,8 +162,7 @@ client.on('interactionCreate', async interaction => {
 		profile.save();
 	}
 	catch (error) {
-		console.error('[異常]\n' + error)
-		error_unknown(interaction, error);
+		return console.error('[異常]\n' + error), error_unknown(interaction, error);
 	}
 });
 

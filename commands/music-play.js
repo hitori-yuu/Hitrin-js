@@ -18,16 +18,11 @@ module.exports = {
         if (!permissions.has('CONNECT')) return interaction.reply('権限がありません: `CONNECT`');
         if (!permissions.has('SPEAK')) return interaction.reply('権限がありません: `SPEAK`');
 
-        try {
-            client.distube.play(channel, arg, {
-                member: interaction.member,
-                textChannel: interaction.channel,
-                interaction
-            })
-            await interaction.reply('再生します。')
-        } catch (e) {
-            await interaction.reply(`エラーが発生しました。`)
-            console.error('[異常]\n' + e)
-        }
+        client.distube.play(channel, arg, {
+            member: interaction.member,
+            textChannel: interaction.channel,
+            interaction
+        })
+        await interaction.reply('再生します。')
 	},
 };

@@ -8,7 +8,7 @@ module.exports = {
 		.setDescription('曲を再生するステータスを表示します。'),
 	async execute(interaction, client) {
         const queue = client.distube.getQueue(interaction)
-        if (!queue) return interaction.reply(`キューに曲がないため表示できません。`)
+        if (!queue) return interaction.reply('キューに曲がないため表示できません。')
 
         const file = new MessageAttachment('D:/folder/Hitrin/bot/js/v1/materials/music.png');
         const embed = new MessageEmbed()
