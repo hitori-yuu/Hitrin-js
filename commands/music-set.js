@@ -49,7 +49,7 @@ module.exports = {
         }
 
 		const queue = client.distube.getQueue(interaction)
-		if (!queue) return interaction.reply(`キューに曲がないため表示できません。`)
+		if (!queue) return interaction.reply('キューに曲がないため表示できません。')
 		const file = new MessageAttachment('D:/folder/Hitrin/bot/js/v1/materials/music.png');
 		const embed = new MessageEmbed()
 			.setColor('#89c3eb')

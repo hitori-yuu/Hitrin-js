@@ -14,13 +14,8 @@ module.exports = {
         if (!permissions.has('SPEAK')) return interaction.reply('権限がありません: `SPEAK`');
 
         const queue = client.distube.getQueue(interaction)
-        if (!queue) return interaction.reply(`キューに曲がありません。`)
-        try {
-          queue.resume()
-          await interaction.reply('一時停止中の曲を再生します。')
-        } catch (e) {
-          await interaction.reply('エラーが発生しました。')
-          console.error('[異常]\n' + e)
-        }
+        if (!queue) return interaction.reply('キューに曲がありません。')
+        queue.resume()
+        await interaction.reply('一時停止中の曲を再生します。')
 	},
 };
