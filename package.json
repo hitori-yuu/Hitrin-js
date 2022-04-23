@@ -16,6 +16,7 @@
     "@distube/soundcloud": "^1.1.0",
     "@distube/spotify": "^1.2.1",
     "@distube/yt-dlp": "^1.0.2",
+    "@distube/ytdl-core": "^4.11.3",
     "@imlinhanchao/google-translate-api": "^8.0.1",
     "axios": "^0.23.0",
     "date-utils": "^1.2.21",
