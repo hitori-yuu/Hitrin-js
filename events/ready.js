@@ -11,3 +11,5 @@ module.exports = {
 		}, 10000);
 	},
 };
+
+// client.user.setActivity(`テスト中のため使用できません。`, { type: 'PLAYING' }, { status: 'idle' });

@@ -4,6 +4,9 @@ const profileModel = require('../models/profileSchema');
 module.exports = {
 	name: 'interactionCreate',
 	async execute(client, interaction) {
+        if (interaction.user.bot) return;
+        if (!interaction.isButton()) return;
+
         if (interaction.customId === 'tos_ok') {
 			const profile = await profileModel.findOneAndUpdate(
 				{

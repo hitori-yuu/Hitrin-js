@@ -4,6 +4,8 @@ module.exports = {
 	name: 'interactionCreate',
 	async execute(client, interaction) {
         if (interaction.user.bot) return;
+        if (!interaction.isButton()) return;
+
         const file = new MessageAttachment('D:/folder/Hitrin/bot/js/v1/materials/music.png');
         if (interaction.customId === 'skip') {
             const queue = client.distube.getQueue(interaction)

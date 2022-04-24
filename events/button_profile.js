@@ -4,6 +4,9 @@ const profileModel = require('../models/profileSchema');
 module.exports = {
 	name: 'interactionCreate',
 	async execute(client, interaction) {
+        if (interaction.user.bot) return;
+        if (!interaction.isButton()) return;
+
         const profileData = await profileModel.findOne({ _id: interaction.user.id });
         if (!profileData) return;
         let Birthday = '非公開';
