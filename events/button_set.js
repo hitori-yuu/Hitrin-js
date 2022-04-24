@@ -4,6 +4,9 @@ const guildsModel = require('../models/guildsSchema');
 module.exports = {
 	name: 'interactionCreate',
 	async execute(client, interaction) {
+        if (interaction.user.bot) return;
+        if (!interaction.isButton()) return;
+
 		const invalid = new MessageEmbed()
 			.setColor('#ba2636')
 			.setTitle('実行に失敗')
