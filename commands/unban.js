@@ -12,23 +12,7 @@ module.exports = {
 		const user = interaction.options.getUser('対象');
 		const reasons = interaction.options.getString('理由') || 'None';
 
-		const permission = new MessageEmbed()
-			.setColor('#ba2636')
-			.setTitle('実行に失敗')
-			.setAuthor({ name: interaction.user.tag, iconURL: interaction.user.displayAvatarURL({ format: 'png' }), url: interaction.user.displayAvatarURL({ format: 'png' }) })
-			.setDescription('あなたは実行に必要な権限を持っていません。 実行に必要な権限: `BAN_MEMBERS`')
-			.setFooter({ text: 'Hitrin', iconURL: client.user.displayAvatarURL({ format: 'png' }) })
-			.setTimestamp();
-
-		const invalid = new MessageEmbed()
-			.setColor('#ba2636')
-			.setTitle('実行に失敗')
-			.setAuthor({ name: interaction.user.tag, iconURL: interaction.user.displayAvatarURL({ format: 'png' }), url: interaction.user.displayAvatarURL({ format: 'png' }) })
-			.setDescription('存在しないユーザー')
-			.setFooter({ text: 'Hitrin', iconURL: client.user.displayAvatarURL({ format: 'png' }) })
-			.setTimestamp();
-
-		const success = new MessageEmbed()
+		const embed = new MessageEmbed()
 			.setColor('#028760')
 			.setTitle('ユーザーの禁止を解除(UNBAN)')
 			.setAuthor({ name: interaction.user.tag, iconURL: interaction.user.displayAvatarURL({ format: 'png' }), url: interaction.user.displayAvatarURL({ format: 'png' }) })
@@ -36,15 +20,32 @@ module.exports = {
 			.setFooter({ text: 'Hitrin', iconURL: client.user.displayAvatarURL({ format: 'png' }) })
 			.setTimestamp();
 
-		if (!user) {
-			return await interaction.reply({ embeds: [invalid] });
-		}
-		else if (!interaction.member.permissions.has('BAN_MEMBERS')) {
-			return await interaction.reply({ embeds: [permission] });
-		}
-		else {
-			interaction.guild.bans.remove(user.id, { reason: '「' + reasons + `」by:${interaction.user.tag}` });
-			await interaction.reply({ embeds: [success] });
-		}
+		if (!user) return error_invalid(interaction, client, 'ユーザー');
+		if (!guild.bans.fetch(user.id)) return error_invalid(interaction, client, 'ユーザー');
+		if (!interaction.member.permissions.has('BAN_MEMBERS')) return error_permission(interaction, client, 'BAN_MEMBERS');
+
+		interaction.guild.bans.remove(user.id, { reason: '「' + reasons + `」by:${interaction.user.tag}` });
+		await interaction.reply({ embeds: [embed] });
 	},
 };
+
+function error_invalid(interaction, client, invalid) {
+	const error = new MessageEmbed()
+		.setColor('#ba2636')
+		.setTitle('実行失敗')
+		.setAuthor({ name: interaction.user.tag, iconURL: interaction.user.displayAvatarURL({ format: 'png' }), url: interaction.user.displayAvatarURL({ format: 'png' }) })
+		.setDescription(`実行に必須なパラメータが無効です: \`${invalid || 'None'}\``)
+		.setFooter({ text: 'Hitrin', iconURL: client.user.displayAvatarURL({ format: 'png' }) })
+		.setTimestamp();
+	return interaction.reply({ embeds: [error] });
+}
+function error_permission(interaction, client, permission) {
+	const error = new MessageEmbed()
+		.setColor('#ba2636')
+		.setTitle('実行失敗')
+		.setAuthor({ name: interaction.user.tag, iconURL: interaction.user.displayAvatarURL({ format: 'png' }), url: interaction.user.displayAvatarURL({ format: 'png' }) })
+		.setDescription(`実行に必須な権限がありません: \`${permission || 'None'}\``)
+		.setFooter({ text: 'Hitrin', iconURL: client.user.displayAvatarURL({ format: 'png' }) })
+		.setTimestamp();
+	return interaction.reply({ embeds: [error] });
+}

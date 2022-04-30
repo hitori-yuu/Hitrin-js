@@ -6,9 +6,9 @@ module.exports = {
 	data: new SlashCommandBuilder()
 		.setName('docs')
 		.setDescription('discord.jsのドキュメントから検索します。')
-		.addStringOption(option => option.setName('検索ワード').setDescription('任意の文字列を入力')),
+		.addStringOption(option => option.setName('検索').setDescription('任意の文字列を入力').setRequired(true)),
 	async execute(interaction) {
-		const args = interaction.options.getString('検索ワード');
+		const args = interaction.options.getString('検索');
 		const uri = `https://djsdocs.sorta.moe/v2/embed?src=stable&q=${encodeURIComponent(args)}`;
 		axios
 			.get(uri).then(async (embed) => {

@@ -7,7 +7,7 @@ module.exports = {
 	data: new SlashCommandBuilder()
 		.setName('get-coin')
 		.setDescription('コインを受け取るために行動します。')
-		.addStringOption(option => option.setName('種類').setDescription('どんな行動をするか選択').addChoice('仕事', 'work').addChoice('盗む', 'steal').addChoice('手伝い', 'assist')),
+		.addStringOption(option => option.setName('種類').setDescription('行動の種類をするか選択').addChoice('仕事', 'work').addChoice('盗む', 'steal').addChoice('手伝い', 'assist').setRequired(true)),
 	async execute(interaction) {
 		if (cooldown.has(interaction.user.id)) return await interaction.reply('This command can only be executed once every 5 minutes.');
 		const type = interaction.options.getString('type');

@@ -7,7 +7,7 @@ module.exports = {
 	data: new SlashCommandBuilder()
 		.setName('check-url')
 		.setDescription('Norton Safewebを使って、サイトが危険にさらされているかどうかを確認します。')
-		.addStringOption(option => option.setName('url').setDescription('the url')),
+		.addStringOption(option => option.setName('url').setDescription('URLまたはドメインを入力').setRequired(true)),
 	async execute(interaction) {
 		const page = interaction.options.getString('url');
         const file = new MessageAttachment('D:/folder/Hitrin/bot/js/v1/materials/norton_logo.png');

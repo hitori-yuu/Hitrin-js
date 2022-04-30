@@ -9,7 +9,7 @@ module.exports = {
 	data: new SlashCommandBuilder()
 		.setName('info')
 		.setDescription('指定したものの詳細を表示します。')
-		.addStringOption(option => option.setName('種類').setDescription('種類を選択').addChoice('ボット', 'Bot').addChoice('ユーザー', 'User').addChoice('メンバー', 'Member').addChoice('サーバー', 'Server'))
+		.addStringOption(option => option.setName('種類').setDescription('種類を選択').addChoice('ボット', 'Bot').addChoice('ユーザー', 'User').addChoice('メンバー', 'Member').addChoice('サーバー', 'Server').setRequired(true))
 		.addUserOption(option => option.setName('対象').setDescription('ユーザーかメンバーを選択')),
 	async execute(interaction, client) {
 		const type = interaction.options.getString('種類');
@@ -101,9 +101,13 @@ module.exports = {
 			.setFooter({ text: 'Hitrin', iconURL: client.user.displayAvatarURL({ format: 'png' }) })
 			.setTimestamp();
 
-		try {
-			switch (type) {
+		switch (type) {
+			case 'User':
+				if (!user) return error_invalid(interaction, client, 'ユーザー');
+				await interaction.reply({ embeds: [u] });
+				break;
 			case 'Member':
+				if (!member) return error_invalid(interaction, client, 'メンバー');
 				await interaction.reply({ embeds: [m] });
 				break;
 			case 'Server':
@@ -112,16 +116,9 @@ module.exports = {
 			case 'Bot':
 				await interaction.reply({ embeds: [b] });
 				break;
-			case '':
-				error_invalid(interaction, client, '種類')
-				break;
 			default:
 				await interaction.reply({ embeds: [u] });
 				break;
-			}
-		}
-		catch (error) {
-			error_unknown(interaction, client, error);
 		}
 	},
 };
@@ -135,21 +132,4 @@ function error_invalid(interaction, client, invalid) {
 		.setFooter({ text: 'Hitrin', iconURL: client.user.displayAvatarURL({ format: 'png' }) })
 		.setTimestamp();
 	return interaction.reply({ embeds: [error] });
-}
-function error_unknown(interaction, client, error) {
-	const err = new MessageEmbed()
-		.setColor('#ba2636')
-		.setTitle('実行失敗')
-		.setAuthor({ name: interaction.user.tag, iconURL: interaction.user.displayAvatarURL({ format: 'png' }), url: interaction.user.displayAvatarURL({ format: 'png' }) })
-		.setDescription('無知のエラーが発生しました。既に開発者に報告されています。')
-		.setFooter({ text: 'Hitrin', iconURL: client.user.displayAvatarURL({ format: 'png' }) })
-		.setTimestamp();
-	const error_log = new MessageEmbed()
-		.setColor('#ba2636')
-		.setTitle('エラー')
-		.setDescription('【エラー内容】\n' + codeBlock('js', error))
-		.setFooter({ text: 'Hitrin', iconURL: client.user.displayAvatarURL({ format: 'png' }) })
-		.setTimestamp();
-	const log = client.channels.cache.get('919599721184628807').send({ embeds: [error_log] });
-	return interaction.reply({ embeds: [err] }), log;
 }
