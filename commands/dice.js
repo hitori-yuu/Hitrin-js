@@ -5,8 +5,8 @@ module.exports = {
 	data: new SlashCommandBuilder()
 		.setName('dice')
 		.setDescription('ダイスを振ります。')
-		.addNumberOption(option => option.setName('回数').setDescription('何回降りますか'))
-		.addNumberOption(option => option.setName('面数').setDescription('何面ですか')),
+		.addNumberOption(option => option.setName('回数').setDescription('回数を入力').setRequired(true))
+		.addNumberOption(option => option.setName('面数').setDescription('面数を入力').setRequired(true)),
 	async execute(interaction) {
 		const times = interaction.options.getNumber('回数');
 		const side = interaction.options.getNumber('面数');

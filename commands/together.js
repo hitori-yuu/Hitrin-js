@@ -7,15 +7,15 @@ module.exports = {
 	data: new SlashCommandBuilder()
 		.setName('together')
 		.setDescription('指定したチャンネルにて任意のアクティビティを開始します。')
-		.addStringOption(option => option.setName('種類').setDescription('種類を選択').addChoice('YouTube', 'youtube').addChoice('ポーカー', 'poker').addChoice('チェス', 'chess').addChoice('チェッカーズ', 'checkers').addChoice('裏切者', 'betrayal').addChoice('釣り', 'fishing').addChoice('文字タイル', 'lettertile').addChoice('ワードスナック', 'wordsnack')),
+		.addStringOption(option => option.setName('種類').setDescription('種類を選択').addChoice('YouTube', 'youtube').addChoice('ポーカー', 'poker').addChoice('チェス', 'chess').addChoice('チェッカーズ', 'checkers').addChoice('裏切者', 'betrayal').addChoice('釣り', 'fishing').addChoice('文字タイル', 'lettertile').addChoice('ワードスナック', 'wordsnack').setRequired(true))
+        .addChannelOption(option => option.setName('チャンネル').setDescription('チャンネルを選択')),
         async execute(interaction, client) {
             const type = interaction.options.getString('種類');
             const ch = interaction.options.getChannel('チャンネル');
-            if (!ch) return interaction.reply('無効なチャンネルです');
+            if (!ch) return error_invalid(interaction, client, 'チャンネル')
 
             client.discordTogether = new DiscordTogether(client);
-            try {
-                switch (type) {
+            switch (type) {
                 case 'youtube':
                     await client.discordTogether.createTogetherCode(ch.id, type).then(async invite => {
                         return interaction.reply(`**YouTube**\n${invite.code}`);
@@ -56,15 +56,6 @@ module.exports = {
                         return interaction.reply(`**ワードスナック**\n${invite.code}`);
                     })
                     break;
-                case '':
-                    error_invalid(interaction, client, '種類')
-                    break;
-                default:
-                    break;
-                }
-            }
-            catch (error) {
-                error_unknown(interaction, client, error);
             }
 	},
 };

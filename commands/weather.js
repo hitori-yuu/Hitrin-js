@@ -1,6 +1,3 @@
-/* eslint-disable no-shadow */
-/* eslint-disable no-redeclare */
-/* eslint-disable no-var */
 const { SlashCommandBuilder } = require('@discordjs/builders');
 const { MessageEmbed } = require('discord.js');
 const weather = require('weather-js');
@@ -10,9 +7,9 @@ module.exports = {
 	data: new SlashCommandBuilder()
 		.setName('weather')
 		.setDescription('天気を表示')
-		.addStringOption(option => option.setName('地名').setDescription('任意の文字列を入力'))
-		.addStringOption(option => option.setName('日付').setDescription('日付を選択').addChoice('今日', 'today').addChoice('明日', 'tomorrow'))
-		.addStringOption(option => option.setName('温度の種類').setDescription('種類を選択').addChoice('摂氏℃', 'C').addChoice('華氏℉', 'F')),
+		.addStringOption(option => option.setName('地名').setDescription('任意の文字列を入力').setRequired(true))
+		.addStringOption(option => option.setName('日付').setDescription('日付を選択').addChoice('今日', 'today').addChoice('明日', 'tomorrow').setRequired(true))
+		.addStringOption(option => option.setName('温度の種類').setDescription('種類を選択').addChoice('摂氏℃', 'C').addChoice('華氏℉', 'F').setRequired(true)),
 	async execute(interaction, client) {
 		const location = interaction.options.getString('地名');
 		const type = interaction.options.getString('日付') || 'today';

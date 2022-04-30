@@ -7,6 +7,6 @@ module.exports = {
 		.setDescription('test'),
 	async execute(interaction, client) {
 		client.emit('guildMemberAdd', interaction.member);
-		interaction.reply('test');
+		interaction.reply('設定している場合、指定のチャンネルに歓迎メッセージを送信しました。');
 	},
 };

@@ -5,7 +5,7 @@ module.exports = {
 	data: new SlashCommandBuilder()
 		.setName('del')
 		.setDescription('指定のコマンドをすべて削除。')
-		.addStringOption(option => option.setName('種類').setDescription('種類を選択').addChoice('ギルドコマンド', 'guild').addChoice('アプリケーションコマンド', 'application')),
+		.addStringOption(option => option.setName('種類').setDescription('種類を選択').addChoice('ギルドコマンド', 'guild').addChoice('アプリケーションコマンド', 'application').setRequired(true)),
 	async execute(interaction, client) {
 		if (!interaction.user.id === '874184214130602015') return;
 		const type = interaction.options.getString('種類');
