@@ -24,6 +24,7 @@ module.exports = {
 			.setTimestamp();
 
 		if (!user) return error_invalid(interaction, client, 'ユーザー');
+		if (interaction.guild.ownerId !== interaction.user.id && member.roles.highest.comparePositionTo(interaction.member.roles.highest) >= 0) return error_invalid(interaction, client, 'メンバー');
 		if (!user.bannable) return error_invalid(interaction, client, 'ユーザー');
 		if (!interaction.member.permissions.has('BAN_MEMBERS')) return error_permission(interaction, client, 'BAN_MEMBERS');
 

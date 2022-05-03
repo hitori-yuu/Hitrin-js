@@ -21,6 +21,7 @@ module.exports = {
 			.setTimestamp();
 
 		if (!member) return error_invalid(interaction, client, 'メンバー');
+		if (interaction.guild.ownerId !== interaction.user.id && member.roles.highest.comparePositionTo(interaction.member.roles.highest) >= 0) return error_invalid(interaction, client, 'メンバー');
 		if (!member.kickable) return error_invalid(interaction, client, 'メンバー');
 		else if (!interaction.member.permissions.has('KICK_MEMBERS')) return error_permission(interaction, client, 'KICK_MEMBERS');
 

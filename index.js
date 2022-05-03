@@ -8,12 +8,14 @@ require('dotenv').config();
 const profileModel = require('./models/profileSchema');
 const guildsModel = require('./models/guildsSchema');
 
-
-const options = {
+const client = new Client({
 	intents: ['GUILDS', 'GUILD_BANS', 'GUILD_MESSAGES', 'GUILD_MEMBERS', 'GUILD_PRESENCES', 'GUILD_VOICE_STATES'],
-};
+	allowedMentions: {
+	  parse: []
+	},
+	partials: ["CHANNEL", "GUILD_MEMBER", "MESSAGE", "REACTION", "USER"]
+});
 
-const client = new Client(options);
 client.distube = new DisTube(client, {
 	leaveOnStop: false,
 	searchSongs: 5,
@@ -86,6 +88,7 @@ client.on('interactionCreate', async interaction => {
 					autoMod: true,
 					autoPublish: true,
 					globalBan: true,
+					auth_role: 'none',
 					log: 'none',
 					level: 'normal',
 				}

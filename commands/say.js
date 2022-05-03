@@ -1,4 +1,5 @@
 const { SlashCommandBuilder } = require('@discordjs/builders');
+const { Util } = require('discord.js')
 require('dotenv').config();
 
 module.exports = {
@@ -7,9 +8,8 @@ module.exports = {
 		.setDescription('任意の文字列をボットに言わせます。')
 		.addStringOption(option => option.setName('言葉').setDescription('言わせたい言葉を入力')),
 	async execute(interaction) {
-		const arg = interaction.options.getString('言葉') || '.';
+		const arg = interaction.options.getString('言葉');
 		if (!arg) return error_invalid(interaction, client, '言葉')
-		if (arg.includes('@everyone' || '@here')) return;
 		await interaction.reply(arg);
 	},
 };

@@ -19,6 +19,10 @@ module.exports = {
 			.setCustomId('welcome')
 			.setStyle('PRIMARY')
 			.setLabel('新規参加');
+		const auth = new MessageButton()
+			.setCustomId('auth')
+			.setStyle('PRIMARY')
+			.setLabel('参加認証');
 		const globalban = new MessageButton()
 			.setCustomId('globalban')
 			.setStyle('PRIMARY')
@@ -37,22 +41,26 @@ module.exports = {
 				{ name: '__**お知らせ:**__', value: 'ボットのアップデートなどのお知らせを受け取るチャンネルを設定します。' },
 				{ name: '__**新規参加:**__', value: 'サーバーに新たなユーザーが参加した際に歓迎のメッセージを送信するチャンネルを設定します。' },
 				{ name: '__**グローバルBAN:**__', value: '危険なユーザーをあらかじめBANしておく機能を設定します。__(β機能)__' },
+				{ name: '__**認証権限:**__', value: 'ユーザーが `/auth` コマンドを使用した際に取得するロールを設定します。これは参加認証に使用できるものです。' },
 				{ name: '__**自動管理:**__', value: 'サーバー内の様々な管理をボットが自動で行う機能を設定します。__(β機能)__' },
 			)
 			.setThumbnail(client.user.displayAvatarURL({ format: 'png' }))
 			.setFooter({ text: 'Hitrin', iconURL: client.user.displayAvatarURL({ format: 'png' }) })
 			.setTimestamp();
-		const permission = new MessageEmbed()
-			.setColor('#ba2636')
-			.setTitle('実行に失敗')
-			.setAuthor({ name: interaction.user.tag, iconURL: interaction.user.displayAvatarURL({ format: 'png' }), url: interaction.user.displayAvatarURL({ format: 'png' }) })
-			.setDescription('あなたは実行に必要な権限を持っていません。 実行に必要な権限: `MANAGE_GUILD`')
-			.setFooter({ text: 'Hitrin', iconURL: client.user.displayAvatarURL({ format: 'png' }) })
-			.setTimestamp();
 
-		if (!interaction.member.permissions.has('MANAGE_GUILD')) {
-				return await interaction.reply({ embeds: [permission] });
-		}
-		await interaction.reply({ embeds: [home], components: [new MessageActionRow().addComponents([nick, announce, welcome, globalban, automod])] });
+		if (!interaction.member.permissions.has('MANAGE_GUILD')) return error_permission(interaction, client, 'MANAGE_GUILD');
+		await interaction.reply({ embeds: [home], components: [new MessageActionRow().addComponents([nick, announce, welcome, auth, globalban])] });
+		// , automod
 	},
 };
+
+function error_permission(interaction, client, permission) {
+	const error = new MessageEmbed()
+		.setColor('#ba2636')
+		.setTitle('実行失敗')
+		.setAuthor({ name: interaction.user.tag, iconURL: interaction.user.displayAvatarURL({ format: 'png' }), url: interaction.user.displayAvatarURL({ format: 'png' }) })
+		.setDescription(`実行に必須な権限がありません: \`${permission || 'None'}\``)
+		.setFooter({ text: 'Hitrin', iconURL: client.user.displayAvatarURL({ format: 'png' }) })
+		.setTimestamp();
+	return interaction.reply({ embeds: [error] });
+}
