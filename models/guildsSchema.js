@@ -8,6 +8,7 @@ const guildsSchema = new mongoose.Schema({
 		autoMod: { type: Boolean, default: true },
 		autoPublish: { type: Boolean, default: true },
 		globalBan: { type: Boolean, default: true },
+		auth_role: { type: String },
 		log: { type: String },
 		level: { type: String, enum: ['master', 'high', 'normal', 'low'] },
 	}
