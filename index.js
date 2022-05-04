@@ -77,8 +77,8 @@ client.on('interactionCreate', async interaction => {
 	if (!command) return;
 
 	try {
-		profileData = await profileModel.findOne({ _id: interaction.user.id });
-		guildsData = await guildsModel.findOne({ _id: interaction.guild.id });
+		const profileData = await profileModel.findOne({ _id: interaction.user.id });
+		const guildsData = await guildsModel.findOne({ _id: interaction.guild.id });
 		if (!guildsData) {
 			const guild = await guildsModel.create({
 				_id: interaction.guild.id,

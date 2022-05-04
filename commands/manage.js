@@ -9,8 +9,8 @@ module.exports = {
 	data: new SlashCommandBuilder()
 		.setName('manage')
 		.setDescription('ボットの管理コマンド。※ボット管理者のみ実行可能')
-		.addStringOption(option => option.setName('種類').setDescription('種類を選択').addChoice('コイン', 'coin').addChoice('評価値', 'evaluation').addChoice('ボットの名前', 'bot').addChoice('グローバルBAN', 'g-ban'))
-		.addStringOption(option => option.setName('変更の種類').setDescription('種類を選択').addChoice('設定', 'set').addChoice('加増', 'increase').addChoice('減少', 'decrease').addChoice('追加', 'addition').addChoice('削除', 'deletion').addChoice('ユーザーネーム', 'username').addChoice('アバター', 'avatar'))
+		.addStringOption(option => option.setName('種類').setDescription('種類を選択').addChoice('コイン', 'coin').addChoice('評価値', 'evaluation').addChoice('ボットの名前', 'bot').addChoice('グローバルBAN', 'g-ban').setRequired(true))
+		.addStringOption(option => option.setName('変更の種類').setDescription('種類を選択').addChoice('設定', 'set').addChoice('加増', 'increase').addChoice('減少', 'decrease').addChoice('追加', 'addition').addChoice('削除', 'deletion').addChoice('ユーザーネーム', 'username').addChoice('アバター', 'avatar').setRequired(true))
 		.addUserOption(option => option.setName('ユーザー').setDescription('ユーザーを選択'))
 		.addStringOption(option => option.setName('文字列').setDescription('任意の文字列を入力'))
 		.addNumberOption(option => option.setName('数値').setDescription('任意の数値を入力')),
@@ -191,6 +191,7 @@ module.exports = {
 				.setThumbnail(interaction.user.displayAvatarURL({ format: 'png' }))
 				.setFooter({ text: 'Hitrin', iconURL: client.user.displayAvatarURL({ format: 'png' }) })
 				.setTimestamp();
+
 			if (change === 'addition') {
 				const gbanData = await gbanModel.findOne({ _id: user.id });
 				if (gbanData) {
@@ -204,32 +205,53 @@ module.exports = {
 					});
 					gban.save();
 
-					client.guilds.cache.forEach((guild) => {
-						const guildsData = guildsModel.findOne({ _id: interaction.guild.id });
-						if (guildsData.globalBan === true) {
-							guild.bans.create(user, { reason: 'HitorinGlobalBAN「' + string + '」', days: '7' });
+					client.guilds.cache.forEach(async (guild) => {
+						const guildsData = await guildsModel.findOne({ _id: guild.id });
+						try {
+							if (!guildsData) return;
+							if (guildsData.settings.globalBan === false) return;
+							if (!guild.me.permissions.has('BAN_MEMBERS')) return;
+
+							const g_ban_log = new MessageEmbed()
+								.setColor('#89c3eb')
+								.setTitle('ボット管理')
+								.setDescription(`${guild.name}(${guild.id}) にて ${user.tag}(${user.id}) をGlobalBanしました。`)
+								.setFooter({ text: 'Hitrin', iconURL: client.user.displayAvatarURL({ format: 'png' }) })
+								.setTimestamp();
+							client.channels.cache.get('879943806118678528').send({ embeds: [g_ban_log] });
+							guild.bans.create(user, { reason: 'HitrinGlobalBAN「' + string + '」', days: '7' });
+						} catch(e) {
+							return console.log('[異常]\n'+ guild.name + e);
 						}
-						else {return;}
 					});
 					await interaction.reply({ embeds: [g_ban] });
 				}
 			}
 			if (change === 'deletion') {
 				const gbanData = await gbanModel.findOne({ _id: user.id });
-				if (gbanData) {
-					gbanData.remove();
-					client.guilds.cache.forEach((guild) => {
-						try {
-							guild.bans.remove(user, { reason: 'HitorinGlobalBAN(REMOVE)「' + string + '」' });
-						}
-						catch (err) {
-							return console.log(err);
-						}
-					});
-					await interaction.reply({ embeds: [g_ban] });
-				}
-				else if (!gbanData) {
+				if (!gbanData) {
 					await interaction.reply('そのユーザーはGlobalBanされていません。');
+				}
+				else if (gbanData) {
+					gbanData.remove();
+					client.guilds.cache.forEach(async (guild) => {
+						try {
+							const guildsData = await guildsModel.findOne({ _id: guild.id });
+							if (guildsData.settings.globalBan === false) return;
+
+							guild.bans.remove(user, { reason: 'HitrinGlobalBAN(REMOVE)「' + string + '」' });
+							const g_ban_log = new MessageEmbed()
+								.setColor('#89c3eb')
+								.setTitle('ボット管理')
+								.setDescription(`${guild.name}(${guild.id}) にて ${user.tag}(${user.id}) のGlobalBanを解除しました。`)
+								.setFooter({ text: 'Hitrin', iconURL: client.user.displayAvatarURL({ format: 'png' }) })
+								.setTimestamp();
+							client.channels.cache.get('879943806118678528').send({ embeds: [g_ban_log] });
+						} catch(e) {
+							return console.log('[異常]\n'+ guild.name + e);
+						}
+					})
+					await interaction.reply({ embeds: [g_ban] });
 				}
 			}
 		}
