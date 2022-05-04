@@ -168,13 +168,13 @@ module.exports = {
 			const filter = msg => msg.author.id === interaction.user.id;
 			interaction.channel.awaitMessages({ filter, max: 1, time: 10000 })
 				.then(collected => {
-					if (!collected.size) return interaction.channel.send('タイムアウト');
+					if (!collected.size) return interaction.reply('タイムアウト');
 					else if (collected.first().content === '-reset') {
-						interaction.channel.send('設定完了: ニックネームをリセットしました。');
+						interaction.reply('設定完了: ニックネームをリセットしました。');
 						interaction.guild.me.setNickname('');
 					}
 					else {
-						interaction.channel.send('設定完了: **' + collected.first().content + '** に変更しました。');
+						interaction.reply('設定完了: **' + collected.first().content + '** に変更しました。');
 						interaction.guild.me.setNickname(collected.first().content);
 					}
 				});
@@ -194,12 +194,12 @@ module.exports = {
 			const filter = msg => msg.author.id === interaction.user.id;
 			interaction.channel.awaitMessages({ filter, max: 1, time: 15000 })
 				.then(collected => {
-					if (!collected.size) return interaction.channel.send('タイムアウト');
+					if (!collected.size) return interaction.reply('タイムアウト');
 					const channel = interaction.guild.channels.cache.find((ch) => ch.name === collected.first().content) || interaction.guild.channels.cache.get(collected.first().content);
 					if (!channel) return error_invalid(interaction, client, 'チャンネル')
 					client.channels.cache.get('879943806118678528').send({ embeds: [announce_log] });
 					client.channels.cache.get('913821026377420910').addFollower(channel.id);
-					interaction.channel.send('設定完了: **' + channel.name + '** でお知らせを受け取ります。', { ephemeral: true });
+					interaction.reply('設定完了: **' + channel.name + '** でお知らせを受け取ります。', { ephemeral: true });
 				});
 		}
 		else if (interaction.customId === 'announce_no') {
@@ -224,7 +224,7 @@ module.exports = {
 			const filter = msg => msg.author.id === interaction.user.id;
 			interaction.channel.awaitMessages({ filter, max: 1, time: 15000 })
 				.then(async collected => {
-					if (!collected.size) return interaction.channel.send('タイムアウト');
+					if (!collected.size) return interaction.reply('タイムアウト');
 					const channel = interaction.guild.channels.cache.find((ch) => ch.name === collected.first().content) || interaction.guild.channels.cache.get(collected.first().content);
 					if (!channel) return error_invalid(interaction, client, 'チャンネル')
 					const guild = await guildsModel.findOneAndUpdate(
@@ -238,7 +238,7 @@ module.exports = {
 						},
 					);
 					guild.save();
-					interaction.channel.send('設定完了: <#' + channel.id + '> で新規メンバーへの歓迎メッセージを送ります。', { ephemeral: true });
+					interaction.reply('設定完了: <#' + channel.id + '> で新規メンバーへの歓迎メッセージを送ります。', { ephemeral: true });
 			});
 		}
 		else if (interaction.customId === 'welcome_no') {
@@ -253,7 +253,7 @@ module.exports = {
 				},
 			);
 			guild.save();
-			interaction.channel.send('設定完了: このサーバでの新規メンバーへの歓迎メッセージを**無効**にしました', { ephemeral: true });
+			interaction.reply('設定完了: このサーバでの新規メンバーへの歓迎メッセージを**無効**にしました', { ephemeral: true });
 		}
 		else if (interaction.customId === 'auth') {
 			await interaction.reply({
@@ -270,7 +270,7 @@ module.exports = {
 			const filter = msg => msg.author.id === interaction.user.id;
 			interaction.channel.awaitMessages({ filter, max: 1, time: 30000 })
 				.then(async collected => {
-					if (!collected.size) return interaction.channel.send('タイムアウト');
+					if (!collected.size) return interaction.reply('タイムアウト');
 					const role = interaction.guild.roles.cache.find((role) => role.name === collected.first().content) || interaction.guild.roles.cache.get(collected.first().content);
 					if (!role) return error_invalid(interaction, client, 'ロール')
 					const guild = await guildsModel.findOneAndUpdate(
@@ -286,7 +286,7 @@ module.exports = {
 						},
 					);
 					guild.save();
-					interaction.channel.send('設定完了: **' + role.name + '**を `/auth` コマンドを実行したユーザーに付与します。', { ephemeral: true });
+					interaction.reply('設定完了: **' + role.name + '**を `/auth` コマンドを実行したユーザーに付与します。', { ephemeral: true });
 			});
 		}
 		else if (interaction.customId === 'auth_no') {
@@ -303,7 +303,7 @@ module.exports = {
 				},
 			);
 			guild.save();
-			interaction.channel.send('設定完了: このサーバでの認証権限を**無効**にしました', { ephemeral: true });
+			interaction.reply('設定完了: このサーバでの認証権限を**無効**にしました', { ephemeral: true });
 		}
 		else if (interaction.customId === 'globalban') {
 			await interaction.reply({
@@ -324,7 +324,7 @@ module.exports = {
 				},
 			);
 			guild.save();
-			interaction.channel.send('設定完了: このサーバでのグローバルBANを**有効**にしました。', { ephemeral: true });
+			interaction.reply('設定完了: このサーバでのグローバルBANを**有効**にしました。', { ephemeral: true });
 		}
 		else if (interaction.customId === 'globalban_no') {
 			const guild = await guildsModel.findOneAndUpdate(
@@ -338,7 +338,7 @@ module.exports = {
 				},
 			);
 			guild.save();
-			interaction.channel.send('設定完了: このサーバでのグローバルBANを**無効**にしました。', { ephemeral: true });
+			interaction.reply('設定完了: このサーバでのグローバルBANを**無効**にしました。', { ephemeral: true });
 		}
 		else if (interaction.customId === 'automod') {
 			await interaction.reply({
@@ -359,7 +359,7 @@ module.exports = {
 				},
 			);
 			guild.save();
-			interaction.channel.send('設定完了: このサーバでの自動管理を**有効**にしました。', { ephemeral: true });
+			interaction.reply('設定完了: このサーバでの自動管理を**有効**にしました。', { ephemeral: true });
 		}
 		else if (interaction.customId === 'automod_no') {
 			const guild = await guildsModel.findOneAndUpdate(
@@ -373,7 +373,7 @@ module.exports = {
 				},
 			);
 			guild.save();
-			interaction.channel.send('設定完了: このサーバでの自動管理を**無効**にしました。', { ephemeral: true });
+			interaction.reply('設定完了: このサーバでの自動管理を**無効**にしました。', { ephemeral: true });
 		}
 	},
 };

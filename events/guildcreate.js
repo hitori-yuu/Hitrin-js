@@ -28,8 +28,9 @@ module.exports = {
 			.setThumbnail(guild.iconURL({ format: 'png' }))
 			.setFooter({ text: 'Hitrin', iconURL: client.user.displayAvatarURL({ format: 'png' }) })
 			.setTimestamp();
-		await client.channels.cache.get('879943806118678528').send({ embeds: [log] });
+
 		await client.users.cache.get(guild.ownerId).send({ embeds: [thanks], content: '**Try typing `/help` / `/help` と入力してみてください!**' });
+		await client.channels.cache.get('879943806118678528').send({ embeds: [log] });
 		console.log('[通知] ボットがサーバーに参加: ' + guild.name);
 	},
 };
