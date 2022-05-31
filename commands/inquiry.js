@@ -18,65 +18,54 @@ module.exports = {
 		else if (type === 'question') t = '質問';
 		else if (type === 'bug') t = '不具合';
 
-		/* report以外 */
-		const success_1 = new MessageEmbed()
-			.setColor('#028760')
-			.setTitle('送信完了')
-			.setAuthor({ name: interaction.user.tag, iconURL: interaction.user.displayAvatarURL({ format: 'png' }), url: interaction.user.displayAvatarURL({ format: 'png' }) })
-			.setDescription(`**[種類]** ${t}\n**[内容]** ${body}`)
-			.setFooter({ text: 'Hitrin', iconURL: client.user.displayAvatarURL({ format: 'png' }) })
-			.setTimestamp();
-		const in_1 = new MessageEmbed()
-			.setColor('#f5e56b')
-			.setTitle(`Inquiry [${t}]`)
-			.setAuthor({ name: interaction.user.tag, iconURL: interaction.user.displayAvatarURL({ format: 'png' }), url: interaction.user.displayAvatarURL({ format: 'png' }) })
-			.addFields(
-				{ name: '__**Executor:**__', value: `**[Name]** ${interaction.user.tag}\n**[ID]** ${interaction.user.id}\n**[Mention]** <@${interaction.user.id}>` },
-				{ name: '__**Body:**__', value: `${body}` },
-			)
-			.setThumbnail(interaction.user.displayAvatarURL({ format: 'png' }))
-			.setFooter({ text: 'Hitrin', iconURL: client.user.displayAvatarURL({ format: 'png' }) })
-			.setTimestamp();
+		if (!type === 'report') {
+			const success_1 = new MessageEmbed()
+				.setColor('#028760')
+				.setTitle('送信完了')
+				.setAuthor({ name: interaction.user.tag, iconURL: interaction.user.displayAvatarURL({ format: 'png' }), url: interaction.user.displayAvatarURL({ format: 'png' }) })
+				.setDescription(`**[種類]** ${t}\n**[内容]** ${body}`)
+				.setFooter({ text: 'Hitrin', iconURL: client.user.displayAvatarURL({ format: 'png' }) })
+				.setTimestamp();
+			const in_1 = new MessageEmbed()
+				.setColor('#f5e56b')
+				.setTitle(`Inquiry [${t}]`)
+				.setAuthor({ name: interaction.user.tag, iconURL: interaction.user.displayAvatarURL({ format: 'png' }), url: interaction.user.displayAvatarURL({ format: 'png' }) })
+				.addFields(
+					{ name: '__**Executor:**__', value: `**[Name]** ${interaction.user.tag}\n**[ID]** ${interaction.user.id}\n**[Mention]** <@${interaction.user.id}>` },
+					{ name: '__**Body:**__', value: `${body}` },
+				)
+				.setThumbnail(interaction.user.displayAvatarURL({ format: 'png' }))
+				.setFooter({ text: 'Hitrin', iconURL: client.user.displayAvatarURL({ format: 'png' }) })
+				.setTimestamp();
 
-		/* report */
-		const success_2 = new MessageEmbed()
-			.setColor('#028760')
-			.setTitle('送信完了')
-			.setAuthor({ name: interaction.user.tag, iconURL: interaction.user.displayAvatarURL({ format: 'png' }), url: interaction.user.displayAvatarURL({ format: 'png' }) })
-			.setDescription(`**[種類]** レポート\n**[内容]** ${body}\n**[対象]** <@${target.id}>`)
-			.setFooter({ text: 'Hitrin', iconURL: client.user.displayAvatarURL({ format: 'png' }) })
-			.setTimestamp();
-		const in_2 = new MessageEmbed()
-			.setColor('#f5e56b')
-			.setTitle('Inquiry [Report]')
-			.setAuthor({ name: interaction.user.tag, iconURL: interaction.user.displayAvatarURL({ format: 'png' }), url: interaction.user.displayAvatarURL({ format: 'png' }) })
-			.addFields(
-				{ name: '__**Executor:**__', value: `**[Name]** ${interaction.user.tag}\n**[ID]** ${interaction.user.id}\n**[Mention]** <@${interaction.user.id}>` },
-				{ name: '__**Target:**__', value: `**[Name]** ${target.tag}\n**[ID]** ${target.id}\n**[Mention]** <@${target.id}>` },
-				{ name: '__**Body:**__', value: `${body}` },
-			)
-			.setThumbnail(interaction.user.displayAvatarURL({ format: 'png' }))
-			.setFooter({ text: 'Hitrin', iconURL: client.user.displayAvatarURL({ format: 'png' }) })
-			.setTimestamp();
+			await interaction.reply({ embeds: [success_1] });
+			client.channels.cache.get('912561215669149717').send({ embeds: [in_1] });
+		}
 
-		switch (type) {
-			case 'request':
-				await interaction.reply({ embeds: [success_1] });
-				await client.channels.cache.get('912561215669149717').send({ embeds: [in_1] });
-				break;
-			case 'question':
-				await interaction.reply({ embeds: [success_1] });
-				await client.channels.cache.get('912561215669149717').send({ embeds: [in_1] });
-				break;
-			case 'bug':
-				await interaction.reply({ embeds: [success_1] });
-				await client.channels.cache.get('912561215669149717').send({ embeds: [in_1] });
-				break;
-			case 'report':
-				if (!target) return error_invalid(interaction, client, '対象')
-				await interaction.reply({ embeds: [success_2] });
-				await client.channels.cache.get('912561215669149717').send({ embeds: [in_2] });
-				break;
+		if (type === 'report') {
+			const success_2 = new MessageEmbed()
+				.setColor('#028760')
+				.setTitle('送信完了')
+				.setAuthor({ name: interaction.user.tag, iconURL: interaction.user.displayAvatarURL({ format: 'png' }), url: interaction.user.displayAvatarURL({ format: 'png' }) })
+				.setDescription(`**[種類]** レポート\n**[内容]** ${body}\n**[対象]** <@${target.id}>`)
+				.setFooter({ text: 'Hitrin', iconURL: client.user.displayAvatarURL({ format: 'png' }) })
+				.setTimestamp();
+			const in_2 = new MessageEmbed()
+				.setColor('#f5e56b')
+				.setTitle('Inquiry [Report]')
+				.setAuthor({ name: interaction.user.tag, iconURL: interaction.user.displayAvatarURL({ format: 'png' }), url: interaction.user.displayAvatarURL({ format: 'png' }) })
+				.addFields(
+					{ name: '__**Executor:**__', value: `**[Name]** ${interaction.user.tag}\n**[ID]** ${interaction.user.id}\n**[Mention]** <@${interaction.user.id}>` },
+					{ name: '__**Target:**__', value: `**[Name]** ${target.tag}\n**[ID]** ${target.id}\n**[Mention]** <@${target.id}>` },
+					{ name: '__**Body:**__', value: `${body}` },
+				)
+				.setThumbnail(interaction.user.displayAvatarURL({ format: 'png' }))
+				.setFooter({ text: 'Hitrin', iconURL: client.user.displayAvatarURL({ format: 'png' }) })
+				.setTimestamp();
+
+			if (!target) return error_invalid(interaction, client, '対象')
+			await interaction.reply({ embeds: [success_2] });
+			client.channels.cache.get('912561215669149717').send({ embeds: [in_2] });
 		}
 	},
 };

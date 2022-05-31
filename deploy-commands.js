@@ -15,10 +15,10 @@ for (const file of commandFiles) {
 
 const rest = new REST({ version: '9' }).setToken(process.env.TOKEN);
 
-rest.put(Routes.applicationCommands(client_id), { body: commands })
-	.then(() => console.log('[起動] アプリケーションコマンド登録完了'))
-	.catch(console.error);
-
-// rest.put(Routes.applicationGuildCommands(client_id, '914150885473542175'), { body: commands })
-// 	.then(() => console.log('[起動] ギルドコマンド登録完了'))
+// rest.put(Routes.applicationCommands(client_id), { body: commands })
+// 	.then(() => console.log('[起動] アプリケーションコマンド登録完了'))
 // 	.catch(console.error);
+
+rest.put(Routes.applicationGuildCommands(client_id, '914150885473542175'), { body: commands })
+	.then(() => console.log('[起動] ギルドコマンド登録完了'))
+	.catch(console.error);
