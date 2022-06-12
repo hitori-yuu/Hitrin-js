@@ -19,7 +19,7 @@ module.exports = {
 				},
 			);
 			profile.save();
-			interaction.reply('利用規約に同意しました。再度実行してください。', { ephemeral: true });
+			interaction.channel.send('利用規約に同意しました。再度実行してください。', { ephemeral: true });
 		}
 		if (interaction.customId === 'tos_no') {
 			const profile = await profileModel.findOneAndUpdate(
@@ -33,7 +33,7 @@ module.exports = {
 				},
 			);
 			profile.save();
-			interaction.reply('利用規約に同意しないと使用できません。', { ephemeral: true });
+			interaction.channel.send('利用規約に同意しないと使用できません。', { ephemeral: true });
 		}
 	},
 };

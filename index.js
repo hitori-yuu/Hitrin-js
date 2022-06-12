@@ -165,7 +165,7 @@ client.on('interactionCreate', async interaction => {
 		profile.save();
 	}
 	catch (error) {
-		return console.error('[異常]\n' + error), error_unknown(interaction, error);
+		return console.error('[異常]\n' + error), error_log(interaction, error);
 	}
 });
 
@@ -304,12 +304,12 @@ client.distube
     )
     .on('searchDone', () => {})
 
-function error_unknown(interaction, error) {
+function error_log(interaction, error) {
 	const err = new MessageEmbed()
 		.setColor('#ba2636')
 		.setTitle('実行失敗')
 		.setAuthor({ name: interaction.user.tag, iconURL: interaction.user.displayAvatarURL({ format: 'png' }), url: interaction.user.displayAvatarURL({ format: 'png' }) })
-		.setDescription('無知のエラーが発生しました。既に開発者に報告されています。')
+		.setDescription(`**エラーが発生しました。**` + codeBlock('js', error))
 		.setFooter({ text: 'Hitrin', iconURL: client.user.displayAvatarURL({ format: 'png' }) })
 		.setTimestamp();
 	const error_log = new MessageEmbed()

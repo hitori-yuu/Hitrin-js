@@ -170,11 +170,11 @@ module.exports = {
 				.then(collected => {
 					if (!collected.size) return interaction.reply('タイムアウト');
 					else if (collected.first().content === '-reset') {
-						interaction.reply('設定完了: ニックネームをリセットしました。');
+						interaction.channel.send('設定完了: ニックネームをリセットしました。');
 						interaction.guild.me.setNickname('');
 					}
 					else {
-						interaction.reply('設定完了: **' + collected.first().content + '** に変更しました。');
+						interaction.channel.send('設定完了: **' + collected.first().content + '** に変更しました。');
 						interaction.guild.me.setNickname(collected.first().content);
 					}
 				});
@@ -199,7 +199,7 @@ module.exports = {
 					if (!channel) return error_invalid(interaction, client, 'チャンネル')
 					client.channels.cache.get('879943806118678528').send({ embeds: [announce_log] });
 					client.channels.cache.get('913821026377420910').addFollower(channel.id);
-					interaction.reply('設定完了: **' + channel.name + '** でお知らせを受け取ります。', { ephemeral: true });
+					interaction.channel.send('設定完了: **' + channel.name + '** でお知らせを受け取ります。', { ephemeral: true });
 				});
 		}
 		else if (interaction.customId === 'announce_no') {
@@ -238,7 +238,7 @@ module.exports = {
 						},
 					);
 					guild.save();
-					interaction.reply('設定完了: <#' + channel.id + '> で新規メンバーへの歓迎メッセージを送ります。', { ephemeral: true });
+					interaction.channel.send('設定完了: <#' + channel.id + '> で新規メンバーへの歓迎メッセージを送ります。', { ephemeral: true });
 			});
 		}
 		else if (interaction.customId === 'welcome_no') {
@@ -253,7 +253,7 @@ module.exports = {
 				},
 			);
 			guild.save();
-			interaction.reply('設定完了: このサーバでの新規メンバーへの歓迎メッセージを**無効**にしました', { ephemeral: true });
+			interaction.channel.send('設定完了: このサーバでの新規メンバーへの歓迎メッセージを**無効**にしました', { ephemeral: true });
 		}
 		else if (interaction.customId === 'auth') {
 			await interaction.reply({
@@ -303,7 +303,7 @@ module.exports = {
 				},
 			);
 			guild.save();
-			interaction.reply('設定完了: このサーバでの認証権限を**無効**にしました', { ephemeral: true });
+			interaction.channel.send('設定完了: このサーバでの認証権限を**無効**にしました', { ephemeral: true });
 		}
 		else if (interaction.customId === 'globalban') {
 			await interaction.reply({
@@ -324,7 +324,7 @@ module.exports = {
 				},
 			);
 			guild.save();
-			interaction.reply('設定完了: このサーバでのグローバルBANを**有効**にしました。', { ephemeral: true });
+			interaction.channel.send('設定完了: このサーバでのグローバルBANを**有効**にしました。', { ephemeral: true });
 		}
 		else if (interaction.customId === 'globalban_no') {
 			const guild = await guildsModel.findOneAndUpdate(
@@ -338,7 +338,7 @@ module.exports = {
 				},
 			);
 			guild.save();
-			interaction.reply('設定完了: このサーバでのグローバルBANを**無効**にしました。', { ephemeral: true });
+			interaction.channel.send('設定完了: このサーバでのグローバルBANを**無効**にしました。', { ephemeral: true });
 		}
 		else if (interaction.customId === 'automod') {
 			await interaction.reply({
@@ -359,7 +359,7 @@ module.exports = {
 				},
 			);
 			guild.save();
-			interaction.reply('設定完了: このサーバでの自動管理を**有効**にしました。', { ephemeral: true });
+			interaction.channel.send('設定完了: このサーバでの自動管理を**有効**にしました。', { ephemeral: true });
 		}
 		else if (interaction.customId === 'automod_no') {
 			const guild = await guildsModel.findOneAndUpdate(
@@ -373,7 +373,7 @@ module.exports = {
 				},
 			);
 			guild.save();
-			interaction.reply('設定完了: このサーバでの自動管理を**無効**にしました。', { ephemeral: true });
+			interaction.channel.send('設定完了: このサーバでの自動管理を**無効**にしました。', { ephemeral: true });
 		}
 	},
 };
