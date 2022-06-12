@@ -73,7 +73,7 @@ module.exports = {
             .setColor('#89c3eb')
             .setTitle('プロフィール > 設定 > アバター')
             .setAuthor({ name: interaction.user.tag, iconURL: interaction.user.displayAvatarURL({ format: 'png' }), url: interaction.user.displayAvatarURL({ format: 'png' }) })
-            .setDescription('__15秒以内__に、プロフィールに載せたい任意の**アバターのURL**を入力または**画像を添付**してください。')
+            .setDescription('__15秒以内__に、プロフィールに載せたい任意の**アバターのURL**を入力または**画像を添付**してください。\n`default` と入力するとDiscordのアイコンを設定します。')
             .setThumbnail(client.user.displayAvatarURL({ format: 'png' }))
             .setFooter({ text: 'Hitrin', iconURL: client.user.displayAvatarURL({ format: 'png' }) })
             .setTimestamp();
@@ -81,7 +81,7 @@ module.exports = {
             .setColor('#89c3eb')
             .setTitle('プロフィール > 設定 > カラー')
             .setAuthor({ name: interaction.user.tag, iconURL: interaction.user.displayAvatarURL({ format: 'png' }), url: interaction.user.displayAvatarURL({ format: 'png' }) })
-            .setDescription('__15秒以内__に、プロフィールの**色を__16進数__カラーコードで**入力してください。')
+            .setDescription('__15秒以内__に、プロフィールの**色を__16進数__カラーコードで**入力してください。\n「[HTMLカラーコード: WEB色見本 原色大辞典](https://www.colordic.org/)」こちらのサイトを参考に。\n`default` と入力すると黒色(#000000)を設定します。')
             .setThumbnail(client.user.displayAvatarURL({ format: 'png' }))
             .setFooter({ text: 'Hitrin', iconURL: client.user.displayAvatarURL({ format: 'png' }) })
             .setTimestamp();
@@ -121,7 +121,7 @@ module.exports = {
             .setColor('#89c3eb')
             .setTitle('プロフィール > 検索')
             .setAuthor({ name: interaction.user.tag, iconURL: interaction.user.displayAvatarURL({ format: 'png' }), url: interaction.user.displayAvatarURL({ format: 'png' }) })
-            .setDescription('__10秒以内__に、閲覧したいプロフィールのユーザータグまたはユーザーIDを入力してください。')
+            .setDescription('__10秒以内__に、閲覧したいプロフィールのユーザーIDを入力してください。')
             .setThumbnail(client.user.displayAvatarURL({ format: 'png' }))
             .setFooter({ text: 'Hitrin', iconURL: client.user.displayAvatarURL({ format: 'png' }) })
             .setTimestamp();
@@ -166,7 +166,8 @@ module.exports = {
                 .then(async collected => {
                     if (!collected.size) return interaction.reply('タイムアウト');
                     else if (collected) {
-                        var arg = collected.first().content
+                        var arg = collected.first().content || collected.first().attachments.first().url
+                        if (arg === 'default') arg = interaction.user.displayAvatarURL({ format: 'png' })
                         const profile = await profileModel.findOneAndUpdate(
                             {
                                 _id: interaction.user.id,
@@ -192,18 +193,24 @@ module.exports = {
                     if (!collected.size) return interaction.reply('タイムアウト');
                     else if (collected) {
                         var arg = collected.first().content
-                        const profile = await profileModel.findOneAndUpdate(
-                            {
-                                _id: interaction.user.id,
-                            },
-                            {
-                                $set: {
-                                    color: arg,
+                        if (arg == 'default') arg = '#000000';
+                        var reg=/^#([0-9a-f]{3}){1,2}$/i;
+                        if (reg.test(arg)) {
+                            const profile = await profileModel.findOneAndUpdate(
+                                {
+                                    _id: interaction.user.id,
                                 },
-                            },
-                        );
-                        profile.save();
-                        interaction.channel.send(`設定完了: 表示するカラーを「 ${arg} 」に変更しました。`, { ephemeral: true });
+                                {
+                                    $set: {
+                                        color: arg,
+                                    },
+                                },
+                            );
+                            profile.save();
+                            interaction.channel.send(`設定完了: 表示するカラーを「 ${arg} 」に変更しました。`, { ephemeral: true });
+                        } else {
+                            return error_invalid(interaction, client, 'カラーコード');
+                        }
                     }
                 });
         }
@@ -311,6 +318,17 @@ module.exports = {
         }
 	},
 };
+
+function error_invalid(interaction, client, invalid) {
+	const error = new MessageEmbed()
+		.setColor('#ba2636')
+		.setTitle('実行失敗')
+		.setAuthor({ name: interaction.user.tag, iconURL: interaction.user.displayAvatarURL({ format: 'png' }), url: interaction.user.displayAvatarURL({ format: 'png' }) })
+		.setDescription(`実行に必須なパラメータが無効です: \`${invalid || 'None'}\``)
+		.setFooter({ text: 'Hitrin', iconURL: client.user.displayAvatarURL({ format: 'png' }) })
+		.setTimestamp();
+	return interaction.channel.send({ embeds: [error] });
+}
 
 /*
 const filter = msg => msg.author.id === interaction.user.id;

@@ -272,7 +272,7 @@ module.exports = {
 				.then(async collected => {
 					if (!collected.size) return interaction.reply('タイムアウト');
 					const role = interaction.guild.roles.cache.find((role) => role.name === collected.first().content) || interaction.guild.roles.cache.get(collected.first().content);
-					if (!role) return error_invalid(interaction, client, 'ロール')
+					if (!role) return error_invalid(interaction, client, 'ロール');
 					const guild = await guildsModel.findOneAndUpdate(
 						{
 							_id: interaction.guild.id,
@@ -386,5 +386,5 @@ function error_invalid(interaction, client, invalid) {
 		.setDescription(`実行に必須なパラメータが無効です: \`${invalid || 'None'}\``)
 		.setFooter({ text: 'Hitrin', iconURL: client.user.displayAvatarURL({ format: 'png' }) })
 		.setTimestamp();
-	return interaction.reply({ embeds: [error] });
+	return interaction.channel.send({ embeds: [error] });
 }
