@@ -286,7 +286,7 @@ module.exports = {
 						},
 					);
 					guild.save();
-					interaction.reply('設定完了: **' + role.name + '**を `/auth` コマンドを実行したユーザーに付与します。', { ephemeral: true });
+					interaction.channel.send('設定完了: **' + role.name + '**を `/auth` コマンドを実行したユーザーに付与します。', { ephemeral: true });
 			});
 		}
 		else if (interaction.customId === 'auth_no') {
