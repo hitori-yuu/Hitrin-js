@@ -1,0 +1,25 @@
+{
+  "name": "hitrinbot",
+  "description": "<div align=\"center\">\r   <br>\r   <img src=\"https://user-images.githubusercontent.com/89414334/145695368-bef31b6e-256d-4812-8156-382402e60fc7.png\"alt=\"Hitrin-bot\" width=\"200px\">\r   <img src=\"https://user-images.githubusercontent.com/89414334/153596103-4e5dbe22-928e-42d3-b4b3-325a31bc853b.png\"alt=\"Hitrin\" width=\"200px\">",
+  "version": "2.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hitori-yuu/Hitrin-js.git"
+  },
+  "dependencies": {
+    "discord.js": "^14.0.2",
+    "dotenv": "^16.0.1",
+    "glob": "^7.2.3"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/hitori-yuu/Hitrin-js/issues"
+  },
+  "homepage": "https://github.com/hitori-yuu/Hitrin-js#readme"
+}
