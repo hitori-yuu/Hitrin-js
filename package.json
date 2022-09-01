@@ -1,0 +1,25 @@
+{
+  "name": "hitrin",
+  "version": "2.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hitori-yuu/Hitrin-js.git"
+  },
+  "author": "HitoriYuu",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/hitori-yuu/Hitrin-js/issues"
+  },
+  "homepage": "https://github.com/hitori-yuu/Hitrin-js#readme",
+  "dependencies": {
+    "discord.js": "^14.1.2",
+    "dotenv": "^16.0.1",
+    "mongoose": "^6.5.1",
+    "nodemon": "^2.0.19"
+  }
+}
