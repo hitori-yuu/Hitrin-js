@@ -7,7 +7,7 @@ module.exports = {
 		.setDescription('Displays information about that player in Hypixel.')
         .setDescriptionLocalizations({
             'en-US': 'Displays information about that player in Hypixel.',
-            'ja': 'Hypixelで指定したプレイヤーの情報を表示します。',
+            'ja': '指定したプレイヤーのHypixel内での情報を表示します。',
         })
 		.addStringOption(
             option => option
