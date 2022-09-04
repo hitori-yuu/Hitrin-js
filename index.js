@@ -39,6 +39,7 @@ const client = new Client({
 client.slashCommands = new Collection();
 client.buttonCommands = new Collection();
 client.selectCommands = new Collection();
+client.contextCommands = new Collection();
 
 // データベース
 mongoose //mongooseについて
@@ -91,6 +92,20 @@ for (const module of selectMenus) {
 	}
 };
 
+// コンテキストメニュー
+const contextMenus = fs.readdirSync("./interactions/context");
+
+for (const folder of contextMenus) {
+	const files = fs
+		.readdirSync(`./interactions/context/${folder}`)
+		.filter((file) => file.endsWith(".js"));
+	for (const file of files) {
+		const menu = require(`./interactions/context/${folder}/${file}`);
+		const keyName = `${folder.toUpperCase()} ${menu.data.name}`;
+		client.contextCommands.set(keyName, menu);
+	}
+}
+
 // スラッシュコマンド
 const slashCommands = fs.readdirSync("./commands");
 for (const module of slashCommands) {
@@ -107,7 +122,8 @@ for (const module of slashCommands) {
 const rest = new REST({ version: "10" }).setToken(process.env.TOKEN);
 
 const commandJsonData = [
-	...Array.from(client.slashCommands.values()).map((command) => command.data.toJSON())
+	...Array.from(client.slashCommands.values()).map((command) => command.data.toJSON()),
+	...Array.from(client.contextCommands.values()).map((c) => c.data),
 ];
 
 (async () => {

@@ -42,7 +42,7 @@ module.exports = {
             },
             {
                 name: '__**メンバー:**__',
-                value: `**[ユーザー数]** ${members.filter(member => !member.bot).size}\n**[ボット数]** ${members.filter(member => member.user.bot).size}\n**[オンラインメンバー数]** ${members.filter(member => member.user.presence?.status === 'online').size || '0'}\n**[AFKメンバー数]** ${members.filter(member => member.presence?.status === 'idle').size || '0'}\n**[オフラインメンバー数]** ${members.filter(member => member.user.presence?.status === 'offline').size || '0'}`
+                value: `**[ユーザー]** ${members.filter(member => !member.user.bot).size}\n**[ボット]** ${members.filter(member => member.user.bot).size}\n**[オンライン]** ${members.filter(member => member.user.presence?.status === 'online').size || '0'}\n**[退席中]** ${members.filter(member => member.presence?.status === 'idle').size || '0'}\n**[オフライン]** ${members.filter(member => member.user.presence?.status === 'offline').size || '0'}`
             }
         )
         .setTimestamp()

@@ -3,20 +3,37 @@ const { SlashCommandBuilder, EmbedBuilder, PermissionFlagsBits } = require('disc
 module.exports = {
 	data: new SlashCommandBuilder()
         .setName('kick')
-        .setDescription('指定したメンバーをサーバーから追放します。')
+        .setNameLocalizations({
+            'en-US': 'kick',
+            'ja': '追放',
+        })
+        .setDescription('Kick the specified member.')
+        .setDescriptionLocalizations({
+            'en-US': 'Kick the specified member.',
+            'ja': '指定したメンバーを追放します。',
+        })
+        .setDMPermission(false)
         .setDefaultMemberPermissions(PermissionFlagsBits.KickMembers)
         .addUserOption(
             option => option
-            .setName('メンバー')
-            .setDescription('追放するメンバーを選択')
+            .setName('member')
+            .setNameLocalizations({
+                'en-US': 'member',
+                'ja': 'メンバー',
+            })
+            .setDescription('Select members to be kick.')
+            .setDescriptionLocalizations({
+                'en-US': 'Select members to be kick.',
+                'ja': '追放するメンバーを選択。',
+            })
             .setRequired(true)
         ),
 
 	async execute(interaction) {
-        const member = interaction.options.getMember('メンバー');
+        const member = interaction.options.getMember('member');
 
         if (member.kickable) {
-            interaction.guild.members.kick(member).then(member => {
+            interaction.guild.members.kick(member, `Kicked by ${interaction.member.user.username}`).then(member => {
                 const kickEmbed = new EmbedBuilder()
                 .setColor('#93ca76')
                 .setAuthor({ name: interaction.user.tag, iconURL: interaction.user.displayAvatarURL(), url: interaction.user.displayAvatarURL() })
