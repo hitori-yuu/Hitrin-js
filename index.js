@@ -80,18 +80,6 @@ for (const module of buttonCommands) {
 	}
 };
 
-// セレクトメニュー
-const selectMenus = fs.readdirSync("./interactions/select-menus");
-for (const module of selectMenus) {
-	const commandFiles = fs
-		.readdirSync(`./interactions/select-menus/${module}`)
-		.filter((file) => file.endsWith(".js"));
-	for (const commandFile of commandFiles) {
-		const command = require(`./interactions/select-menus/${module}/${commandFile}`);
-		client.selectCommands.set(command.id, command);
-	}
-};
-
 // コンテキストメニュー
 const contextMenus = fs.readdirSync("./interactions/context");
 

@@ -32,7 +32,7 @@ module.exports = {
 		hypixel.getPlayer(player, { guild: true }).then(player => {
 			const guild = player.guild;
 			let playerName = player.nickname;
-			if (guild.tag) playerName = `${player.nickname}*[${guild.tag}]*`;
+			if (guild.tag) playerName = `${player.nickname} [${guild.tag}]`;
 
 			const playerEmbed = new EmbedBuilder()
 				.setColor('#59b9c6')
@@ -59,7 +59,6 @@ module.exports = {
 				.setTimestamp()
                 .setFooter({ text: '© 2021-2022 HitoriYuu, Hitrin' });
 
-			console.log(player.guild);
 			interaction.followUp({
 				embeds: [playerEmbed]
 			});
