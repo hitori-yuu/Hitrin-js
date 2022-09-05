@@ -11,6 +11,7 @@ module.exports = {
             'en-US': 'Use HypixelAPI to retrieve various information.',
             'ja': 'HypixelAPIを使用して様々な情報を取得します。',
         })
+		.setDMPermission(true)
 		.addSubcommand(subcommand =>
 			subcommand
 				.setName('player')

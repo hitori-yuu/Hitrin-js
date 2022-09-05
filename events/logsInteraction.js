@@ -13,7 +13,7 @@ module.exports = {
             var ch_name = interaction.channel.name
             var ch_id = interaction.channel.id
             var ch_dm = false
-            if (interaction.channel.type === ChannelType.DM) ch_dm = true;
+            if (interaction.channel.type == ChannelType.DM) ch_dm = true;
             if (ch_dm == true) ch_name = ch_id = 'None'
 
 

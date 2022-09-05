@@ -33,9 +33,9 @@ module.exports = {
 
         const memberEmbed = new EmbedBuilder()
         .setColor('#59b9c6')
-        .setAuthor({ name: interaction.user.tag, iconURL: interaction.user.displayAvatarURL(), url: interaction.user.displayAvatarURL() })
+        .setAuthor({ name: interaction.user.tag, iconURL: interaction.user.displayAvatarURL({ format: 'png' }), url: interaction.user.displayAvatarURL({ format: 'png' }) })
         .setTitle(`${member.user.username} の詳細`)
-        .setThumbnail(member.displayAvatarURL({format: 'png', size: 128}))
+        .setThumbnail(member.displayAvatarURL({ format: 'png' }), member.displayAvatarURL({ format: 'png' }))
         .addFields(
             {
                 name: '__**一般:**__',
