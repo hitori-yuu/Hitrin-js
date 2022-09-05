@@ -35,11 +35,11 @@ module.exports = {
         if (member.kickable) {
             interaction.guild.members.kick(member, `Kicked by ${interaction.member.user.username}`).then(member => {
                 const kickEmbed = new EmbedBuilder()
-                .setColor('#93ca76')
-                .setAuthor({ name: interaction.user.tag, iconURL: interaction.user.displayAvatarURL(), url: interaction.user.displayAvatarURL() })
-                .setDescription(`<@${member.id}> をサーバーから追放しました。`)
-                .setTimestamp()
-                .setFooter({ text: '© 2021-2022 HitoriYuu, Hitrin' });
+                    .setColor('#93ca76')
+                    .setAuthor({ name: interaction.user.tag, iconURL: interaction.user.displayAvatarURL({extension: 'png'}), url: interaction.user.displayAvatarURL({extension: 'png'}) })
+                    .setDescription(`<@${member.id}> をサーバーから追放しました。`)
+                    .setTimestamp()
+                    .setFooter({ text: '© 2021-2022 HitoriYuu, Hitrin' });
 
                 interaction.followUp({
                     embeds: [kickEmbed]
@@ -48,11 +48,11 @@ module.exports = {
         }
         else {
             const failedEmbed = new EmbedBuilder()
-            .setColor('#d9333f')
-            .setAuthor({ name: interaction.user.tag, iconURL: interaction.user.displayAvatarURL(), url: interaction.user.displayAvatarURL() })
-            .setDescription(`<@${member.id}> を追放できませんでした。`)
-            .setTimestamp()
-            .setFooter({ text: '© 2021-2022 HitoriYuu, Hitrin' });
+                .setColor('#d9333f')
+                .setAuthor({ name: interaction.user.tag, iconURL: interaction.user.displayAvatarURL({extension: 'png'}), url: interaction.user.displayAvatarURL({extension: 'png'}) })
+                .setDescription(`<@${member.id}> を追放できませんでした。`)
+                .setTimestamp()
+                .setFooter({ text: '© 2021-2022 HitoriYuu, Hitrin' });
 
             interaction.followUp({
                 embeds: [failedEmbed]

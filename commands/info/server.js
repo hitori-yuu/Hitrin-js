@@ -28,9 +28,9 @@ module.exports = {
 
         const serverEmbed = new EmbedBuilder()
         .setColor('#59b9c6')
-        .setAuthor({ name: interaction.user.tag, iconURL: interaction.user.displayAvatarURL({format: 'png'}), url: interaction.user.displayAvatarURL({format: 'png'}) })
+        .setAuthor({ name: interaction.user.tag, iconURL: interaction.user.displayAvatarURL({extension: 'png'}), url: interaction.user.displayAvatarURL({extension: 'png'}) })
         .setTitle(`${guild.name} の詳細`)
-        .setThumbnail(guild.iconURL({ format: 'png' }))
+        .setThumbnail(guild.iconURL({extension: 'png'}))
         .addFields(
             {
                 name: '__**一般:**__',
