@@ -13,7 +13,7 @@ module.exports = {
         const logEmbed = new EmbedBuilder()
             .setColor('#59b9c6')
             .setAuthor({ name: member.user.tag, iconURL: member.displayAvatarURL({extension: 'png'}) })
-            .setTitle('ロールs削除')
+            .setTitle('ロール削除')
             .setDescription(
                 `<@${member.id}> が ロール \`${role.name}\` を削除しました。`
             )
