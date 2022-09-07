@@ -19,9 +19,9 @@ module.exports = {
 					'en-US': 'player',
 					'ja': 'プレイヤー',
 				})
-				.setDescription('Displays information about that player')
+				.setDescription('Displays information about that player.')
 				.setDescriptionLocalizations({
-					'en-US': 'Displays information about that player',
+					'en-US': 'Displays information about that player.',
 					'ja': 'プレイヤーの情報を表示。',
 				})
 				.addStringOption(
@@ -37,7 +37,8 @@ module.exports = {
 						'ja': 'プレイヤーのMCIDを入力。',
 					})
 					.setRequired(true)
-				))
+				)
+			)
 		.addSubcommand(subcommand =>
 			subcommand
 				.setName('guild')
@@ -45,9 +46,9 @@ module.exports = {
 					'en-US': 'guild',
 					'ja': 'ギルド',
 				})
-				.setDescription('Displays information about that guild')
+				.setDescription('Displays information about that guild.')
 				.setDescriptionLocalizations({
-					'en-US': 'Displays information about that guild',
+					'en-US': 'Displays information about that guild.',
 					'ja': 'ギルドの情報を表示。',
 				})
 				.addStringOption(
@@ -63,7 +64,8 @@ module.exports = {
 						'ja': 'ギルドの名前を入力。',
 					})
 					.setRequired(true)
-				)),
+				)
+			),
 
 	async execute(interaction) {
 		const player = interaction.options.getString('player');
