@@ -2,7 +2,7 @@ const { EmbedBuilder } = require('discord.js');
 const logsChannelsModel = require('../models/logsChannelsSchema');
 
 module.exports = {
-	name: 'roleCreate',
+	name: 'roleDelete',
 
 	async execute(role) {
         const AuditLogs = await role.guild.fetchAuditLogs({ limit: 1 });
@@ -13,9 +13,9 @@ module.exports = {
         const logEmbed = new EmbedBuilder()
             .setColor('#59b9c6')
             .setAuthor({ name: member.user.tag, iconURL: member.displayAvatarURL({extension: 'png'}) })
-            .setTitle('ロール作成')
+            .setTitle('ロールs削除')
             .setDescription(
-                `<@${member.id}> が ロール ${role} を作成しました。`
+                `<@${member.id}> が ロール \`${role.name}\` を削除しました。`
             )
             .addFields(
                 {
