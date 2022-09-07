@@ -26,11 +26,16 @@ module.exports = {
             .setTimestamp()
             .setFooter({ text: '© 2021-2022 HitoriYuu, Hitrin' });
 
-        const guildsData = await logsChannelsModel.findOne({ id: oldRole.guild.id });
-        if (guildsData) {
-            oldRole.guild.channels.cache.get(guildsData.channel.id).send({embeds: [logEmbed]});
-        } else {
-            return;
+        const guildsData = await logsChannelsModel.find();
+        const data = guildsData.filter(data => data.guild.id  === oldRole.guild.id);
+        try {
+            if (data.length <= 0) {
+                return;
+            } else {
+                oldRole.guild.channels.cache.get(data[0].channel.id).send({embeds: [logEmbed]});
+            }
+        } catch (error) {
+            return console.error('[エラー]イベント時にエラーが発生しました。\n内容: ' + error.message);
         }
 	},
 };

@@ -20,17 +20,22 @@ module.exports = {
             .addFields(
                 {
                     name: '__**絵文字:**__',
-                    value: `**[名前]** ${newEmoji.name}\n**[ID]** ${newEmoji.id}\n**[変更]** \`${oldEmoji.name}\` => \`${newEmoji.name}\``
+                    value: `**[名前]** ${newEmoji.name}\n**[ID]** ${newEmoji.id}\n**[変更]** ${log.changes[0].key}: \`${log.changes[0].old}\` => \`${log.changes[0].new}\``
                 },
             )
             .setTimestamp()
             .setFooter({ text: '© 2021-2022 HitoriYuu, Hitrin' });
 
-        const guildsData = await logsChannelsModel.findOne({ id: oldEmoji.guild.id });
-        if (guildsData) {
-            oldEmoji.guild.channels.cache.get(guildsData.channel.id).send({embeds: [logEmbed]});
-        } else {
-            return;
+        const guildsData = await logsChannelsModel.find();
+        const data = guildsData.filter(data => data.guild.id === oldEmoji.guild.id);
+        try {
+            if (data.length <= 0) {
+                return;
+            } else {
+                oldEmoji.guild.channels.cache.get(data[0].channel.id).send({embeds: [logEmbed]});
+            }
+        } catch (error) {
+            return console.error('[エラー]イベント時にエラーが発生しました。\n内容: ' + error.message);
         }
 	},
 };

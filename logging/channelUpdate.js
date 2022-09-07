@@ -2,7 +2,7 @@ const { EmbedBuilder } = require('discord.js');
 const logsChannelsModel = require('../models/logsChannelsSchema');
 
 module.exports = {
-	name: 'channelDelete',
+	name: 'channelUpdate',
 
 	async execute(channel) {
         const AuditLogs = await channel.guild.fetchAuditLogs({ limit: 1 });
@@ -13,18 +13,14 @@ module.exports = {
         const logEmbed = new EmbedBuilder()
             .setColor('#59b9c6')
             .setAuthor({ name: member.user.tag, iconURL: member.displayAvatarURL({extension: 'png'}) })
-            .setTitle('チャンネル削除')
+            .setTitle('チャンネル更新')
             .setDescription(
-                `<@${member.id}> が チャンネル \`#${log.target.name}\` を削除しました。`
+                `<@${member.id}> が チャンネル ${log.target} を更新しました。`
             )
             .addFields(
                 {
                     name: '__**チャンネル:**__',
-                    value: `**[名前]** ${log.target.name}\n**[ID]** ${log.target.id}`
-                },
-                {
-                    name: '__**理由:**__',
-                    value: log.reason || 'None'
+                    value: `**[名前]** ${log.target.name}\n**[ID]** ${log.target.id}\n**[変更]** ${log.changes[0].key}: \`${log.changes[0].old}\` => \`${log.changes[0].new}\``
                 },
             )
             .setTimestamp()
