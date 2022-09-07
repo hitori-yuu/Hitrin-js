@@ -1,4 +1,4 @@
-const { InteractionType, EmbedBuilder, ChannelType } = require('discord.js');
+const { InteractionType, EmbedBuilder } = require('discord.js');
 const logsChannelsModel = require('../models/logsChannelsSchema');
 
 module.exports = {

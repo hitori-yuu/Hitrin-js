@@ -80,6 +80,7 @@ module.exports = {
 						if (!player.guild) {
 							playerEmbed = new EmbedBuilder()
 								.setColor('#59b9c6')
+								.setAuthor({ name: interaction.user.tag, iconURL: interaction.user.displayAvatarURL({extension: 'png'}), url: interaction.user.displayAvatarURL({extension: 'png'}) })
 								.setTitle(`${player} の詳細`)
 								.setThumbnail('https://mineskin.eu/avatar/' + player)
 								.addFields(
@@ -105,6 +106,7 @@ module.exports = {
 
 							playerEmbed = new EmbedBuilder()
 								.setColor('#59b9c6')
+								.setAuthor({ name: interaction.user.tag, iconURL: interaction.user.displayAvatarURL({extension: 'png'}), url: interaction.user.displayAvatarURL({extension: 'png'}) })
 								.setTitle(`${player} の詳細`)
 								.setThumbnail('https://mineskin.eu/avatar/' + player)
 								.addFields(
