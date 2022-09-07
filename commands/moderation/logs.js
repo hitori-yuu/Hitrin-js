@@ -57,9 +57,8 @@ module.exports = {
             ),
 
 	async execute(interaction) {
-        const channel = interaction.options.getChannel('channel');
-
         if (interaction.options.getSubcommand() === 'set') {
+            const channel = interaction.options.getChannel('channel');
             const guildData = await logsChannelsModel.findOne({ id: interaction.guild.id });
             if (!guildData) {
                 const channelData = await logsChannelsModel.create({

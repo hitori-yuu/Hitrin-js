@@ -39,6 +39,14 @@ module.exports = {
             var ch = `${interaction.channel.name}(${interaction.channel.id})`
             if (ch_dm == true) ch = 'DM';
 
+            var args = [];
+            for (let i = 0; i < interaction.options.data.length; i++) {
+                args.push(`[${interaction.options.data[i].name}] ${interaction.options.data[i].value}`);
+                if (!interaction.options.data[i]) {
+                  break;
+                }
+            }
+
             const logEmbed = new EmbedBuilder()
             .setColor('#59b9c6')
             .setTitle("コマンドログ")
@@ -46,7 +54,11 @@ module.exports = {
             .addFields(
                 {
                     name: '__**コマンド:**__',
-                    value: `**[名前]** ${interaction.commandName}\n**[引数]** ${options}`
+                    value: `**[名前]** ${interaction.commandName}`
+                },
+                {
+                    name: '__**引数:**__',
+                    value: `${args.join('\n')}`
                 },
                 {
                     name: '__**実行者:**__',
