@@ -63,7 +63,7 @@ module.exports = {
         const days = interaction.options.getNumber('days') || 0;
 
         if (member.bannable) {
-            interaction.guild.members.ban(member, { days: days, reason: `baned by ${interaction.member.user.tag} 「${reason}」` }).then(member => {
+            interaction.guild.members.ban(member, { days: days, reason: `Baned by ${interaction.member.user.tag} 「${reason}」` }).then(member => {
                 const banEmbed = new EmbedBuilder()
                     .setColor('#93ca76')
                     .setAuthor({ name: interaction.user.tag, iconURL: interaction.user.displayAvatarURL({extension: 'png'}), url: interaction.user.displayAvatarURL({extension: 'png'}) })
