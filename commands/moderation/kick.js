@@ -27,17 +27,32 @@ module.exports = {
                 'ja': '追放するメンバーを選択。',
             })
             .setRequired(true)
+        )
+        .addStringOption(
+            option => option
+            .setName('reason')
+            .setNameLocalizations({
+                'en-US': 'reason',
+                'ja': '理由',
+            })
+            .setDescription('Select members to be ban.')
+            .setDescriptionLocalizations({
+                'en-US': 'Select members to be ban.',
+                'ja': '禁止する理由を入力。',
+            })
+            .setRequired(true)
         ),
 
 	async execute(interaction) {
         const member = interaction.options.getMember('member');
+        const reason = interaction.options.getString('reason') || 'None';
 
         if (member.kickable) {
-            interaction.guild.members.kick(member, `Kicked by ${interaction.member.user.username}`).then(member => {
+            interaction.guild.members.kick(member, `Kicked by ${interaction.member.user.tag} 「${reason}」`).then(member => {
                 const kickEmbed = new EmbedBuilder()
                     .setColor('#93ca76')
                     .setAuthor({ name: interaction.user.tag, iconURL: interaction.user.displayAvatarURL({extension: 'png'}), url: interaction.user.displayAvatarURL({extension: 'png'}) })
-                    .setDescription(`<@${member.id}> をサーバーから追放しました。`)
+                    .setDescription(`<@${member.id}> をサーバーから追放しました。\n理由: \`${reason}\``)
                     .setTimestamp()
                     .setFooter({ text: '© 2021-2022 HitoriYuu, Hitrin' });
 
