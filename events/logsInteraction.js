@@ -11,11 +11,11 @@ module.exports = {
 
         if (command) {
             var args = [];
-            if (!interaction.options.data) {
+            if (!interaction.options) {
                 args = 'None';
             } else {
                 for (let i = 0; i < interaction.options.data.length; i++) {
-                    args.push(`[${interaction.options.data[i].name}] ${interaction.options.data[i].value}`);
+                    args.push(`**[${interaction.options.data[i].name}]** ${interaction.options.data[i].value}`);
                     if (!interaction.options.data[i]) {
                       break;
                     }
