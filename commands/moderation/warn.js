@@ -50,9 +50,9 @@ module.exports = {
 
         const warnEmbed = new EmbedBuilder()
             .setColor('#59b9c6')
-            .setAuthor({ name: interaction.user.tag, iconURL: interaction.user.displayAvatarURL(), url: interaction.user.displayAvatarURL() })
+            .setAuthor({ name: interaction.user.tag, iconURL: interaction.user.displayAvatarURL({extension: 'png'}), url: interaction.user.displayAvatarURL({extension: 'png'}) })
             .setTitle(`${member.user.username} に警告しました。`)
-            .setThumbnail(member.displayAvatarURL({format: 'png', size: 128}))
+            .setThumbnail(member.displayAvatarURL({extension: 'png'}), member.displayAvatarURL({extension: 'png'}))
             .addFields(
                 {
                     name: '__**対象:**__',
@@ -69,7 +69,7 @@ module.exports = {
         const warnedEmbed = new EmbedBuilder()
             .setColor('#59b9c6')
             .setTitle(`${interaction.guild.name} にて警告されました。`)
-            .setThumbnail(interaction.guild.iconURL({format: 'png', size: 128}))
+            .setThumbnail(interaction.guild.iconURL({extension: 'png'}))
             .setDescription('**[理由]**\n' + reason)
             .setTimestamp()
             .setFooter({ text: '© 2021-2022 HitoriYuu, Hitrin' });

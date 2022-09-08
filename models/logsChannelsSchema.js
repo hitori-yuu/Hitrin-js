@@ -1,20 +1,21 @@
 const mongoose = require('mongoose');
 
-const logsSchema = new mongoose.Schema({
-    command: { type: String },
-    args: { type: Array },
-    executer: {
+const logsChannelSchema = new mongoose.Schema({
+    guild: {
         name: { type: String },
         id: { type: String },
     },
-    locate: {
+    channel: {
         name: { type: String },
         id: { type: String },
-        dm: { type: Boolean },
+    },
+    author: {
+        name: { type: String },
+        id: { type: String },
     },
     date: { type: String },
 });
 
-const model = mongoose.model('Logs', logsSchema);
+const model = mongoose.model('LogsChannel', logsChannelSchema);
 
 module.exports = model;

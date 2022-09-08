@@ -1,7 +1,11 @@
 {
+    "files.insertFinalNewline": true,
     "cSpell.words": [
+        "bannable",
         "Hitori",
         "HYPIXEL",
-        "MCID"
+        "kickable",
+        "MCID",
+        "Mojang"
     ]
 }

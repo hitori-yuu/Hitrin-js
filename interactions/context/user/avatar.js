@@ -11,9 +11,9 @@ module.exports = {
 
 		const avatarEmbed = new EmbedBuilder()
 		.setColor('#59b9c6')
-		.setAuthor({ name: interaction.user.tag, iconURL: interaction.user.displayAvatarURL(), url: interaction.user.displayAvatarURL() })
+		.setAuthor({ name: interaction.user.tag, iconURL: interaction.user.displayAvatarURL({extension: 'png'}), url: interaction.user.displayAvatarURL({extension: 'png'}) })
 		.setTitle(`${member.user.username} のアバター`)
-        .setImage(member.displayAvatarURL({format: 'png', size: 128}))
+        .setImage(member.displayAvatarURL({extension: 'png'}))
 		.setTimestamp()
 		.setFooter({ text: '© 2021-2022 HitoriYuu, Hitrin' });
 
