@@ -10,10 +10,10 @@ module.exports = {
             'en-US': 'remove-word',
             'ja': '単語削除',
         })
-        .setDescription('Commands related to Text-to-Speech.')
+        .setDescription('Delete the entered word from the dictionary.')
         .setDescriptionLocalizations({
-            'en-US': 'Commands related to Text-to-Speech.',
-            'ja': '入力した言葉を辞書に追加します。',
+            'en-US': 'Delete the entered word from the dictionary.',
+            'ja': '入力した言葉を辞書から削除します。',
         })
 		.setDMPermission(false)
         .addStringOption(
