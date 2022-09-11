@@ -7,9 +7,9 @@ module.exports = {
             'en-US': 'member',
             'ja': 'メンバー',
         })
-		.setDescription('Displays information about that member.')
+		.setDescription('Display information about that member.')
         .setDescriptionLocalizations({
-            'en-US': 'Displays information about that member.',
+            'en-US': 'Display information about that member.',
             'ja': 'メンバーの情報を表示します。',
         })
         .setDMPermission(false)
