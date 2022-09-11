@@ -5,6 +5,7 @@ module.exports = {
 	name: 'emojiDelete',
 
 	async execute(emoji) {
+        if (!emoji.guild.me.permissions.has(PermissionFlagsBits.VIEW_AUDIT_LOG)) return;
         const AuditLogs = await emoji.guild.fetchAuditLogs({ limit: 1 });
 
         const log = AuditLogs.entries.first()

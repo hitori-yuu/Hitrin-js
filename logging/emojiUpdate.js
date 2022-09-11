@@ -5,6 +5,7 @@ module.exports = {
 	name: 'emojiUpdate',
 
 	async execute(oldEmoji, newEmoji) {
+        if (!oldEmoji.guild.me.permissions.has(PermissionFlagsBits.VIEW_AUDIT_LOG)) return;
         const AuditLogs = await oldEmoji.guild.fetchAuditLogs({ limit: 1 });
 
         const log = AuditLogs.entries.first()

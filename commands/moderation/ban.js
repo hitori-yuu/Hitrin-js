@@ -26,7 +26,19 @@ module.exports = {
                 'en-US': 'Select members to be ban.',
                 'ja': '禁止するメンバーを選択。',
             })
-            .setRequired(true)
+        )
+        .addStringOption(
+            option => option
+            .setName('user')
+            .setNameLocalizations({
+                'en-US': 'user',
+                'ja': 'ユーザー',
+            })
+            .setDescription('Enter the ID of that user.')
+            .setDescriptionLocalizations({
+                'en-US': 'Enter the ID of that user.',
+                'ja': 'ユーザーのIDを入力。',
+            })
         )
         .addStringOption(
             option => option
@@ -40,7 +52,6 @@ module.exports = {
                 'en-US': 'Enter the reason to ban.',
                 'ja': '禁止する理由を入力。',
             })
-            .setRequired(true)
         )
         .addNumberOption(
             option => option
@@ -54,16 +65,15 @@ module.exports = {
                 'en-US': 'Enter the number of messages to delete. 0 - 7',
                 'ja': 'メッセージを削除する日数を入力。０～７まで',
             })
-            .setRequired(true)
         ),
 
 	async execute(interaction) {
-        const member = interaction.options.getMember('member');
+        const member = interaction.options.getMember('member') || interaction.options.getString('user');
         const reason = interaction.options.getString('reason') || 'None';
         const days = interaction.options.getNumber('days') || 0;
 
-        if (member.bannable) {
-            interaction.guild.members.ban(member, { days: days, reason: `Baned by ${interaction.member.user.tag} 「${reason}」` }).then(member => {
+        if (member) {
+            interaction.guild.members.ban(member || interaction.client.users.fetch(member), { days: days, reason: `Baned by ${interaction.member.user.tag} 「${reason}」` }).then(member => {
                 const banEmbed = new EmbedBuilder()
                     .setColor('#93ca76')
                     .setAuthor({ name: interaction.user.tag, iconURL: interaction.user.displayAvatarURL({extension: 'png'}), url: interaction.user.displayAvatarURL({extension: 'png'}) })

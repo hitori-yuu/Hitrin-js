@@ -7,14 +7,14 @@ module.exports = {
             'en-US': 'server',
             'ja': 'サーバー',
         })
-		.setDescription('Displays information about this server.')
+		.setDescription('Display information about this server.')
         .setDescriptionLocalizations({
-            'en-US': 'Displays information about this server.',
+            'en-US': 'Display information about this server.',
             'ja': 'サーバーの情報を表示します。',
         })
         .setDMPermission(false),
 
-	async execute(interaction, client) {
+	async execute(interaction) {
         const guild = interaction.guild;
 
 

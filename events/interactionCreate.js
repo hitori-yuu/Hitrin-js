@@ -4,14 +4,14 @@ module.exports = {
 	name: 'interactionCreate',
 
 	async execute(interaction) {
-		const { client } = interaction;
+		const { client, player } = interaction;
         if (!interaction.type == InteractionType.ApplicationCommand) return;
         const command = client.slashCommands.get(interaction.commandName);
 
         if (command) {
             try {
                 await interaction.deferReply();
-                await command.execute(interaction);
+                await command.execute(interaction, player);
             } catch (error) {
                 console.error('[エラー] コマンド実行時にエラーが発生しました。\n内容: ' + error.message);
                 const error_message = codeBlock('js', error.message);
