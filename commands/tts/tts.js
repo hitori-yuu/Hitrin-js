@@ -56,6 +56,7 @@ module.exports = {
             });
         } else if (type == 'end') {
             const connection = getVoiceConnection(interaction.guild.id);
+            if (!connection) return interaction.followUp({ content: 'VCに参加していません。' });
             connection.destroy(true);
             interaction.client.voiceChannels.delete(channel.id);
             interaction.followUp({
