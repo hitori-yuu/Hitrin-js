@@ -34,6 +34,7 @@ module.exports = {
         const queue = interaction.client.player.getQueue(interaction.guild.id);
 
         if (!queue) return interaction.followUp({ content: '曲を再生していません。'});
+        if (volume < 0) return interaction.followUp({ content: '音量は0以上にして下さい。' });
 
         queue.setVolume(volume);
         interaction.followUp({
