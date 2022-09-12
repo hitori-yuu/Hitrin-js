@@ -21,7 +21,7 @@ module.exports = {
         if (!queue) return interaction.followUp({ content: '曲を再生していません。'});
         const track = queue.nowPlaying();
 
-        var repeat = 'なし';
+        var repeat = 'オフ';
         if (queue.repeatMode === 1) repeat = 'トラック'
         else if (queue.repeatMode === 2) repeat = 'キュー'
         else if (queue.repeatMode === 3) repeat = '自動再生'

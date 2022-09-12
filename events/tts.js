@@ -2,6 +2,7 @@ const { default: axios } = require("axios");
 const rpc = axios.create({ baseURL: "http://127.0.0.1:50021", proxy: false });
 const { getVoiceConnection, createAudioResource, StreamType, createAudioPlayer, NoSubscriberBehavior } = require("@discordjs/voice");
 const fs = require('fs');
+const usersModel = require('../models/usersSchema');
 
 module.exports = {
     name: 'messageCreate',
@@ -11,11 +12,20 @@ module.exports = {
         if (message.content.match(/http:|https:/)) return;
         const channel = message.member.voice.channel;
         if (!channel) return;
+        var voice;
 
         if (message.channel.id === message.client.voiceChannels.get(channel.id)) {
             const filepath = "./sounds/" + message.author.id + ".wav"
 
-            await generateAudio(message, filepath, 5);
+            const usersData = await usersModel.find();
+            const data = usersData.filter(data => data.id  === message.author.id);
+            if (!data.length > 0 || !data) {
+                voice = 5;
+            } else {
+                voice = data[0].speaker
+            }
+
+            await generateAudio(message, filepath, voice);
             await play(message, filepath);
         }
     },

@@ -29,7 +29,7 @@ module.exports = {
                 },
             )
 
-			const guildsData = await logsChannelsModel.findOne({ id: interaction.guild.id});
+			const guildsData = await logsChannelsModel.findOne({ id: interaction.guild.id });
             if (guildsData) {
                 client.channels.cache.get(guildsData.channel.id).send({embeds: [logEmbed]});
             } else {

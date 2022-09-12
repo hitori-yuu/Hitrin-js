@@ -34,18 +34,18 @@ module.exports = {
 
         if (!queue) return interaction.followUp({ content: '曲を再生していません。'});
 
-        if (track < queue.tracks.length) {
-            queue.skipTo(track - 1);
-            interaction.followUp({
-                content: `⏭ \`${track}番目\` のトラックまでスキップしました。`
-            })
-        } else if (!track) {
+        if (track) {
+            if (track < queue.tracks.length) {
+                queue.skipTo(track - 1);
+                interaction.followUp({
+                    content: `⏭ \`${track}番目\` のトラックまでスキップしました。`
+                });
+            }
+        } else {
             queue.skip();
             interaction.followUp({
                 content: '⏭ スキップしました。'
-            })
-        } else {
-            return interaction.followUp({ content: '無効なトラックです' });
+            });
         }
 	},
 };

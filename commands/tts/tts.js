@@ -1,4 +1,4 @@
-const { SlashCommandBuilder, EmbedBuilder } = require('discord.js');
+const { SlashCommandBuilder } = require('discord.js');
 const { getVoiceConnection, joinVoiceChannel } = require("@discordjs/voice");
 
 module.exports = {
@@ -11,7 +11,7 @@ module.exports = {
         .setDescription('Commands related to Text-to-Speech.')
         .setDescriptionLocalizations({
             'en-US': 'Commands related to Text-to-Speech.',
-            'ja': 'キューを表示します。',
+            'ja': '読み上げに関するコマンド。',
         })
 		.setDMPermission(false)
         .addStringOption(
@@ -29,13 +29,14 @@ module.exports = {
 			.addChoices(
 				{ name: '開始', value: 'start' },
 				{ name: '終了', value: 'end' },
+                { name: '単語追加', value: 'add-word' },
+				{ name: '単語削除', value: 'remove-word' },
 			)
             .setRequired(true)
         ),
 
 	async execute(interaction) {
         const type = interaction.options.getString('type');
-        'user_dict_word?surface=hypixel&pronunciation=%E3%83%8F%E3%82%A4%E3%83%94%E3%82%AF%E3%82%BB%E3%83%AB&accent_type=2&word_type=PROPER_NOUN'
         const channel = interaction.member.voice.channel;
 
         if (!channel) return interaction.followUp({ content: 'あなたが先にVCに入っている必要があります。' });
@@ -61,6 +62,14 @@ module.exports = {
             interaction.client.voiceChannels.delete(channel.id);
             interaction.followUp({
                 content: '読み上げを終了しました。'
+            });
+        } else if (type === 'add-word') {
+            interaction.followUp({
+                content: 'コマンド `/add-word` を使用して単語を追加してください。'
+            });
+        } else if (type === 'remove-word') {
+            interaction.followUp({
+                content: 'コマンド `/remove-word` を使用して単語を削除してください。'
             });
         }
 	},

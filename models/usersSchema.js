@@ -5,6 +5,7 @@ const usersSchema = new mongoose.Schema({
     name: { type: String },
     tos: { type: Boolean },
     evaluation: { type: Number, min: 0, max: 10 },
+    speaker: { type: Number },
     profile: {
         avatar: { type: String },
         color: { type: String },
