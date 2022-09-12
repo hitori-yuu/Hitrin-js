@@ -18,7 +18,7 @@ module.exports = {
 	async execute(interaction) {
         const channel = interaction.member.voice.channel;
         const queue = interaction.client.player.getQueue(interaction.guild.id);
-        const connection = await getVoiceConnection(interaction.guild.id);
+        const connection = getVoiceConnection(interaction.guild.id);
 
         if (!channel) return interaction.followUp({ content: 'VCに参加していません。' });
         if (!queue) return interaction.followUp({ content: 'VCに参加していません。' });
