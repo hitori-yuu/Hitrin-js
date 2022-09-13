@@ -1,5 +1,6 @@
 const { InteractionType, EmbedBuilder } = require('discord.js');
 const usersModel = require('../models/usersSchema');
+const guildsModel = require('../models/guildsSchema');
 
 module.exports = {
 	name: 'interactionCreate',
@@ -11,9 +12,42 @@ module.exports = {
             const command = client.slashCommands.get(interaction.commandName);
 
             if (command) {
+                const guildsData = await guildsModel.find();
+                const guild_data = guildsData.filter(data => data.id  === interaction.guild.id);
+                if (guild_data.length <= 0) {
+                    const guildData = await guildsModel.create({
+                        id: interaction.guild.id,
+                        name: interaction.guild.name,
+                        settings: {
+                            autoMod: false,
+                            autoPublish: true,
+                            globalBan: true,
+                            authRole: 'None',
+                        },
+                        createDate: new Date().toLocaleString({ timeZone: 'Asia/Tokyo' }),
+                    });
+
+                    const logEmbed = new EmbedBuilder()
+                        .setColor('#59b9c6')
+                        .setTitle("サーバー初期設定")
+                        .setThumbnail(interaction.user.displayAvatarURL({extension: 'png', size: 128}))
+                        .setDescription(`サーバーの初期設定が完了しました。`)
+                        .addFields(
+                            {
+                                name: '__**サーバー:**__',
+                                value: `**[名前]** ${interaction.guild.tag}\n**[ID]** ${interaction.guild.id}`
+                            },
+                        )
+
+                    guildData.save();
+                    client.channels.cache.get('879943806118678528').send({
+                        embeds: [logEmbed]
+                    });
+                }
+
                 const usersData = await usersModel.find();
-                const data = usersData.filter(data => data.id  === interaction.user.id);
-                if (data.length <= 0) {
+                const user_data = usersData.filter(data => data.id  === interaction.user.id);
+                if (user_data.length <= 0) {
                     const userData = await usersModel.create({
                         id: interaction.user.id,
                         name: interaction.user.username,
