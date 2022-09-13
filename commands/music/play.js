@@ -44,9 +44,9 @@ module.exports = {
         .catch(() => {});
 
         const queue = interaction.client.player.createQueue(interaction.guild, {
-            initialVolume: 30,
             leaveOnEnd: false,
             leaveOnStop: false,
+            volumeSmoothness: 5,
             metadata: { channel: interaction.channel },
         });
 
