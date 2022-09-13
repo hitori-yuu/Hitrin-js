@@ -30,13 +30,13 @@ module.exports = {
                         },
                     )
 
-            const guildsData = await logsChannelsModel.find();
-            const data = guildsData.filter(data => data.guild.id === interaction.guild.id);
-            if (data.length <= 0) {
-                return;
-            } else {
-                interaction.guild.channels.cache.get(data[0].channel.id).send({embeds: [logEmbed]});
-            }
+                const guildsData = await logsChannelsModel.find();
+                const data = guildsData.filter(data => data.guild.id === interaction.guild.id);
+                if (data.length <= 0) {
+                    return;
+                } else {
+                    interaction.guild.channels.cache.get(data[0].channel.id).send({embeds: [logEmbed]});
+                }
             }
         } catch (error) {
             console.error('[エラー] ログ作成時にエラーが発生しました。\n内容: ' + error.message);
