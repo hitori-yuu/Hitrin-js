@@ -43,7 +43,12 @@ module.exports = {
         })
         .catch(() => {});
 
-        const queue = interaction.client.player.createQueue(interaction.guild, { PlayerOptions: { initialVolume: 30 }, metadata: {channel: interaction.channel } });
+        const queue = interaction.client.player.createQueue(interaction.guild, {
+            leaveOnEnd: false,
+            leaveOnStop: false,
+            volumeSmoothness: 5,
+            metadata: { channel: interaction.channel },
+        });
 
         const failedEmbed = new EmbedBuilder()
             .setColor('#d9333f')
@@ -107,7 +112,7 @@ module.exports = {
             }
             track.playlist ? queue.addTracks(track.tracks) : queue.addTrack(track.tracks[0]);
             if (!queue.playing) await queue.play();
-            queue.setRepeatMode(3);
+            if (interaction.client.player.getQueue(interaction.guild.id).repeatMode === 0) queue.setRepeatMode(3);
         } catch {
             queue.destroy();
             const failedEmbed = new EmbedBuilder()

@@ -2,3 +2,5 @@
 .env
 .Ink
 node_modules
+*.wav
+sounds/*.wav

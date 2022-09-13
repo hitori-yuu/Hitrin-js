@@ -78,18 +78,18 @@ for (const file of eventFiles) {
 	}
 };
 
-// const loggingFiles = fs.readdirSync('./logging').filter((file) => file.endsWith('.js'));
-// for (const file of loggingFiles) {
-// 	const event = require(`./logging/${file}`);
-// 	if (event.once) {
-// 		client.once(event.name, (...args) => event.execute(...args, client));
-// 	} else {
-// 		client.on(
-// 			event.name,
-// 			async (...args) => await event.execute(...args, client)
-// 		);
-// 	}
-// };
+const loggingFiles = fs.readdirSync('./logging').filter((file) => file.endsWith('.js'));
+for (const file of loggingFiles) {
+	const event = require(`./logging/${file}`);
+	if (event.once) {
+		client.once(event.name, (...args) => event.execute(...args, client));
+	} else {
+		client.on(
+			event.name,
+			async (...args) => await event.execute(...args, client)
+		);
+	}
+};
 
 // ボタン
 const buttonCommands = fs.readdirSync('./interactions/buttons');
@@ -133,6 +133,7 @@ for (const module of slashCommands) {
 
 client.player.on('trackStart', (queue, track) => {
 	queue.metadata.channel.send(`▶ | **${track.title}** を <#${queue.connection.channel.id}> で再生中です。`);
+	queue.setVolume(50);
 });
 
 client.player.on('trackAdd', (queue, track) => {
