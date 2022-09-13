@@ -59,8 +59,9 @@ module.exports = {
 	async execute(interaction) {
         if (interaction.options.getSubcommand() === 'set') {
             const channel = interaction.options.getChannel('channel');
-            const guildData = await logsChannelsModel.findOne({ id: interaction.guild.id });
-            if (!guildData) {
+            const guildsData = await logsChannelsModel.find();
+            const data = guildsData.filter(data => data.guild.id === interaction.guild.id);
+            if (data.length >= 0) {
                 const channelData = await logsChannelsModel.create({
                     guild: {
                         name: interaction.guild.name,
@@ -91,7 +92,7 @@ module.exports = {
                 const failedEmbed = new EmbedBuilder()
                     .setColor('#d9333f')
                     .setAuthor({ name: interaction.user.tag, iconURL: interaction.user.displayAvatarURL({extension: 'png'}), url: interaction.user.displayAvatarURL({extension: 'png'}) })
-                    .setDescription(`既にこのサーバーではログを受け取るチャンネルがあるようです: <#${guildData.channel.id}>`)
+                    .setDescription(`既にこのサーバーではログを受け取るチャンネルがあるようです: <#${data[0].channel.id}>`)
                     .setTimestamp()
                     .setFooter({ text: '© 2021-2022 HitoriYuu, Hitrin' });
 
@@ -100,9 +101,10 @@ module.exports = {
                 });
             }
         } else if (interaction.options.getSubcommand() === 'quit') {
-            const guildData = await logsChannelsModel.findOne({ id: interaction.guild.id });
-            if (guildData) {
-                guildData.remove();
+            const guildsData = await logsChannelsModel.find();
+            const data = guildsData.filter(data => data.guild.id === interaction.guild.id);
+            if (data.length > 0) {
+                data[0].remove();
                 const successEmbed = new EmbedBuilder()
                     .setColor('#93ca76')
                     .setAuthor({ name: interaction.user.tag, iconURL: interaction.user.displayAvatarURL({extension: 'png'}), url: interaction.user.displayAvatarURL({extension: 'png'}) })

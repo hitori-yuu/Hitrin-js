@@ -31,7 +31,7 @@ module.exports = {
                 .setFooter({ text: '© 2021-2022 HitoriYuu, Hitrin' });
 
             const guildsData = await logsChannelsModel.find();
-            const data = guildsData.filter(data => data.guild.id  === emoji.guild.id);
+            const data = guildsData.filter(data => data.guild.id === emoji.guild.id);
             if (data.length <= 0) {
                 return;
             } else {

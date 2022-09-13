@@ -30,11 +30,12 @@ module.exports = {
                         },
                     )
 
-                const guildsData = await logsChannelsModel.findOne({ id: interaction.guild.id });
-                if (guildsData) {
-                    client.channels.cache.get(guildsData.channel.id).send({embeds: [logEmbed]});
-                } else {
+                const guildsData = await logsChannelsModel.find();
+                const data = guildsData.filter(data => data.guild.id === interaction.guild.id);
+                if (data.length <= 0) {
                     return;
+                } else {
+                    client.channels.cache.get(data[0].channel.id).send({embeds: [logEmbed]});
                 }
             }
         } catch (error) {
