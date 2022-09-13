@@ -24,7 +24,7 @@ module.exports = {
         if (!queue) return interaction.followUp({ content: 'VCに参加していません。' });
         if (!connection) return interaction.followUp({ content: 'VCに参加していません。' });
 
-        if (queue) queue.destroy();
+        if (queue) queue.destroy(true);
         else if (connection) connection.destroy(true);
         interaction.followUp({
             content: `<#${channel.id}> から切断しました。`
