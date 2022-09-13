@@ -35,7 +35,7 @@ module.exports = {
                 if (data.length <= 0) {
                     return;
                 } else {
-                    client.channels.cache.get(data[0].channel.id).send({embeds: [logEmbed]});
+                    interaction.guild.channels.cache.get(data[0].channel.id).send({embeds: [logEmbed]});
                 }
             }
         } catch (error) {

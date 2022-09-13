@@ -61,7 +61,7 @@ module.exports = {
             const channel = interaction.options.getChannel('channel');
             const guildsData = await logsChannelsModel.find();
             const data = guildsData.filter(data => data.guild.id === interaction.guild.id);
-            if (data.length >= 0) {
+            if (data.length <= 0) {
                 const channelData = await logsChannelsModel.create({
                     guild: {
                         name: interaction.guild.name,
