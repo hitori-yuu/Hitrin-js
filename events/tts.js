@@ -1,5 +1,9 @@
 const { default: axios } = require("axios");
-const rpc = axios.create({ baseURL: "http://127.0.0.1:50021", proxy: false });
+const rpc = axios.create({
+    baseURL: "http://127.0.0.1:50021",
+    proxy: false,
+    timeout: 2000,
+});
 const { getVoiceConnection, createAudioResource, StreamType, createAudioPlayer, NoSubscriberBehavior } = require("@discordjs/voice");
 const fs = require('fs');
 const usersModel = require('../models/usersSchema');
@@ -25,15 +29,18 @@ module.exports = {
                 voice = data[0].speaker
             }
 
-            await generateAudio(message, filepath, voice);
-            await play(message, filepath);
+            try {
+                await generateAudio(message, filepath, voice);
+                await play(message, filepath);
+            } catch(error) {
+                console.error('[エラー] 読み上げ時にエラーが発生しました。\n内容: ' + error.message);
+            }
         }
     },
 };
 
 async function generateAudio(text, filepath, voice) {
     const audio_query = await rpc.post(`audio_query?text=${encodeURI(text)}&speaker=${voice}`)
-
     const synthesis = await rpc.post("synthesis?speaker=" + voice, JSON.stringify(audio_query.data), {
         responseType: 'arraybuffer',
         headers: {
