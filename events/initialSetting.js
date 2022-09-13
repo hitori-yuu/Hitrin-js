@@ -5,12 +5,12 @@ module.exports = {
 	name: 'interactionCreate',
 
 	async execute(interaction) {
-		const { client } = interaction;
-        if (!interaction.type == InteractionType.ApplicationCommand) return;
-        const command = client.slashCommands.get(interaction.commandName);
+        try {
+            const { client } = interaction;
+            if (!interaction.type == InteractionType.ApplicationCommand) return;
+            const command = client.slashCommands.get(interaction.commandName);
 
-        if (command) {
-            try {
+            if (command) {
                 const usersData = await usersModel.find();
                 const data = usersData.filter(data => data.id  === interaction.user.id);
                 if (data.length <= 0) {
@@ -19,6 +19,7 @@ module.exports = {
                         name: interaction.user.username,
                         tos: false,
                         evaluation: 10,
+                        speaker: 5,
                         profile: {
                             avatar: interaction.user.displayAvatarURL({ format: 'png'}),
                             color: 'BLACK',
@@ -48,9 +49,9 @@ module.exports = {
                         embeds: [logEmbed]
                     });
                 } else return;
-            } catch (error) {
-                console.error('[エラー] ユーザー初期設定時にエラーが発生しました。\n内容: ' + error.message);
             }
+        } catch (error) {
+            console.error('[エラー] ユーザー初期設定時にエラーが発生しました。\n内容: ' + error.message);
         }
 	},
 };
