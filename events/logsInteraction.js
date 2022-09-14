@@ -16,14 +16,14 @@ module.exports = {
                     args = 'None';
                 } else {
                     for (let i = 0; i < interaction.options.data.length; i++) {
-                        args.push(`**[${interaction.options.data[i].name}]** ${interaction.options.data[i].value}`);
+                        args.push(`**[${interaction.options.data[i].name || 'None'}]** ${interaction.options.data[i].value || 'None'}`);
                         if (!interaction.options.data[i]) {
                           break;
                         }
                     }
                 };
 
-                if (interaction.channel.type == ChannelType.DM) {
+                if (interaction.channel.type === 1) {
                     const logData = await logsModel.create({
                         command: interaction.commandName,
                         args: args,
@@ -63,7 +63,7 @@ module.exports = {
                         embeds: [logEmbed]
                     });
 
-                } else if (interaction.channel.type == ChannelType.GuildText) {
+                } else if (interaction.channel.type === 0) {
                     const logData = await logsModel.create({
                         command: interaction.commandName,
                         args: args,
