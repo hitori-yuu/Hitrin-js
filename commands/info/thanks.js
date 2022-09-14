@@ -12,7 +12,7 @@ module.exports = {
             'en-US': 'Display repositories and other resources that were instrumental in the creation of the bot.',
             'ja': 'ボット作成時に力をいただいたレポジトリ等を表示します。',
         })
-        .setDMPermission(false),
+        .setDMPermission(true),
 
 	async execute(interaction) {
         const text = codeBlock('',`discord.js@${require('discord.js').version}\ndiscord-player [Yukitoki - © Snowflake Studio ❄ - 2022]\nHypixel API\nytdl-core\nnode-fetch\nmongoose\nmojang-api\nffmpeg\naxios\nVOICEVOX:四国めたん\nVOICEVOX:ずんだもん\nVOICEVOX:春日部つむぎ\nVOICEVOX:雨晴はう\nVOICEVOX:九州そら`);
