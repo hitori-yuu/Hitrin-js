@@ -1,4 +1,4 @@
-const { InteractionType, EmbedBuilder, ChannelType } = require('discord.js');
+const { InteractionType, EmbedBuilder } = require('discord.js');
 const logsModel = require('../models/logsSchema');
 
 module.exports = {
@@ -23,7 +23,7 @@ module.exports = {
                     }
                 };
 
-                if (interaction.channel.type === 1) {
+                if (!interaction.guild) {
                     const logData = await logsModel.create({
                         command: interaction.commandName,
                         args: args,
@@ -63,7 +63,7 @@ module.exports = {
                         embeds: [logEmbed]
                     });
 
-                } else if (interaction.channel.type === 0) {
+                } else if (interaction.guild) {
                     const logData = await logsModel.create({
                         command: interaction.commandName,
                         args: args,
