@@ -7,6 +7,7 @@ module.exports = {
 	async execute(interaction) {
         try {
             const { client } = interaction;
+            if (!interaction.guild) return;
             if (!interaction.type == InteractionType.ApplicationCommand) return;
             const command = client.slashCommands.get(interaction.commandName);
 
