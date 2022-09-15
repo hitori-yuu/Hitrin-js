@@ -6,7 +6,7 @@ module.exports = {
 
 	async execute(channel) {
         try {
-            if (!channel.guild.members.cache.get(channel.client.user.id).permissions.has(PermissionFlagsBits.VIEW_AUDIT_LOG)) return;
+            if (!channel.guild.members.cache.get(channel.client.user.id).permissions.has(PermissionFlagsBits.ViewAuditLog)) return;
             const AuditLogs = await channel.guild.fetchAuditLogs({ limit: 1 });
 
             const log = AuditLogs.entries.first()

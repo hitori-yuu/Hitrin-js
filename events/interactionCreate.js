@@ -6,7 +6,7 @@ module.exports = {
 	async execute(interaction) {
         try {
             const { client, player } = interaction;
-            if (!interaction.type == InteractionType.ApplicationCommand) return;
+            if (!interaction.isApplicationCommand()) return;
             const command = client.slashCommands.get(interaction.commandName);
 
             if (command) {
