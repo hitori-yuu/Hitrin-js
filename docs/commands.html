@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>ヒトリン公式サイト-コマンド</title>
+        <link rel="stylesheet" href="commands.css">
+        <link rel="stylesheet" href="common.css">
+        <script src="https://kit.fontawesome.com/fb4709c9fe.js" crossorigin="anonymous"></script>
+    </head>
+    <body>
+        <div class="header">
+                <div class="header-left">
+                    <img class="header-logo" src="images/Hitrin.png" alt="Hitrin">
+                </div>
+                <div class="header-right">
+                    <ul class="header-list">
+                        <li><a href="index.html">ホーム</a></li>
+                        <li><a href="index.html">ポリシー</a>
+                            <ul>
+                                <li><a href="terms.html">利用規約</a></li>
+                                <li><a href="privacy.html">プライバシーポリシー</a></li>
+                            </ul>
+                        </li>
+                        <li><a href="commands.html"><b>コマンド</b></a></li>
+                        <li><a href="index.html">その他</a>
+                            <ul>
+                                <li><a href="notice.html">お知らせ</a></li>
+                                <li><a href="inquiry.html">お問い合わせ</a></li>
+                                <li><a href="faq.html">よくある質問</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                    <div class="innovate">
+                        <a href="https://discord.com/api/oauth2/authorize?client_id=876116418037444630&permissions=1644971949559&scope=bot%20applications.commands">導入する</a>
+                    </div>
+                </div>
+                <div class="clear"></div>
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" preserveAspectRatio="none">
+                    <polygon points="0,0 50,50 100,0"/>
+                </svg>
+        </div>
+        <div class="main">
+            <div class="path">
+                <p>ホーム&ensp;>&ensp;<b>コマンド</b></p>
+            </div>
+            <h1>― コマンド ―</h1>
+            <div class="commands">
+                <div class="tab-wrap">
+                    <input id="TAB-01" type="radio" name="TAB" class="tab-switch" checked="checked" /><label class="tab-label" for="TAB-01">ヘルプ:</label>
+                    <div class="tab-content">
+                        <p>コマンドボックスをクリックすると詳細を表示します。<br>&lt;必ず必要なパラメーター&gt; [任意なパラメーター]</p>
+
+                        <label for="box-01-01">
+                            <div class="command-box">
+                                <input type="checkbox" id="box-01-01"/>
+                                <h2>/help</h2>
+                                <p>ヘルプを表示します。</p>
+                                <div class="info">
+                                    <p>使用方法:<a class="info-sub">/help</a></p>
+                                    <p>実行に必要な権限:<a class="info-sub">誰でも実行可能</a></p>
+                                </div>
+                            </div>
+                        </label>
+
+                        <label for="box-01-02">
+                            <div class="command-box">
+                                <input type="checkbox" id="box-01-02"/>
+                                <h2>/inquiry</h2>
+                                <p>運営に依頼や質問等を送信します。</p>
+                                <div class="info">
+                                    <p>使用方法:<a class="info-sub">/inquiry &lt;種類&gt; [内容] [対象]</a></p>
+                                    <p>実行に必要な権限:<a class="info-sub">誰でも実行可能</a></p>
+                                </div>
+                            </div>
+                        </label>
+                    </div>
+                    <input id="TAB-02" type="radio" name="TAB" class="tab-switch" /><label class="tab-label" for="TAB-02">設定:</label>
+                    <div class="tab-content">
+                        <p>コマンドボックスをクリックすると詳細を表示します。<br>&lt;必ず必要なパラメーター&gt; [任意なパラメーター]</p>
+
+                        <label for="box-02-01">
+                            <div class="command-box">
+                                <input type="checkbox" id="box-02-01"/>
+                                <h2>/set</h2>
+                                <p>BOTに関することを設定します。</p>
+                                <div class="info">
+                                    <p>使用方法:<a class="info-sub">/set</a></p>
+                                    <p>実行に必要な権限:<a class="info-sub">誰でも実行可能</a></p>
+                                </div>
+                            </div>
+                        </label>
+
+                        <label for="box-02-02">
+                            <div class="command-box">
+                                <input type="checkbox" id="box-02-02"/>
+                                <h2>/music-set</h2>
+                                <p>曲の再生に関する設定をします。</p>
+                                <div class="info">
+                                    <p>使用方法:<a class="info-sub">/music-set</a></p>
+                                    <p>実行に必要な権限:<a class="info-sub">誰でも実行可能</a></p>
+                                </div>
+                            </div>
+                        </label>
+                    </div>
+                    <input id="TAB-03" type="radio" name="TAB" class="tab-switch" /><label class="tab-label" for="TAB-03">便利:</label>
+                    <div class="tab-content">
+                        <p>コマンドボックスをクリックすると詳細を表示します。<br>&lt;必ず必要なパラメーター&gt; [任意なパラメーター]</p>
+
+                        <label for="box-03-01">
+                            <div class="command-box">
+                                <input type="checkbox" id="box-03-01"/>
+                                <h2>/docs</h2>
+                                <p>discord.jsのドキュメントから検索します。</p>
+                                <div class="info">
+                                    <p>使用方法:<a class="info-sub">/docs &lt;検索&gt;</a></p>
+                                    <p>実行に必要な権限:<a class="info-sub">誰でも実行可能</a></p>
+                                </div>
+                            </div>
+                        </label>
+
+                        <label for="box-03-02">
+                            <div class="command-box">
+                                <input type="checkbox" id="box-03-02"/>
+                                <h2>/info</h2>
+                                <p>指定したものの詳細を表示します。</p>
+                                <div class="info">
+                                    <p>使用方法:<a class="info-sub">/info &lt;種類&gt; [対象]</a></p>
+                                    <p>実行に必要な権限:<a class="info-sub">誰でも実行可能</a></p>
+                                </div>
+                            </div>
+                        </label>
+
+                        <label for="box-03-03">
+                            <div class="command-box">
+                                <input type="checkbox" id="box-03-03"/>
+                                <h2>/translate</h2>
+                                <p>任意のテキストを翻訳します。</p>
+                                <div class="info">
+                                    <p>使用方法:<a class="info-sub">/translate &lt;任意の文字列&gt; &lt;翻訳先の言語&gt;</a></p>
+                                    <p>実行に必要な権限:<a class="info-sub">誰でも実行可能</a></p>
+                                </div>
+                            </div>
+                        </label>
+
+                        <label for="box-03-04">
+                            <div class="command-box">
+                                <input type="checkbox" id="box-03-04"/>
+                                <h2>/check-url</h2>
+                                <p>Norton Safewebを使って、サイトが危険にさらされているかどうかを確認します。</p>
+                                <div class="info">
+                                    <p>使用方法:<a class="info-sub">/check-url &lt;URLまたはドメイン名&gt;</a></p>
+                                    <p>実行に必要な権限:<a class="info-sub">誰でも実行可能</a></p>
+                                </div>
+                            </div>
+                        </label>
+
+                        <label for="box-03-05">
+                            <div class="command-box">
+                                <input type="checkbox" id="box-03-05"/>
+                                <h2>/weather</h2>
+                                <p>指定した地域の天気の詳細を表示します。（現在または明日）</p>
+                                <div class="info">
+                                    <p>使用方法:<a class="info-sub">/weather &lt;地名&gt; &lt;日付&gt; &lt;温度の種類&gt;</a></p>
+                                    <p>実行に必要な権限:<a class="info-sub">誰でも実行可能</a></p>
+                                </div>
+                            </div>
+                        </label>
+
+                        <label for="box-03-06">
+                            <div class="command-box">
+                                <input type="checkbox" id="box-03-06"/>
+                                <h2>/join</h2>
+                                <p>あなたが参加しているボイスチャンネルに参加します。</p>
+                                <div class="info">
+                                    <p>使用方法:<a class="info-sub">/join</a></p>
+                                    <p>実行に必要な権限:<a class="info-sub">誰でも実行可能</a></p>
+                                </div>
+                            </div>
+                        </label>
+
+                        <label for="box-03-07">
+                            <div class="command-box">
+                                <input type="checkbox" id="box-03-07"/>
+                                <h2>/leave</h2>
+                                <p>現在参加しているボイスチャンネルから切断します。</p>
+                                <div class="info">
+                                    <p>使用方法:<a class="info-sub">/leave</a></p>
+                                    <p>実行に必要な権限:<a class="info-sub">誰でも実行可能</a></p>
+                                </div>
+                            </div>
+                        </label>
+                    </div>
+                    <input id="TAB-04" type="radio" name="TAB" class="tab-switch" /><label class="tab-label" for="TAB-04">遊び:</label>
+                    <div class="tab-content">
+                        <p>コマンドボックスをクリックすると詳細を表示します。<br>&lt;必ず必要なパラメーター&gt; [任意なパラメーター]</p>
+
+                        <label for="box-04-01">
+                            <div class="command-box">
+                                <input type="checkbox" id="box-04-01"/>
+                                <h2>/profile</h2>
+                                <p>プロフィール関連コマンド。</p>
+                                <div class="info">
+                                    <p>使用方法:<a class="info-sub">/profile</a></p>
+                                    <p>実行に必要な権限:<a class="info-sub">誰でも実行可能</a></p>
+                                </div>
+                            </div>
+                        </label>
+
+                        <label for="box-04-02">
+                            <div class="command-box">
+                                <input type="checkbox" id="box-04-02"/>
+                                <h2>/together</h2>
+                                <p>指定したチャンネルにて任意のアクティビティを開始します。</p>
+                                <div class="info">
+                                    <p>使用方法:<a class="info-sub">/together &lt;チャンネル&gt;</a></p>
+                                    <p>実行に必要な権限:<a class="info-sub">誰でも実行可能</a></p>
+                                </div>
+                            </div>
+                        </label>
+
+                        <label for="box-04-03">
+                            <div class="command-box">
+                                <input type="checkbox" id="box-04-03"/>
+                                <h2>/say</h2>
+                                <p>任意の文字列をボットに言わせます。</p>
+                                <div class="info">
+                                    <p>使用方法:<a class="info-sub">/say &lt;言わせたい言葉&gt;</a></p>
+                                    <p>実行に必要な権限:<a class="info-sub">誰でも実行可能</a></p>
+                                </div>
+                            </div>
+                        </label>
+
+                        <label for="box-04-04">
+                            <div class="command-box">
+                                <input type="checkbox" id="box-04-04"/>
+                                <h2>/omikuji</h2>
+                                <p>おみくじを引きます。</p>
+                                <div class="info">
+                                    <p>使用方法:<a class="info-sub">/omikuji</a></p>
+                                    <p>実行に必要な権限:<a class="info-sub">誰でも実行可能</a></p>
+                                </div>
+                            </div>
+                        </label>
+
+                        <label for="box-04-05">
+                            <div class="command-box">
+                                <input type="checkbox" id="box-04-05"/>
+                                <h2>/dice</h2>
+                                <p>ダイスを振ります。</p>
+                                <div class="info">
+                                    <p>使用方法:<a class="info-sub">/dice &lt;回数&gt; &lt;面数&gt;</a></p>
+                                    <p>実行に必要な権限:<a class="info-sub">誰でも実行可能</a></p>
+                                </div>
+                            </div>
+                        </label>
+
+                        <label for="box-04-06">
+                            <div class="command-box">
+                                <input type="checkbox" id="box-04-06"/>
+                                <h2>/balance</h2>
+                                <p>あなたの残金を表示します。</p>
+                                <div class="info">
+                                    <p>使用方法:<a class="info-sub">/balance</a></p>
+                                    <p>実行に必要な権限:<a class="info-sub">誰でも実行可能</a></p>
+                                </div>
+                            </div>
+                        </label>
+
+                        <label for="box-04-07">
+                            <div class="command-box">
+                                <input type="checkbox" id="box-04-07"/>
+                                <h2>/get-coin</h2>
+                                <p>コインを受け取るために行動します。(5分に一度)</p>
+                                <div class="info">
+                                    <p>使用方法:<a class="info-sub">/get-coin &lt;任意の文字列を選択&gt;</a></p>
+                                    <p>実行に必要な権限:<a class="info-sub">誰でも実行可能</a></p>
+                                </div>
+                            </div>
+                        </label>
+
+                        <label for="box-04-08">
+                            <div class="command-box">
+                                <input type="checkbox" id="box-04-08"/>
+                                <h2>/login</h2>
+                                <p>ログイン報酬を受け取ります。(24時間に一度)</p>
+                                <div class="info">
+                                    <p>使用方法:<a class="info-sub">/login</a></p>
+                                    <p>実行に必要な権限:<a class="info-sub">誰でも実行可能</a></p>
+                                </div>
+                            </div>
+                        </label>
+                    </div>
+                    <input id="TAB-05" type="radio" name="TAB" class="tab-switch" /><label class="tab-label" for="TAB-05">管理:</label>
+                    <div class="tab-content">
+                        <p>コマンドボックスをクリックすると詳細を表示します。<br>&lt;必ず必要なパラメーター&gt; [任意なパラメーター]</p>
+
+                        <label for="box-05-01">
+                            <div class="command-box">
+                                <input type="checkbox" id="box-05-01"/>
+                                <h2>/kick</h2>
+                                <p>指定したメンバーをサーバーから追放します。</p>
+                                <div class="info">
+                                    <p>使用方法:<a class="info-sub">/kick &lt;対象&gt; [理由]</a></p>
+                                    <p>実行に必要な権限:<a class="info-sub">ユーザーKICK</a></p>
+                                </div>
+                            </div>
+                        </label>
+
+                        <label for="box-05-02">
+                            <div class="command-box">
+                                <input type="checkbox" id="box-05-02"/>
+                                <h2>/ban</h2>
+                                <p>指定メンバーをサーバーから禁止します。</p>
+                                <div class="info">
+                                    <p>使用方法:<a class="info-sub">/ban &lt;対象&gt; [理由] [日数]</a></p>
+                                    <p>実行に必要な権限:<a class="info-sub">ユーザーBAN</a></p>
+                                </div>
+                            </div>
+                        </label>
+
+                        <label for="box-05-03">
+                            <div class="command-box">
+                                <input type="checkbox" id="box-05-03"/>
+                                <h2>/unban</h2>
+                                <p>指定したユーザーの禁止を解除します。</p>
+                                <div class="info">
+                                    <p>使用方法:<a class="info-sub">/unban &lt;対象&gt; [理由]</a></p>
+                                    <p>実行に必要な権限:<a class="info-sub">ユーザーBAN</a></p>
+                                </div>
+                            </div>
+                        </label>
+                    </div>
+                    <input id="TAB-06" type="radio" name="TAB" class="tab-switch" /><label class="tab-label" for="TAB-06">音楽:</label>
+                    <div class="tab-content">
+                        <p>コマンドボックスをクリックすると詳細を表示します。<br>&lt;必ず必要なパラメーター&gt; [任意なパラメーター]</p>
+
+                        <label for="box-06-01">
+                            <div class="command-box">
+                                <input type="checkbox" id="box-06-01"/>
+                                <h2>/play</h2>
+                                <p>指定したURLの動画または検索した動画を再生します。</p>
+                                <div class="info">
+                                    <p>使用方法:<a class="info-sub">/play</a></p>
+                                    <p>実行に必要な権限:<a class="info-sub">誰でも実行可能</a></p>
+                                </div>
+                            </div>
+                        </label>
+
+                        <label for="box-06-02">
+                            <div class="command-box">
+                                <input type="checkbox" id="box-06-02"/>
+                                <h2>/stop</h2>
+                                <p>再生中の曲を停止します。</p>
+                                <div class="info">
+                                    <p>使用方法:<a class="info-sub">/stop</a></p>
+                                    <p>実行に必要な権限:<a class="info-sub">誰でも実行可能</a></p>
+                                </div>
+                            </div>
+                        </label>
+
+                        <label for="box-06-03">
+                            <div class="command-box">
+                                <input type="checkbox" id="box-06-03"/>
+                                <h2>/skip</h2>
+                                <p>再生中の曲をスキップします。</p>
+                                <div class="info">
+                                    <p>使用方法:<a class="info-sub">/skip</a></p>
+                                    <p>実行に必要な権限:<a class="info-sub">誰でも実行可能</a></p>
+                                </div>
+                            </div>
+                        </label>
+
+                        <label for="box-06-04">
+                            <div class="command-box">
+                                <input type="checkbox" id="box-06-04"/>
+                                <h2>/queue</h2>
+                                <p>再生中の曲をスキップします。</p>
+                                <div class="info">
+                                    <p>使用方法:<a class="info-sub">/queue</a></p>
+                                    <p>実行に必要な権限:<a class="info-sub">誰でも実行可能</a></p>
+                                </div>
+                            </div>
+                        </label>
+
+                        <label for="box-06-05">
+                            <div class="command-box">
+                                <input type="checkbox" id="box-06-05"/>
+                                <h2>/pause</h2>
+                                <p>再生中の曲一時停止します。</p>
+                                <div class="info">
+                                    <p>使用方法:<a class="info-sub">/pause</a></p>
+                                    <p>実行に必要な権限:<a class="info-sub">誰でも実行可能</a></p>
+                                </div>
+                            </div>
+                        </label>
+
+                        <label for="box-06-06">
+                            <div class="command-box">
+                                <input type="checkbox" id="box-06-06"/>
+                                <h2>/remuse</h2>
+                                <p>一時停止中の曲を再生します。</p>
+                                <div class="info">
+                                    <p>使用方法:<a class="info-sub">/remuse</a></p>
+                                    <p>実行に必要な権限:<a class="info-sub">誰でも実行可能</a></p>
+                                </div>
+                            </div>
+                        </label>
+
+                        <label for="box-06-07">
+                            <div class="command-box">
+                                <input type="checkbox" id="box-06-07"/>
+                                <h2>/music-status</h2>
+                                <p>曲を再生するステータスを表示します。</p>
+                                <div class="info">
+                                    <p>使用方法:<a class="info-sub">/music-status</a></p>
+                                    <p>実行に必要な権限:<a class="info-sub">誰でも実行可能</a></p>
+                                </div>
+                            </div>
+                        </label>
+
+                        <label for="box-06-08">
+                            <div class="command-box">
+                                <input type="checkbox" id="box-06-08"/>
+                                <h2>/music-set</h2>
+                                <p>曲の再生に関する設定をします。</p>
+                                <div class="info">
+                                    <p>使用方法:<a class="info-sub">/music-set</a></p>
+                                    <p>実行に必要な権限:<a class="info-sub">誰でも実行可能</a></p>
+                                </div>
+                            </div>
+                        </label>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="footer">
+            <div class="container">
+                <div class="footer-left">
+                    <a href="index.html"><img src="images/Hitrin.png"></a>
+                </div>
+                <div class="footer-right">
+                    <ul class="snsButtons">
+                        <li class="sns-twitter"><a href="https://twitter.com/yuu_hitorin"><i class="fa-brands fa-twitter fa-color"></i></a></li>
+                        <li><a href="https://www.instagram.com/hitori_yuu/" class="sns-instagram"><i class="fa-brands fa-instagram fa-color"></i></a></li>
+                        <li><a href="https://github.com/hitori-yuu/Hitrin-js" class="sns-github"><i class="fa-brands fa-github fa-color"></i></a></li>
+                        <li><a href="https://discord.gg/7BDq9ZNfkf" class="sns-discord"><i class="fa-brands fa-discord fa-color"></i></a></li>
+                    </ul>
+                </div>
+                <div class="clear"></div>
+                <p class="footer-text">本サイトを構成するすべての資料についてのすべての権利、権原、権益は本サイト運営者および第三者のライセンス許諾者に帰属します。<br>&copy; 2021-2022 HitoriYuu, Hitrin</p>
+            </div>
+        </div>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+    <script src="codes/fadeanime.js"></script>
+    </body>
+</html>
