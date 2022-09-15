@@ -1,4 +1,4 @@
-const { EmbedBuilder } = require('discord.js');
+const { InteractionType, EmbedBuilder } = require('discord.js');
 const logsModel = require('../models/logsSchema');
 
 module.exports = {
@@ -6,8 +6,9 @@ module.exports = {
 
 	async execute(interaction) {
         try {
+            const { client } = interaction;
             const command = client.slashCommands.get(interaction.commandName);
-            if (!interaction.isApplicationCommand()) return;
+            if (!interaction.type == InteractionType.ApplicationCommand) return;
             if (!command) return;
 
             var args = [];
@@ -35,7 +36,7 @@ module.exports = {
                     date: new Date().toLocaleString({ timeZone: 'Asia/Tokyo' }),
                 });
 
-                const logEmbed = new EmbedBuilder()
+                const dmEmbed = new EmbedBuilder()
                     .setColor('#59b9c6')
                     .setTitle('コマンドログ')
                     .setThumbnail(interaction.user.displayAvatarURL({extension: 'png', size: 128}))
@@ -63,8 +64,8 @@ module.exports = {
                     )
 
                 logData.save();
-                client.channels.cache.get('879943806118678528').send({
-                    embeds: [logEmbed]
+                await client.channels.cache.get('879943806118678528').send({
+                    embeds: [dmEmbed]
                 });
             } else if (!interaction.inGuild()) {
                 const logData = await logsModel.create({
@@ -82,7 +83,7 @@ module.exports = {
                     date: new Date().toLocaleString({ timeZone: 'Asia/Tokyo' }),
                 });
 
-                const logEmbed = new EmbedBuilder()
+                const guildEmbed = new EmbedBuilder()
                     .setColor('#59b9c6')
                     .setTitle('コマンドログ')
                     .setThumbnail(interaction.user.displayAvatarURL({extension: 'png', size: 128}))
@@ -93,7 +94,7 @@ module.exports = {
                         },
                         {
                             name: '__**引数:**__',
-                            value: `${args.join('\n')}`
+                            value: `${args.join('\n') || 'None'}`
                         },
                         {
                             name: '__**実行者:**__',
@@ -102,8 +103,8 @@ module.exports = {
                     )
 
                 logData.save();
-                client.channels.cache.get('879943806118678528').send({
-                    embeds: [logEmbed]
+                await client.channels.cache.get('879943806118678528').send({
+                    embeds: [guildEmbed]
                 });
             }
         } catch (error) {
