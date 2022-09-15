@@ -6,7 +6,7 @@ module.exports = {
 
 	async execute(oldEmoji, newEmoji) {
         try {
-            if (!oldEmoji.guild.members.cache.get(oldEmoji.client.user.id).permissions.has(PermissionFlagsBits.VIEW_AUDIT_LOG)) return;
+            if (!oldEmoji.guild.members.cache.get(oldEmoji.client.user.id).permissions.has(PermissionFlagsBits.ViewAuditLog)) return;
             const AuditLogs = await oldEmoji.guild.fetchAuditLogs({ limit: 1 });
 
             const log = AuditLogs.entries.first()
@@ -22,7 +22,11 @@ module.exports = {
                 .addFields(
                     {
                         name: '__**絵文字:**__',
-                        value: `**[名前]** ${newEmoji.name}\n**[ID]** ${newEmoji.id}\n**[変更]** ${log.changes[0].key}: \`${log.changes[0].old}\` => \`${log.changes[0].new}\``
+                        value: `**[名前]** ${newEmoji.name}\n**[ID]** ${newEmoji.id}`
+                    },
+                    {
+                        name: `__**${log.changes[0].key || 'None'}:**__`,
+                        value: `**[旧]** ${log.changes[0].old || 'None'}\n**[新]** ${log.changes[0].new || 'None'}`
                     },
                 )
                 .setTimestamp()

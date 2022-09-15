@@ -6,7 +6,7 @@ module.exports = {
 
 	async execute(channel) {
         try {
-            if (!channel.guild.members.cache.get(channel.client.user.id).permissions.has(PermissionFlagsBits.VIEW_AUDIT_LOG)) return;
+            if (!channel.guild.members.cache.get(channel.client.user.id).permissions.has(PermissionFlagsBits.ViewAuditLog)) return;
             const AuditLogs = await channel.guild.fetchAuditLogs({ limit: 1 });
 
             const log = AuditLogs.entries.first()
@@ -17,12 +17,16 @@ module.exports = {
                 .setAuthor({ name: member.user.tag, iconURL: member.displayAvatarURL({extension: 'png'}) })
                 .setTitle('チャンネル更新')
                 .setDescription(
-                    `<@${member.id}> が チャンネル ${log.target} を更新しました。`
+                    `<@${member.id}> が チャンネル ${log.target.name} を更新しました。`
                 )
                 .addFields(
                     {
                         name: '__**チャンネル:**__',
-                        value: `**[名前]** ${log.target.name}\n**[ID]** ${log.target.id}\n**[変更]** ${log.changes[0].key}: \`${log.changes[0].old}\` => \`${log.changes[0].new}\``
+                        value: `**[名前]** ${log.target.name}\n**[ID]** ${log.target.id}`
+                    },
+                    {
+                        name: `__**${log.changes[0].key || 'None'}:**__`,
+                        value: `**[旧]** ${log.changes[0].old || 'None'}\n**[新]** ${log.changes[0].new || 'None'}`
                     },
                 )
                 .setTimestamp()

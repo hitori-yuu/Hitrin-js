@@ -6,7 +6,7 @@ module.exports = {
 
 	async execute(emoji) {
         try {
-            if (!emoji.guild.members.cache.get(emoji.client.user.id).permissions.has(PermissionFlagsBits.VIEW_AUDIT_LOG)) return;
+            if (!emoji.guild.members.cache.get(emoji.client.user.id).permissions.has(PermissionFlagsBits.ViewAuditLog)) return;
             const AuditLogs = await emoji.guild.fetchAuditLogs({ limit: 1 });
 
             const log = AuditLogs.entries.first()
