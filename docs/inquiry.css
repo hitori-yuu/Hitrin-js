@@ -1,0 +1,37 @@
+.support h2 {
+    margin-top: 60px;
+    margin-bottom: 25px;
+    font-size: 35px;
+}
+.support h3 {
+    margin-top: 30px;
+    margin-bottom: 20px;
+    font-size: 25px;
+}
+.support p {
+    font-size: 15px;
+}
+.space {
+    margin-left: 15px;
+}
+.support-links{
+    padding: 7px 0 2px 2em;
+    border: double 6px #a6c8b2;
+}
+.support-links li{
+    line-height: 1.5;
+    padding: 0.5em 0;
+}
+a {
+    color: #b94047;
+}
+a:hover {
+    opacity: 65%;
+    transition: all .2s;
+}
+.please {
+    padding-left: 2em;
+}
+.please li {
+    line-height: 2em;
+}

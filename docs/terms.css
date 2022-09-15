@@ -1,0 +1,23 @@
+.terms {
+    text-align: left;
+    font-size: 17px;
+}
+.terms p {
+    letter-spacing: 0.1em;
+    line-height : 1.5em;
+}
+.terms h2 {
+    margin-top: 20px;
+    font-size: 20px;
+}
+.terms a {
+    color: #b94047;
+    text-decoration: none;
+}
+.terms a:hover {
+    opacity: 65%;
+    transition: all .2s;
+}
+.space {
+    margin-left: 15px;
+}

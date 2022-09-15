@@ -1,0 +1,28 @@
+.content h2 {
+    display: inline-block;
+    font-size: 30px;
+    padding: 0.3em 0.4em;
+    background-color: #383c3c;
+    color: #fffffc;
+}
+.content p {
+    font-size: 18px;
+    padding: 1.5em 2em;
+    text-align: left;
+    margin-bottom: 60px;
+    background-color: #eae5e3;
+}
+.content p::before {
+    content: "A.";
+}
+.content h2::before {
+    content: "Q.";
+}
+a {
+    color: #b94047;
+    text-decoration: none;
+}
+a:hover {
+    opacity: 65%;
+    transition: all .2s;
+}

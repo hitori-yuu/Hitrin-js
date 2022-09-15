@@ -1,0 +1,223 @@
+@charset "utf-8";
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@500;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Sawarabi+Mincho&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+}
+body {
+    background-color: #f3f3f3;
+}
+.header {
+    position: fixed;
+	height: 100px;
+    width: 100%;
+	background: #fde8d0;
+    top: 0;
+    z-index: 1;
+}
+.header svg {
+	position: absolute;
+	bottom: -100px;
+	width: 100%;
+	height: 100px;
+	fill: #fde8d0;
+    z-index: 1;
+}
+.header-left {
+    float: left;
+    z-index: 2;
+}
+.header-right {
+    float: right;
+    display: flex;
+    z-index: 2;
+}
+.clear {
+    clear: both;
+}
+.header-logo {
+    height: 90px;
+    margin-top: 5px;
+    margin-left: 150px;
+    z-index: 2;
+}
+.header-list {
+    margin: 15px -70px;
+    display: flex;
+    height: 2rem;
+    width: 600px;
+    z-index: 2;
+}
+.header-list li {
+    list-style: none;
+    position: relative;
+    width: 100%;
+}
+.header-list li a {
+    height: 2rem;
+}
+.header-list li li a {
+    color: #e7609e;
+    font-weight: bold;
+}
+.header-list li li {
+    height: 0;
+    overflow: hidden;
+    transition: .5s;
+}
+.header-list li:hover > ul > li {
+    overflow: visible;
+    height: 3rem;
+}
+.innovate {
+    margin: 25px 50px;
+    display: flex;
+}
+.innovate a {
+    padding: 8px 15px;
+    text-align: center;
+    width: 80px;
+    color: #0d0015;
+    font-size: 18px;
+    font-weight: 550;
+    border: 2px solid #53727d;
+    border-radius: 10px;
+    text-decoration: none;
+}
+.innovate a::after {
+    content: '';
+    width: 5px;
+    height: 5px;
+    transform: rotate(45deg);
+}
+.innovate a:hover {
+    color: #333333;
+    text-decoration: none;
+    background-color: #a0c4d3;
+    transition: all .5s;
+}
+.header-list a {
+    color: #5a5c5f;
+    margin-top: 25px;
+    margin-left: 12px;
+    text-decoration: none;
+    font-size: 20px;
+    position: relative;
+    display: inline-block;
+}
+.header-list a::after {
+    position: absolute;
+    bottom: -4px;
+    left: 0;
+    content: '';
+    width: 100%;
+    height: 2px;
+    background: #333;
+    transform: scale(0, 1);
+    transform-origin: left top;
+    transition: transform .3s;
+}
+.header-list a:hover::after {
+    transform: scale(1, 1);
+}
+.header-list a:hover {
+    opacity: 65%;
+    transition: opacity .3s;
+}
+
+.main {
+    margin-top: 140px;
+    margin-bottom: 80px;
+    max-width: 1200px;
+    padding: 0 30px;
+    margin-left: auto;
+    margin-right: auto;
+    color: #333631;
+    font-family: 'Noto Sans JP', sans-serif;
+}
+.main > .path {
+    margin-bottom: 20px;
+    text-align: left;
+    font-size: 15px;
+}
+.main h1 {
+    text-align: center;
+    margin-bottom: 80px;
+    font-size: 45px;
+}
+.effective {
+    margin-top: 30px;
+    font-size: 18px;
+    font-weight: 800;
+    font-family: 'Sawarabi Mincho', serif;
+}
+
+.footer {
+    height: 250px;
+    background-color: #2b2b2b;
+}
+.footer > .container {
+    max-width: 1200px;
+    margin-left: auto;
+    margin-right: auto;
+}
+.footer-text {
+    padding-top: 30px;
+    font-family: 'Noto Sans JP', sans-serif;
+    font-size: 15px;
+    text-align: center;
+    color: #e8ecef;
+}
+.footer-left {
+    color: #e8ecef;
+    padding-top: 30px;
+    padding-left: 150px;
+    float: left;
+}
+.footer-left a img {
+    width: 90px;
+}
+.footer-left a img:hover {
+    opacity: 60%;
+    transform: scale(1.1);
+    transition: all .2s;
+}
+.footer-right {
+    padding-top: 45px;
+    padding-right: 150px;
+    float: right;
+}
+.snsButtons > li {
+    text-shadow: 0 0 2px #4d5aaf;
+    display: inline-block;
+    width: 80px;
+    font-size: 35px;
+}
+.fa-color {
+    color: #dcdddd;
+}
+.snsButtons li:hover {
+    opacity: 60%;
+    transition: all .3s;
+}
+
+.fadeUp {
+    animation-name: fadeUpAnime;/*アニメーションの定義名*/
+    animation-duration: 1.8s;/*アニメーション変化時間 ※デフォルト*/
+    animation-fill-mode: forwards;/*アニメーションの開始と終了時の状態を指定*/
+    opacity: 0;
+    animation-duration: 1.3s;
+}
+    /*アニメーションの開始から終了までを指定する*/
+@keyframes fadeUpAnime{
+    from {
+        opacity: 0;
+        transform: translateY(100px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
