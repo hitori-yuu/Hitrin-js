@@ -5,3 +5,5 @@ node_modules
 *.wav
 sounds/*.wav
 voicevox.ink
+voicevox.sh
+launch.sh
