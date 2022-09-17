@@ -91,7 +91,7 @@ module.exports = {
         const data = wordsData.filter(data => data.word  === surface);
         if (data.length > 0) return interaction.followUp({ content: 'その単語は既に追加されています' });
 
-        const res = await rpc.post(`user_dict_word?surface=${surface}&pronunciation=${encodeURI(pronunciation)}&accent_type=${accent}&word_type=${type}`);
+        const res = await rpc.post(`user_dict_word?surface=${encodeURI(surface)}&pronunciation=${encodeURI(pronunciation)}&accent_type=${encodeURI(accent)}&word_type=${encodeURI(type)}`);
         const wordEmbed = new EmbedBuilder()
             .setColor('#93ca76')
             .setAuthor({ name: interaction.user.tag, iconURL: interaction.user.displayAvatarURL({extension: 'png'}), url: interaction.user.displayAvatarURL({extension: 'png'}) })

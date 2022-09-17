@@ -132,6 +132,7 @@ for (const module of slashCommands) {
 };
 
 client.player.on('trackStart', (queue, track) => {
+	if (queue.repeatMode === 1) return queue.setVolume(50);
 	queue.metadata.channel.send(`▶ | **${track.title}** を <#${queue.connection.channel.id}> で再生中です。`);
 	queue.setVolume(50);
 });

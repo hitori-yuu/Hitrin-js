@@ -32,10 +32,11 @@ module.exports = {
 
             const guildsData = await logsChannelsModel.find();
             const data = guildsData.filter(data => data.guild.id === emoji.guild.id);
-            if (data.length <= 0) {
+            if (!data) {
                 return;
             } else {
                 emoji.guild.channels.cache.get(data[0].channel.id).send({embeds: [logEmbed]});
+                return;
             }
         } catch (error) {
             return console.error('[エラー]イベント時にエラーが発生しました。\n内容: ' + error.message);
