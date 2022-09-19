@@ -35,7 +35,7 @@ module.exports = {
 
             const guildsData = await logsChannelsModel.find();
             const data = guildsData.filter(data => data.guild.id === message.guild.id);
-            if (!data) {
+            if (!data || !data.length > 0) {
                 return;
             } else {
                 message.guild.channels.cache.find(ch => ch.id === data[0].channel.id).send({embeds: [logEmbed]});
