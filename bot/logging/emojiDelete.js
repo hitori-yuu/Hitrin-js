@@ -32,7 +32,7 @@ module.exports = {
 
             const guildsData = await logsChannelsModel.find();
             const data = guildsData.filter(data => data.guild.id === emoji.guild.id);
-            if (data === undefined) {
+            if (data[0] === undefined) {
                 return;
             } else {
                 emoji.guild.channels.cache.get(data[0].channel.id).send({embeds: [logEmbed]});
