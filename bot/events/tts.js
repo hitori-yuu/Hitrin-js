@@ -44,7 +44,7 @@ module.exports = {
 function convertMessage(text) {
     text = text.replace(/<:[a-zA-Z0-9_]+:[0-9]+>/g, "絵文字")
     text = text.replace(emojiRegex(), "絵文字")
-    text = text.replace(/(https?|ftp)(:\/\/[\w\/:%#\$&\?\(\)~\.=\+\-]+)/g, "URL省略")
+    text = text.replace(/(https?|http?|ftp)(:\/\/[\w\/:%#\$&\?\(\)~\.=\+\-]+)/g, "URL省略")
     text = text.replace(/\r?\n/g, "、")
 
     return text
