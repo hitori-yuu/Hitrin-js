@@ -35,12 +35,8 @@ module.exports = {
 
             const guildsData = await logsChannelsModel.find();
             const data = guildsData.filter(data => data.guild.id === message.guild.id);
-            if (data[0] === undefined) {
-                return;
-            } else {
-                message.guild.channels.cache.find(ch => ch.id === data[0].channel.id).send({embeds: [logEmbed]});
-                return;
-            }
+            if (data[0] == undefined) return;
+            message.guild.channels.cache.find(ch => ch.id === data[0].channel.id).send({embeds: [logEmbed]});
         } catch (error) {
             return console.error('[エラー]イベント時にエラーが発生しました。\n内容: ' + error.message);
         }
