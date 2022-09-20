@@ -35,8 +35,10 @@ module.exports = {
 				{ name: '春日部つむぎ', value: 8 },
                 { name: '雨晴はう', value: 10 },
 				{ name: '九州そら(ノーマル)', value: 16 },
-                { name: '九州そら(あまあま)', value: 15 },
                 { name: '九州そら(セクシー)', value: 17 },
+                { name: '白上虎太郎', value: 12 },
+                { name: '青山龍星', value: 13 },
+                { name: '剣崎雌雄', value: 21 },
 			)
             .setRequired(true)
         ),
@@ -72,10 +74,14 @@ module.exports = {
             speakerName = '雨晴はう';
         } else if (speaker === 16) {
             speakerName = '九州そら(ノーマル)';
-        } else if (speaker === 15) {
-            speakerName = '九州そら(あまあま)';
         } else if (speaker === 17) {
             speakerName = '九州そら(セクシー)';
+        } else if (speaker === 12) {
+            speakerName = '白上虎太郎';
+        } else if (speaker === 13) {
+            speakerName = '青山龍星';
+        } else if (speaker === 21) {
+            speakerName = '剣崎雌雄';
         }
 
         userData.save();
