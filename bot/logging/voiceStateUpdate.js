@@ -12,21 +12,26 @@ module.exports = {
 
 	async execute(oldState, newState) {
         try {
-            const channel = oldState.guild.channels.cache.get(oldState.client.voiceChannels.get(oldState.channelId || newState.channelId));
+            var channel = oldState.guild.channels.cache.get(oldState.client.voiceChannels.get(oldState.channelId || newState.channelId));
             const member = oldState.guild.members.cache.get(oldState.id);
             const oldCh = oldState.guild.channels.cache.get(oldState.channelId);
             const newCh = oldState.guild.channels.cache.get(newState.channelId);
             const filepath = "./sounds/" + oldState.guild.id + ".wav"
             var text;
 
-            if (!oldState.channelId){
+            if (!oldCh) {
                 if (!oldState.client.voiceChannels.get(newState.channelId)) return;
                 channel.send({ content: `**${member.displayName}** が ${newCh} に参加しました。` });
                 text = `${member.displayName}が参加しました。`
-            } else if (!newState.channelId){
+            } else if (!newCh) {
                 if (!oldState.client.voiceChannels.get(oldState.channelId)) return;
                 channel.send({ content: `**${member.displayName}** が ${oldCh} から切断しました。` });
                 text = `${member.displayName}が切断しました。`
+            } else if (newCh.id == oldState.client.voiceGuilds.get(newState.guild.id)) {
+                if (!oldState.client.voiceChannels.get(newState.channelId)) return;
+                channel = oldState.guild.channels.cache.get(oldState.client.voiceChannels.get(newState.channelId))
+                channel.send({ content: `**${member.displayName}** が ${newCh} に移動しました。` });
+                text = `${member.displayName}が参加しました。`
             } else {
                 if (!oldState.client.voiceChannels.get(oldState.channelId)) return;
                 channel.send({ content: `**${member.displayName}** が ${newCh} に移動しました。` });

@@ -55,6 +55,7 @@ module.exports = {
                 selfDeaf: true,
             });
             interaction.client.voiceChannels.set(channel.id, interaction.channel.id);
+            interaction.client.voiceGuilds.set(interaction.guild.id, channel.id);
             interaction.followUp({
                 content: `<#${interaction.channel.id}> でのチャットを <#${channel.id}> で読み上げます。`
             });

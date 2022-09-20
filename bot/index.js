@@ -51,6 +51,7 @@ client.buttonCommands = new Collection();
 client.selectCommands = new Collection();
 client.contextCommands = new Collection();
 client.voiceChannels = new Collection();
+client.voiceGuilds = new Collection();
 
 // データベース
 mongoose //mongooseについて
