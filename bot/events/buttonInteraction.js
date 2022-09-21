@@ -4,13 +4,14 @@ module.exports = {
 	name: "interactionCreate",
 
 	async execute(interaction) {
-		const { client } = interaction;
-		if (!interaction.type == InteractionType.MessageComponent) return;
-		if (!interaction.componentType == ComponentType.Button) return;
-		const command = client.buttonCommands.get(interaction.customId);
-		if (!command) return;
-
 		try {
+			const { client } = interaction;
+			const command = client.buttonCommands.get(interaction.customId);
+
+			if (!command) return;
+			if (!interaction.type == InteractionType.MessageComponent) return;
+			if (!interaction.componentType == ComponentType.Button) return;
+
 			await interaction.deferReply();
 			await command.execute(interaction);
 			return;

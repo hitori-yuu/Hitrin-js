@@ -87,7 +87,7 @@ module.exports = {
                 } else return;
             }
         } catch (error) {
-            console.error('[エラー] ユーザー初期設定時にエラーが発生しました。\n内容: ' + error.message);
+            console.error('[エラー] 初期設定時にエラーが発生しました。\n内容: ' + error.message);
         }
 	},
 };
