@@ -41,6 +41,7 @@ module.exports = {
             }
         } catch (error) {
             console.error('[エラー] ログ作成時にエラーが発生しました。\n内容: ' + error.message);
+            return;
         }
 	},
 };

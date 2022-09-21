@@ -28,6 +28,7 @@ module.exports = {
             interaction.followUp({
                 embeds: [errorEmbed]
             });
+			return;
 		}
 	},
 };

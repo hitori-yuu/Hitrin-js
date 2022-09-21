@@ -64,6 +64,7 @@ module.exports = {
             await owner.send({ embeds: [thanks] });
         } catch (error) {
             console.error('[エラー] サーバー参加時にエラーが発生しました。\n内容: ' + error.message);
+            return;
         }
 	},
 };

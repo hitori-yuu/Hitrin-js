@@ -12,6 +12,7 @@ module.exports = {
 			}, 30000)
 		} catch (error) {
             console.error('[エラー] ステータス設定時にエラーが発生しました。\n内容: ' + error.message);
+			return;
 		}
 	},
 };

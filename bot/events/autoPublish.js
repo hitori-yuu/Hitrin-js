@@ -22,6 +22,7 @@ module.exports = {
             }
         } catch(error) {
             console.error('[エラー] 自動公開時にエラーが発生しました。\n内容: ' + error.message)
+            return;
         }
     },
 };

@@ -88,6 +88,7 @@ module.exports = {
             }
         } catch (error) {
             console.error('[エラー] 初期設定時にエラーが発生しました。\n内容: ' + error.message);
+            return;
         }
 	},
 };
