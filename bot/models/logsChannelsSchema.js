@@ -13,7 +13,7 @@ const logsChannelSchema = new mongoose.Schema({
         name: { type: String },
         id: { type: String },
     },
-    date: { type: String },
+    createdDate : { type: String },
 });
 
 const model = mongoose.model('LogsChannel', logsChannelSchema);

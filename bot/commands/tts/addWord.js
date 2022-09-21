@@ -102,6 +102,10 @@ module.exports = {
         const wordData = await wordsModel.create({
             word: surface,
             word_id: res.data.toString(),
+            author: {
+                name: interaction.user.username,
+                id:  interaction.user.id,
+            },
             date: new Date().toLocaleString({ timeZone: 'Asia/Tokyo' }),
         });
 

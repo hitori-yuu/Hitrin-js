@@ -12,7 +12,7 @@ const logsSchema = new mongoose.Schema({
         id: { type: String },
         dm: { type: Boolean },
     },
-    date: { type: String },
+    createdDate : { type: String },
 });
 
 const model = mongoose.model('Logs', logsSchema);

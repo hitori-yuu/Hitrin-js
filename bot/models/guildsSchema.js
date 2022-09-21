@@ -4,12 +4,32 @@ const guildsSchema = new mongoose.Schema({
     id: { type: String },
     name: { type: String },
     settings: {
-        autoMod: { type: Boolean },
-        autoPublish: { type: Boolean },
-        globalBan: { type: Boolean },
-        authRole: { type: String },
+        autoMod: { type: Boolean, default: true },
+        autoPublish: { type: Boolean, default: true },
+        globalBan: { type: Boolean, default: true },
+        authRole: { type: String, default: 'None' },
     },
-    createDate : { type: String },
+    autoMod: {
+        blacklistsWords: {
+            permission: { type: Boolean, default: false },
+            words: { type: Array , default: 'None'},
+            ignore: { type: Array, default: 'None' },
+        },
+        antiInvite: {
+            permission: { type: Boolean, default: false },
+            ignore: { type: Array, default: 'None' },
+        },
+        antiCapitals: {
+            permission: { type: Boolean, default: false },
+            ignore: { type: Array, default: 'None' },
+        },
+        antiLinks: {
+            permission: { type: Boolean, default: false },
+            links: { type: Array, default: 'None' },
+            ignore: { type: Array, default: 'None' },
+        },
+    },
+    createdDate : { type: String },
 });
 
 const model = mongoose.model('Guilds', guildsSchema);

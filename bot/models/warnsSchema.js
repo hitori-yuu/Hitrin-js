@@ -14,7 +14,7 @@ const warnsSchema = new mongoose.Schema({
         id: { type: String },
     },
     reason: { type: String },
-    date: { type: String },
+    createdDate : { type: String },
 });
 
 const model = mongoose.model('Warns', warnsSchema);

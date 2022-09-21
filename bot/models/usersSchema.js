@@ -15,7 +15,7 @@ const usersSchema = new mongoose.Schema({
             public: { type: Boolean },
         }
     },
-    createDate : { type: String },
+    createdDate : { type: String },
 });
 
 const model = mongoose.model('Users', usersSchema);
