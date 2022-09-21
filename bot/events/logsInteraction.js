@@ -12,11 +12,19 @@ module.exports = {
             if (!command) return;
 
             var args = [];
-            if (!interaction.options) args = 'None';
-            else if (interaction.options) {
-                for (let i = 0; i < interaction.options.data.length; i++) {
-                    args.push(`**[${interaction.options.data[i].name || 'None'}]** ${interaction.options.data[i].value || 'None'}`);
-                    if (!interaction.options.data[i]) break;
+            if (!interaction.options.data[0]) {
+                args = '';
+            } else if (interaction.options.data) {
+                if (interaction.options.data[0].options) {
+                    for (let i = 0; i < interaction.options.data.length; i++) {
+                        args.push(`**[${interaction.options.data[0].options[i].name.toUpperCase() || 'None'}]** ${interaction.options.data[0].options[i].value || 'None'}`);
+                        if (!interaction.options.data[0].options[i]) break;
+                    }
+                } else if (!interaction.options.data[0].options){
+                    for (let i = 0; i < interaction.options.data.length; i++) {
+                        args.push(`**[${interaction.options.data[i].name.toUpperCase() || 'None'}]** ${interaction.options.data[i].value || 'None'}`);
+                        if (!interaction.options.data[i]) break;
+                    }
                 }
             };
 

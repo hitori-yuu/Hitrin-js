@@ -80,12 +80,13 @@ module.exports = {
         ),
 
 	async execute(interaction) {
-        const surface = interaction.options.getString('surface');
+        const surface = interaction.options.getString('surface').toLowerCase();
         const pronunciation = interaction.options.getString('pronunciation');
         const accent = interaction.options.getNumber('accent');
         const type = interaction.options.getString('type') || 'COMMON_NOUN';
 
-        if (accent <= 0 || accent >= pronunciation.length) return interaction.followUp({ content: 'アクセントの場所が0以下または発音文字数を超えています。' });
+        if (accent <= 0 || accent > pronunciation.length) return interaction.followUp({ content: 'アクセントの場所が0以下または発音文字数を超えています。' });
+        if (!pronunciation.match(/^[ァ-ヶー　]*$/)) return interaction.followUp({ content: '発音はカタカナで入力してください。' });
 
         const wordsData = await wordsModel.find();
         const data = wordsData.filter(data => data.word  === surface);
