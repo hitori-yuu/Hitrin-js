@@ -3,6 +3,8 @@
         "bannable",
         "crosspost",
         "crosspostable",
+        "fullname",
+        "genshin",
         "Hitori",
         "HYPIXEL",
         "kickable",
@@ -12,6 +14,7 @@
         "touhou",
         "unban",
         "VOICEVOX",
+        "weapontype",
         "Yukitoki"
     ]
 }
