@@ -12,6 +12,8 @@ module.exports = {
 
 	async execute(oldState, newState) {
         try {
+            const queue = oldState.client.player.getQueue(oldState.guild.id);
+            if (queue) return;
             var channel = oldState.guild.channels.cache.get(oldState.client.voiceChannels.get(oldState.channelId || newState.channelId));
             const member = oldState.guild.members.cache.get(oldState.id);
             const oldCh = oldState.guild.channels.cache.get(oldState.channelId);
