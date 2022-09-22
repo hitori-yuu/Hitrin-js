@@ -16,7 +16,7 @@ module.exports = {
                 args = '';
             } else if (interaction.options.data) {
                 if (interaction.options.data[0].options) {
-                    for (let i = 0; i < interaction.options.data.length; i++) {
+                    for (let i = 0; i < interaction.options.data[0].options.length; i++) {
                         args.push(`**[${interaction.options.data[0].options[i].name.toUpperCase() || 'None'}]** ${interaction.options.data[0].options[i].value || 'None'}`);
                         if (!interaction.options.data[0].options[i]) break;
                     }

@@ -35,10 +35,10 @@ module.exports = {
         const surface = interaction.options.getString('surface');
 
         const wordsData = await wordsModel.find();
-        const word = wordsData.filter(data => data.word === surface);
-        if (word.length <= 0) return interaction.followUp({ content: 'その単語は登録されていません。' });
+        const data = wordsData.filter(data => data.word === surface);
+        if (data[0] == undefined) return interaction.followUp({ content: 'その単語は登録されていません。' });
 
-        await rpc.delete(`user_dict_word/${word[0].word_id}`);
+        await rpc.delete(`user_dict_word/${data[0].word_id}`);
         const wordEmbed = new EmbedBuilder()
             .setColor('#93ca76')
             .setAuthor({ name: interaction.user.tag, iconURL: interaction.user.displayAvatarURL({extension: 'png'}), url: interaction.user.displayAvatarURL({extension: 'png'}) })
