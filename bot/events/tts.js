@@ -15,8 +15,6 @@ module.exports = {
         if (message.author.bot || !message.guild) return;
         const channel = message.member.voice.channel;
         if (!channel) return;
-        const queue = message.client.player.getQueue(message.guild.id);
-        if (queue) return;
         var voice;
 
         if (message.channel.id === message.client.voiceChannels.get(channel.id)) {

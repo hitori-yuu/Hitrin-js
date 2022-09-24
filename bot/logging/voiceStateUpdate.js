@@ -35,9 +35,7 @@ module.exports = {
                 channel.send({ content: `**${member.displayName}** が ${newCh} に移動しました。` });
                 text = `${member.displayName}が参加しました。`
             } else {
-                if (!oldState.client.voiceChannels.get(oldState.channelId)) return;
-                channel.send({ content: `**${member.displayName}** が ${newCh} に移動しました。` });
-                text = `${member.displayName}が移動しました。`
+                return;
             }
 
             await generateAudio(text, filepath, 5);

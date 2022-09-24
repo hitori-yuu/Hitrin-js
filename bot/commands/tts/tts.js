@@ -44,9 +44,6 @@ module.exports = {
         if (!channel.speakable) return interaction.followUp({ content: 'VCで音声を再生する権限がありません。' });
 
         if (type == 'start') {
-            const queue = interaction.client.player.getQueue(interaction.guild.id);
-            if (queue) return interaction.followUp({ content: `曲を再生中のためこの機能は使用できません。` });
-
             joinVoiceChannel({
                 guildId: interaction.guild.id,
                 channelId: channel.id,
@@ -60,9 +57,6 @@ module.exports = {
                 content: `<#${interaction.channel.id}> でのチャットを <#${channel.id}> で読み上げます。`
             });
         } else if (type == 'end') {
-            const queue = interaction.client.player.getQueue(interaction.guild.id);
-            if (queue) return interaction.followUp({ content: `曲を再生中のためこの機能は使用できません。` });
-
             const connection = getVoiceConnection(interaction.guild.id);
             if (!connection) return interaction.followUp({ content: 'VCに参加していません。' });
             connection.destroy(true);

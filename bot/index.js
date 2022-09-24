@@ -132,28 +132,6 @@ for (const module of slashCommands) {
 	}
 };
 
-client.player.on('trackStart', (queue, track) => {
-	if (queue.repeatMode === 1) return queue.setVolume(50);
-	queue.metadata.channel.send(`▶ | **${track.title}** を <#${queue.connection.channel.id}> で再生中です。`);
-	queue.setVolume(50);
-});
-
-client.player.on('trackAdd', (queue, track) => {
-	queue.metadata.channel.send(`🎶 | **${track.title}** がキューに追加されました。`);
-});
-
-client.player.on('botDisconnect', queue => {
-	queue.metadata.channel.send('❌ | 音声チャネルから手動で切断され、キューをクリアしました。');
-});
-
-client.player.on('channelEmpty', queue => {
-	queue.metadata.channel.send('❌ | VCにメンバーがいないため切断しました。');
-});
-
-client.player.on('queueEnd', queue => {
-	queue.metadata.channel.send('✅ | キューの再生が終了しました。');
-});
-
 const rest = new REST({ version: '10' }).setToken(process.env.TOKEN);
 
 const commandJsonData = [
