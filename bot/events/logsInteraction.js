@@ -12,8 +12,10 @@ module.exports = {
             if (!command) return;
 
             var args = [];
+            var Args;
             if (!interaction.options.data[0]) {
                 args = '';
+                Args = args;
             } else if (interaction.options.data) {
                 if (interaction.options.data[0].options) {
                     for (let i = 0; i < interaction.options.data[0].options.length; i++) {
@@ -26,6 +28,7 @@ module.exports = {
                         if (!interaction.options.data[i]) break;
                     }
                 }
+                Args = args.join('\n');
             };
 
             if (interaction.inGuild()) {
@@ -55,7 +58,7 @@ module.exports = {
                         },
                         {
                             name: '__**引数:**__',
-                            value: `${args.join('\n') || 'None'}`
+                            value: `${Args}`
                         },
                         {
                             name: '__**実行者:**__',
