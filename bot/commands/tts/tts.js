@@ -67,6 +67,7 @@ module.exports = {
             if (!connection) return interaction.followUp({ content: 'VCに参加していません。' });
             connection.destroy(true);
             interaction.client.voiceChannels.delete(channel.id);
+            interaction.client.voiceGuilds.delete(channel.guild.id);
             interaction.followUp({
                 content: '読み上げを終了しました。'
             });

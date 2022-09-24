@@ -21,11 +21,22 @@ module.exports = {
         const connection = getVoiceConnection(interaction.guild.id);
 
         if (!channel) return interaction.followUp({ content: 'VCに参加していません。' });
-        if (!queue) return interaction.followUp({ content: 'VCに参加していません。' });
-        if (!connection) return interaction.followUp({ content: 'VCに参加していません。' });
+        if (!queue && !connection) return interaction.followUp({ content: 'VCに参加していません。' });
 
-        if (queue) queue.destroy(true);
-        else if (connection) connection.destroy(true);
+        if (queue && connection) {
+            queue.destroy(true);
+            connection.destroy(true);
+            interaction.client.voiceChannels.delete(channel.id);
+            interaction.client.voiceGuilds.delete(channel.guild.id);
+        }
+        else if (queue) {
+            queue.destroy(true);
+        }
+        else if (connection) {
+            connection.destroy(true);
+            interaction.client.voiceChannels.delete(channel.id);
+            interaction.client.voiceGuilds.delete(channel.guild.id);
+        }
         interaction.followUp({
             content: `<#${channel.id}> から切断しました。`
         });
