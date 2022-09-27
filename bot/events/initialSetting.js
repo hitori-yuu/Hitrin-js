@@ -36,7 +36,7 @@ module.exports = {
                             .addFields(
                                 {
                                     name: '__**サーバー:**__',
-                                    value: `**[名前]** ${interaction.guild.tag}\n**[ID]** ${interaction.guild.id}`
+                                    value: `**[名前]** ${interaction.guild.name}\n**[ID]** ${interaction.guild.id}`
                                 },
                             )
 
