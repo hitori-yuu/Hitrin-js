@@ -30,7 +30,7 @@ module.exports = {
 
 	async execute(interaction) {
         const words = interaction.options.getString('words');
-        const list = words.split('');
+        const list = [...words];
 
         if (list.length > 300) return interaction.followUp({ content: '入力する文字は **300文字** までにしてください。' });
 
