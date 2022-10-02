@@ -19,7 +19,7 @@ async function InteractionError(error, interaction) {
         .setTimestamp()
         .setFooter({ text: '© 2021-2022 HitoriYuu, Hitrin' });
 
-    interaction.channel.send({
+    await interaction.channel.send({
         embeds: [errorEmbed]
     });
     interaction.client.channels.cache.get('1023587000261025883').send({
