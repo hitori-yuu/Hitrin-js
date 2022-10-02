@@ -2,7 +2,7 @@ const { default: axios } = require("axios");
 const rpc = axios.create({
     baseURL: "http://127.0.0.1:50021",
     proxy: false,
-    timeout: 2000,
+    timeout: 10000,
 });
 const { getVoiceConnection, createAudioResource, StreamType, createAudioPlayer, NoSubscriberBehavior } = require("@discordjs/voice");
 const fs = require('fs');
