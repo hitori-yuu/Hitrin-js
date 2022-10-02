@@ -1,10 +1,9 @@
-const { default: axios } = require("axios");
+const { default: axios } = require('axios');
 const rpc = axios.create({
-    baseURL: "http://127.0.0.1:50021",
+    baseURL: 'http://127.0.0.1:50021',
     proxy: false,
-    timeout: 10000,
 });
-const { getVoiceConnection, createAudioResource, StreamType, createAudioPlayer, NoSubscriberBehavior } = require("@discordjs/voice");
+const { getVoiceConnection, createAudioResource, StreamType, createAudioPlayer, NoSubscriberBehavior } = require('@discordjs/voice');
 const fs = require('fs');
 const usersModel = require('../models/usersSchema');
 
@@ -18,7 +17,7 @@ module.exports = {
         var voice;
 
         if (message.channel.id === message.client.voiceChannels.get(channel.id)) {
-            const filepath = "./sounds/" + message.author.id + ".wav"
+            const filepath = './sounds/' + message.author.id + '.wav'
 
             const usersData = await usersModel.find();
             const data = usersData.filter(data => data.id  === message.author.id);
@@ -40,10 +39,10 @@ module.exports = {
 };
 
 function convertMessage(text) {
-    text = text.replace(/<:[a-zA-Z0-9_]+:[0-9]+>/g, "絵文字")
-    text = text.replace(emojiRegex(), "絵文字")
-    text = text.replace(/(https?|http?|ftp)(:\/\/[\w\/:%#\$&\?\(\)~\.=\+\-]+)/g, "URL省略")
-    text = text.replace(/\r?\n/g, "、")
+    text = text.replace(/<:[a-zA-Z0-9_]+:[0-9]+>/g, '絵文字')
+    text = text.replace(emojiRegex(), '絵文字')
+    text = text.replace(/(https?|http?|ftp)(:\/\/[\w\/:%#\$&\?\(\)~\.=\+\-]+)/g, 'URL')
+    text = text.replace(/\r?\n/g, '、')
 
     return text
 }
@@ -53,12 +52,12 @@ function emojiRegex(){
 }
 
 async function generateAudio(text, filepath, voice) {
-    const audio_query = await rpc.post(`audio_query?text=${encodeURI(text)}&speaker=${voice}`)
-    const synthesis = await rpc.post("synthesis?speaker=" + voice, JSON.stringify(audio_query.data), {
+    const audio_query = await rpc.post(`audio_query?text=${encodeURI(text)}&speaker=${voice}`, ({timeout: 10000}))
+    const synthesis = await rpc.post('synthesis?speaker=' + voice, JSON.stringify(audio_query.data), {
         responseType: 'arraybuffer',
         headers: {
-            "accept": "audio/wav",
-            "Content-Type": "application/json"
+            'accept': 'audio/wav',
+            'Content-Type': 'application/json'
         }
     });
 
