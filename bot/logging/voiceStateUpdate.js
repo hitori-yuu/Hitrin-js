@@ -19,22 +19,17 @@ module.exports = {
             const filepath = "./sounds/" + oldState.guild.id + ".wav"
             var text;
 
-            if (!oldCh) {
-                if (!oldState.client.voiceChannels.get(newState.channelId)) return;
+            if (oldState.channelId === newState.channelId) return;
+
+            if (!oldState.channelId && newState.channelId) {
                 channel.send({ content: `**${member.displayName}** が ${newCh} に参加しました。` });
-                text = `${member.displayName}が参加しました。`
-            } else if (!newCh) {
+                text = `${member.displayName}が参加しました。`;
+            };
+            if (oldState.channelID && !newState.channelID) {
                 if (!oldState.client.voiceChannels.get(oldState.channelId)) return;
                 channel.send({ content: `**${member.displayName}** が ${oldCh} から切断しました。` });
-                text = `${member.displayName}が切断しました。`
-            } else if (newCh.id == oldState.client.voiceGuilds.get(newState.guild.id)) {
-                if (!oldState.client.voiceChannels.get(newState.channelId)) return;
-                channel = oldState.guild.channels.cache.get(oldState.client.voiceChannels.get(newState.channelId))
-                channel.send({ content: `**${member.displayName}** が ${newCh} に移動しました。` });
-                text = `${member.displayName}が参加しました。`
-            } else {
-                return;
-            }
+                text = `${member.displayName}が切断しました。`;
+            };
 
             await generateAudio(text, filepath, 5);
             await play(oldState.guild.id, filepath);
