@@ -1,4 +1,4 @@
-const usersModel = require('../../../models/usersSchema');
+const usersModel = require('../models/usersSchema');
 
 module.exports = {
 	id: 'oppose',

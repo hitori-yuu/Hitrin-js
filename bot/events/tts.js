@@ -33,11 +33,7 @@ module.exports = {
                 await generateAudio(text, filepath, voice);
                 await play(message, filepath);
             } catch(error) {
-                console.error('[エラー] 読み上げ時にエラーが発生しました。\n内容: ' + error.message);
-                message.react('🔇');
-                setTimeout(() => {
-                    message.reactions.cache.get('🔇').remove()
-                }, 3000)
+                return TTSError(error, message);
             }
         }
     },

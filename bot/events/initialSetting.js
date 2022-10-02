@@ -1,4 +1,5 @@
 const { InteractionType, EmbedBuilder } = require('discord.js');
+const { Error } = require('../handlers/error');
 const usersModel = require('../models/usersSchema');
 const guildsModel = require('../models/guildsSchema');
 
@@ -30,7 +31,7 @@ module.exports = {
 
                         const logEmbed = new EmbedBuilder()
                             .setColor('#59b9c6')
-                            .setTitle("サーバー初期設定")
+                            .setTitle('サーバー初期設定')
                             .setThumbnail(interaction.user.displayAvatarURL({extension: 'png', size: 128}))
                             .setDescription(`サーバーの初期設定が完了しました。`)
                             .addFields(
@@ -70,7 +71,7 @@ module.exports = {
 
                     const logEmbed = new EmbedBuilder()
                         .setColor('#59b9c6')
-                        .setTitle("ユーザー初期設定")
+                        .setTitle('ユーザー初期設定')
                         .setThumbnail(interaction.user.displayAvatarURL({extension: 'png', size: 128}))
                         .setDescription(`ユーザーの初期設定が完了しました。`)
                         .addFields(
@@ -87,8 +88,7 @@ module.exports = {
                 } else return;
             }
         } catch (error) {
-            console.error('[エラー] 初期設定時にエラーが発生しました。\n内容: ' + error.message);
-            return;
+			return Error(error);
         }
 	},
 };

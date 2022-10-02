@@ -1,3 +1,5 @@
+const { Error } = require('../handlers/error');
+
 module.exports = {
 	name: 'ready',
 
@@ -11,8 +13,7 @@ module.exports = {
 				})
 			}, 30000)
 		} catch (error) {
-            console.error('[エラー] ステータス設定時にエラーが発生しました。\n内容: ' + error.message);
-			return;
+			return Error(error);
 		}
 	},
 };

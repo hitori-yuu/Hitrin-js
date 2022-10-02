@@ -1,4 +1,5 @@
 const { ChannelType } = require('discord.js');
+const { Error } = require('../handlers/error');
 const guildsModel = require('../models/guildsSchema.js');
 
 module.exports = {
@@ -21,8 +22,7 @@ module.exports = {
                 }
             }
         } catch(error) {
-            console.error('[エラー] 自動公開時にエラーが発生しました。\n内容: ' + error.message)
-            return;
+            return Error(error);
         }
     },
 };

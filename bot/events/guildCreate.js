@@ -1,4 +1,5 @@
 const { EmbedBuilder } = require('discord.js');
+const { Error } = require('../handlers/error');
 const guildsModel = require('../models/guildsSchema.js');
 
 module.exports = {
@@ -63,8 +64,7 @@ module.exports = {
 
             await owner.send({ embeds: [thanks] });
         } catch (error) {
-            console.error('[エラー] サーバー参加時にエラーが発生しました。\n内容: ' + error.message);
-            return;
+			return Error(error);
         }
 	},
 };

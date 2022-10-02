@@ -1,4 +1,5 @@
 const { InteractionType, EmbedBuilder } = require('discord.js');
+const { Error } = require('../handlers/error');
 const logsModel = require('../models/logsSchema');
 
 module.exports = {
@@ -12,10 +13,9 @@ module.exports = {
             if (!command) return;
 
             var args = [];
-            var Args;
+            var Args = 'None';
             if (!interaction.options.data[0]) {
                 args = '';
-                Args = args;
             } else if (interaction.options.data) {
                 if (interaction.options.data[0].options) {
                     for (let i = 0; i < interaction.options.data[0].options.length; i++) {
@@ -44,7 +44,7 @@ module.exports = {
                         id: interaction.channel.id,
                         dm: false,
                     },
-                    date: new Date().toLocaleString({ timeZone: 'Asia/Tokyo' }),
+                    createdDate: new Date().toLocaleString({ timeZone: 'Asia/Tokyo' }),
                 });
 
                 const dmEmbed = new EmbedBuilder()
@@ -58,7 +58,7 @@ module.exports = {
                         },
                         {
                             name: '__**引数:**__',
-                            value: `${Args}`
+                            value: Args
                         },
                         {
                             name: '__**実行者:**__',
@@ -75,7 +75,7 @@ module.exports = {
                     )
 
                 logData.save();
-                await client.channels.cache.get('879943806118678528').send({
+                await client.channels.cache.get('1022444125980741642').send({
                     embeds: [dmEmbed]
                 });
             } else if (!interaction.inGuild()) {
@@ -91,7 +91,7 @@ module.exports = {
                         id: 'DM',
                         dm: true,
                     },
-                    date: new Date().toLocaleString({ timeZone: 'Asia/Tokyo' }),
+                    createdDate: new Date().toLocaleString({ timeZone: 'Asia/Tokyo' }),
                 });
 
                 const guildEmbed = new EmbedBuilder()
@@ -105,7 +105,7 @@ module.exports = {
                         },
                         {
                             name: '__**引数:**__',
-                            value: `${args.join('\n') || 'None'}`
+                            value: Args
                         },
                         {
                             name: '__**実行者:**__',
@@ -114,13 +114,12 @@ module.exports = {
                     )
 
                 logData.save();
-                await client.channels.cache.get('879943806118678528').send({
+                await client.channels.cache.get('1022444125980741642').send({
                     embeds: [guildEmbed]
                 });
             }
         } catch (error) {
-            console.error('[エラー] ログ作成時にエラーが発生しました。\n内容: ' + error.message);
-            return;
+			return Error(error);
         }
 	},
 };
