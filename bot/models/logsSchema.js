@@ -15,6 +15,4 @@ const logsSchema = new mongoose.Schema({
     createdDate : { type: String },
 });
 
-const model = mongoose.model('Logs', logsSchema);
-
-module.exports = model;
+module.exports = mongoose.model('Logs', logsSchema);

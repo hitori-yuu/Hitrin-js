@@ -1,41 +1,46 @@
 const { EmbedBuilder, PermissionFlagsBits } = require('discord.js');
-const logsChannelsModel = require('../models/logsChannelsSchema');
+const { isCreatedGuild } = require('../functions/isAvailable');
+const { guildsData } = require('../functions/MongoDB');
+const { auditLog } = require('../functions/auditLog');
+const { hasPermissions } = require('../functions/hasPermissions');
+const { Error } = require('../handlers/Error');
 
 module.exports = {
 	name: 'emojiDelete',
 
 	async execute(emoji) {
         try {
-            if (!emoji.guild.members.cache.get(emoji.client.user.id).permissions.has(PermissionFlagsBits.ViewAuditLog)) return;
-            const AuditLogs = await emoji.guild.fetchAuditLogs({ limit: 1 });
+            const guild = await guildsData(emoji.guild);
 
-            const log = AuditLogs.entries.first()
-            const member = emoji.guild.members.cache.get(log.executor.id)
-            var anime = '静止画';
-            if (emoji.animated) anime = 'アニメーション';
+            if (!hasPermissions(emoji.guild.members.cache.get(emoji.client.user.id), PermissionFlagsBits.ViewAuditLog)) return;
+            if (!await isCreatedGuild(emoji.guild)) return;
+            if (!guild.logging.enable || guild.logging.enable == undefined) return;
 
+            const log = await auditLog(emoji.guild);
+            const executor = emoji.guild.members.cache.get(log.executor.id);
             const logEmbed = new EmbedBuilder()
                 .setColor('#59b9c6')
-                .setAuthor({ name: member.user.tag, iconURL: member.displayAvatarURL({extension: 'png'}) })
-                .setTitle('絵文字削除')
+                .setAuthor({ name: executor.user.tag, iconURL: executor.displayAvatarURL({extension: 'png'}) })
+                .setTitle('絵文字作成')
                 .setDescription(
-                    `<@${member.id}> が 絵文字 \`${emoji}\` を削除しました。`
+                    `<@${executor.id}> が 絵文字 \`${emoji}\` を削除しました。`
                 )
                 .addFields(
                     {
                         name: '__**絵文字:**__',
-                        value: `**[名前]** ${emoji.name}\n**[ID]** ${emoji.id}\n**[種類]** ${anime}`
+                        value: `**[名前]** ${emoji.name}\n**[ID]** ${emoji.id}`
                     },
                 )
                 .setTimestamp()
                 .setFooter({ text: '© 2021-2022 HitoriYuu, Hitrin' });
 
-            const guildsData = await logsChannelsModel.find();
-            const data = guildsData.filter(data => data.guild.id === emoji.guild.id);
-            if (data[0] == undefined) return;
-            emoji.guild.channels.cache.get(data[0].channel.id).send({embeds: [logEmbed]});
+            if (guild.logging.enable && guild.logging.channel.id) {
+                emoji.guild.channels.cache.get(guild.logging.channel.id).send({
+                    embeds: [logEmbed]
+                });
+            };
         } catch (error) {
-            return console.error('[エラー]イベント時にエラーが発生しました。\n内容: ' + error.message);
+            return Error(error);
         }
 	},
 };

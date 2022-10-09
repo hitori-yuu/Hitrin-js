@@ -40,6 +40,7 @@ client.slashCommands = new Collection();
 client.buttons = new Collection();
 client.voiceChannels = new Collection();
 client.voiceGuilds = new Collection();
+client.errors = new Collection();
 
 const { loadHandlers } = require('./handlers/loadHandlers');
 loadHandlers(client);
@@ -56,8 +57,8 @@ const commandJsonData = [
 		console.log('アプリケーションコマンドの再読み込みを開始しました。');
 
 		await rest.put(
-			// Routes.applicationGuildCommands(process.env.CLIENT_ID, process.env.GUILD_ID),
-            Routes.applicationCommands(process.env.CLIENT_ID),
+			Routes.applicationGuildCommands(process.env.CLIENT_ID, process.env.GUILD_ID),
+            // Routes.applicationCommands(process.env.CLIENT_ID),
 			{ body: commandJsonData }
 		);
 

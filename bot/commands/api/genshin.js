@@ -10,10 +10,10 @@ module.exports = {
             'en-US': 'genshin',
             'ja': '原神',
         })
-		.setDescription('Use the genshin.dev API to obtain various information.')
+		.setDescription('Use the Genshin-DB to obtain various information.')
         .setDescriptionLocalizations({
-            'en-US': 'Use the genshin.dev API to obtain various information.',
-            'ja': 'genshin.dev APIを使用して様々な情報を取得します。',
+            'en-US': 'Use the Genshin-DB to obtain various information.',
+            'ja': 'Genshin-DB を使用して様々な情報を取得します。',
         })
 		.setDMPermission(true)
 		.addSubcommand(subcommand =>
@@ -85,15 +85,13 @@ module.exports = {
                     .addFields(
                         {
                             name: '__**一般:**__',
-                            value: `**[二つ名]** ${character.title}\n**[元素]** ${character.element}\n**[武器種類]** ${character.weapontype}`
+                            value: `**[二つ名]** ${character.title}\n**[元素]** ${character.element}\n**[武器種類]** ${character.weapontype}`,
+                            inline: true,
                         },
                         {
                             name: '__**詳細:**__',
                             value: `**[誕生日]** ${character.birthday}\n**[命ノ星座]** ${character.constellation}\n**[CV]** ${character.cv.japanese}`,
-                        },
-                        {
-                            name: '__**説明:**__',
-                            value: character.description,
+                            inline: true,
                         },
                         {
                             name: `__**元素爆発「${talents.combat3.name}」**__`,

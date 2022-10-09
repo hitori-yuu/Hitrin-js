@@ -17,6 +17,4 @@ const warnsSchema = new mongoose.Schema({
     createdDate : { type: String },
 });
 
-const model = mongoose.model('Warns', warnsSchema);
-
-module.exports = model;
+module.exports = mongoose.model('Warns', warnsSchema);

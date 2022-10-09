@@ -1,6 +1,7 @@
 const { ActionRowBuilder, ButtonBuilder, ButtonStyle, InteractionType, EmbedBuilder } = require('discord.js');
 const { InteractionError } = require('../handlers/error');
-const { isAvailable } = require('../functions/isAvailable');
+const { isAvailableUser, isCreatedUser, isCreatedGuild } = require('../functions/isAvailable');
+const { MongoDB, usersData, guildsData, warnsData, wordsData, createUserData, createGuildData } = require('../functions/MongoDB');
 
 module.exports = {
 	name: 'interactionCreate',
@@ -14,7 +15,9 @@ module.exports = {
             if (command) {
                 await interaction.deferReply();
 
-                if (!isAvailable(interaction)) return TOS(interaction);
+                if (!await isCreatedUser(interaction.user)) await createUserData(interaction.user);
+                if (!await isCreatedGuild(interaction.guild)) await createGuildData(interaction.guild);
+                if (!await isAvailableUser(interaction.user)) return TOS(interaction);
 
                 await command.execute(interaction);
             }
@@ -43,7 +46,7 @@ async function TOS(interaction) {
         .setAuthor({ name: 'ボットの利用には、利用規約・プライバシーポリシーへの同意が必要です。' })
         .setDescription('‣ [利用規約](https://hitori-yuu.github.io/Hitrin-web/terms.html)\n\n‣ [プライバシーポリシー](https://hitori-yuu.github.io/Hitrin-web/privacy.html)\n\n必ず確認してから、以下のいずれかのボタンをクリックしてください。')
 
-    interaction.followUp({
+    await interaction.followUp({
         embeds: [tosEmbed],
         components: [row],
         ephemeral: true

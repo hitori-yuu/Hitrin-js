@@ -1,24 +1,14 @@
-const usersModel = require('../models/usersSchema');
+const { consentTOS, opposeTOS } = require('../functions/TOS');
+const { Error, InteractionError, PermissionError, BotPermissionError, ArgumentError, TTSError, CustomError } = require('../handlers/error');
 
 module.exports = {
 	id: 'consent',
 
 	async execute(interaction) {
-        const userData = await usersModel.findOneAndUpdate(
-            {
-                id: interaction.user.id,
-            },
-            {
-                $set: {
-                    tos: true,
-                },
-            },
-        );
-
-		userData.save();
-		interaction.followUp({
-			content: '利用規約に**同意**しました。',
-		});
-		return;
+        try {
+            consentTOS(interaction);
+        } catch (error) {
+            return InteractionError(interaction, error);
+        }
 	},
 };

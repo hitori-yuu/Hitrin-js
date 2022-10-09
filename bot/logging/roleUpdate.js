@@ -1,43 +1,73 @@
-const { EmbedBuilder, PermissionFlagsBits } = require('discord.js');
-const logsChannelsModel = require('../models/logsChannelsSchema');
+const { EmbedBuilder, PermissionFlagsBits, PermissionsBitField } = require('discord.js');
+const { isCreatedGuild } = require('../functions/isAvailable');
+const { guildsData } = require('../functions/MongoDB');
+const { auditLog } = require('../functions/auditLog');
+const { hasPermissions } = require('../functions/hasPermissions');
+const { Error } = require('../handlers/Error');
+
+const key = {
+    'name': '名前',
+    'permissions': '権限',
+    'nsfw': 'NSFW',
+    'parent': 'カテゴリー',
+    'permissionOverwrites': '権限',
+    'topic': 'トピック',
+    'type': '種類',
+    'allow': '許可',
+    'deny': '禁止',
+};
 
 module.exports = {
 	name: 'roleUpdate',
 
 	async execute(oldRole, newRole) {
         try {
-            if (!oldRole.guild.members.cache.get(oldRole.client.user.id).permissions.has(PermissionFlagsBits.ViewAuditLog)) return;
-            const AuditLogs = await oldRole.guild.fetchAuditLogs({ limit: 1 });
+            const guild = await guildsData(oldRole.guild);
 
-            const log = AuditLogs.entries.first()
-            const member = oldRole.guild.members.cache.get(log.executor.id)
+            if (!hasPermissions(oldRole.guild.members.cache.get(oldRole.client.user.id), PermissionFlagsBits.ViewAuditLog)) return;
+            if (!await isCreatedGuild(oldRole.guild)) return;
+            if (!guild.logging.enable || guild.logging.enable == undefined) return;
+
+            const log = await auditLog(oldRole.guild);
+            const executor = oldRole.guild.members.cache.get(log.executor.id);
 
             const logEmbed = new EmbedBuilder()
                 .setColor('#59b9c6')
-                .setAuthor({ name: member.user.tag, iconURL: member.displayAvatarURL({extension: 'png'}) })
+                .setAuthor({ name: executor.user.tag, iconURL: executor.displayAvatarURL({extension: 'png'}) })
                 .setTitle('ロール更新')
                 .setDescription(
-                    `<@${member.id}> が ロール ${newRole} を更新しました。`
+                    `<@${executor.id}> が ロール \`#${log.target.name}\` を更新しました。`
                 )
                 .addFields(
                     {
                         name: '__**ロール:**__',
-                        value: `**[名前]** ${newRole.name}\n**[ID]** ${newRole.id}`
-                    },
-                    {
-                        name: `__**${log.changes[0].key || 'None'}:**__`,
-                        value: `**[旧]** ${log.changes[0].old || 'None'}\n**[新]** ${log.changes[0].new || 'None'}`
+                        value: `**[名前]** ${log.target.name}\n**[ID]** ${log.target.id}`
                     },
                 )
                 .setTimestamp()
                 .setFooter({ text: '© 2021-2022 HitoriYuu, Hitrin' });
 
-            const guildsData = await logsChannelsModel.find();
-            const data = guildsData.filter(data => data.guild.id === oldRole.guild.id);
-            if (data[0] == undefined) return;
-            oldRole.guild.channels.cache.get(data[0].channel.id).send({embeds: [logEmbed]});
+            for (let i = 0; log.changes.length; i++) {
+                if (log.changes[i] == undefined) break;
+                var permissions_old, permissions_new = 'None';
+                if (log.changes[i].key == 'allow'|| log.changes[i].key == 'deny') permissions_old, permissions_new = 'None';
+                else if (!log.changes[i].old == '0') permissions_old = new PermissionsBitField(log.changes[i].old).toArray().join('\`, \`');
+                else if (!log.changes[i].new == '0') permissions_new = new PermissionsBitField(log.changes[i].new).toArray().join('\`, \`');
+                logEmbed.addFields(
+                    {
+                        name: `__**${key[log.changes[i].key] || 'None'}:**__`,
+                        value: `**[旧]** \`${permissions_old || 'None'}\`\n**[新]** \`${permissions_new || 'None'}\``
+                    }
+                )
+            };
+
+            if (guild.logging.enable && guild.logging.channel.id) {
+                oldRole.guild.Roles.cache.get(guild.logging.channel.id).send({
+                    embeds: [logEmbed]
+                });
+            };
         } catch (error) {
-            return console.error('[エラー]イベント時にエラーが発生しました。\n内容: ' + error.message);
+            return Error(error);
         }
 	},
 };

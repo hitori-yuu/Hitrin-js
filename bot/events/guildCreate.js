@@ -1,6 +1,6 @@
-const { EmbedBuilder } = require('discord.js');
 const { Error } = require('../handlers/error');
-const guildsModel = require('../models/guildsSchema.js');
+const { isAvailableUser, isCreatedUser, isCreatedGuild } = require('../functions/isAvailable');
+const { MongoDB, usersData, guildsData, warnsData, wordsData, createUserData, createGuildData } = require('../functions/MongoDB');
 
 module.exports = {
 	name: 'guildCreate',
@@ -30,37 +30,7 @@ module.exports = {
                 .setTimestamp()
                 .setFooter({ text: '© 2021-2022 HitoriYuu, Hitrin' });
 
-            const guildsData = await guildsModel.find();
-            const data = guildsData.filter(data => data.id  === guild.id);
-            if (data[0] == undefined) return;
-            const guildData = await guildsModel.create({
-                id: guild.id,
-                name: guild.name,
-                settings: {
-                    autoMod: false,
-                    autoPublish: true,
-                    globalBan: true,
-                    authRole: 'None',
-                },
-                createDate: new Date().toLocaleString({ timeZone: 'Asia/Tokyo' }),
-            });
-
-            const logEmbed = new EmbedBuilder()
-                .setColor('#59b9c6')
-                .setTitle("サーバー初期設定")
-                .setThumbnail(guild.iconURL({extension: 'png', size: 128}))
-                .setDescription(`サーバーの初期設定が完了しました。`)
-                .addFields(
-                    {
-                        name: '__**サーバー:**__',
-                        value: `**[名前]** ${guild.name}\n**[ID]** ${guild.id}`
-                    },
-                )
-
-            guildData.save();
-            guild.client.channels.cache.get('879943806118678528').send({
-                embeds: [logEmbed]
-            });
+            if (await isCreatedGuild(interaction.guild) == 'false') await createGuildData(guild);
 
             await owner.send({ embeds: [thanks] });
         } catch (error) {

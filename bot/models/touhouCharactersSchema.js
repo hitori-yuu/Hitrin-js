@@ -16,6 +16,4 @@ const touhouCharactersSchema = new mongoose.Schema({
     updatedDate : { type: String },
 });
 
-const model = mongoose.model('touhouCharacters', touhouCharactersSchema);
-
-module.exports = model;
+module.exports = mongoose.model('touhouCharacters', touhouCharactersSchema);

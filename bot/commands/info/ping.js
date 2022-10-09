@@ -1,4 +1,5 @@
 const { SlashCommandBuilder } = require('discord.js');
+const { Error, InteractionError, PermissionError, BotPermissionError, ArgumentError, TTSError, CustomError } = require('../../handlers/error');
 
 module.exports = {
 	data: new SlashCommandBuilder()
@@ -7,8 +8,12 @@ module.exports = {
 		.setDMPermission(true),
 
 	async execute(interaction, client) {
-        interaction.followUp({
-            content: 'pong!'
-        });
+		try {
+			await interaction.followUp({
+				content: `pong: \`${interaction.client.ws.ping} ms\``
+			});
+		} catch (error) {
+			return InteractionError(error, interaction);
+		}
 	},
 };

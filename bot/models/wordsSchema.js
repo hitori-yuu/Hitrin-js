@@ -10,6 +10,4 @@ const wordsSchema = new mongoose.Schema({
     createdDate : { type: String },
 });
 
-const model = mongoose.model('Words', wordsSchema);
-
-module.exports = model;
+module.exports = mongoose.model('Words', wordsSchema);

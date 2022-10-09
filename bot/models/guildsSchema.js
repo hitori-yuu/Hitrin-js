@@ -6,8 +6,12 @@ const guildsSchema = new mongoose.Schema({
     settings: {
         autoMod: { type: Boolean, default: true },
         autoPublish: { type: Boolean, default: true },
+        meetingChannel: { type: String, default: 'None' },
         globalBan: { type: Boolean, default: true },
         authRole: { type: String, default: 'None' },
+        TTS: {
+            vcLog: { type: Boolean, default: true },
+        }
     },
     autoMod: {
         blacklistsWords: {
@@ -29,9 +33,14 @@ const guildsSchema = new mongoose.Schema({
             ignore: { type: Array, default: 'None' },
         },
     },
+    logging: {
+        enable: { type: Boolean, default: false },
+        channel: {
+            name: { type: String, default: 'None'},
+            id: { type: String, default: 'None' },
+        },
+    },
     createdDate : { type: String },
 });
 
-const model = mongoose.model('Guilds', guildsSchema);
-
-module.exports = model;
+module.exports = mongoose.model('Guilds', guildsSchema);

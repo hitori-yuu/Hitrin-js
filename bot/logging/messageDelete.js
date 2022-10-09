@@ -1,24 +1,31 @@
 const { EmbedBuilder, PermissionFlagsBits } = require('discord.js');
-const logsChannelsModel = require('../models/logsChannelsSchema');
+const { isCreatedGuild } = require('../functions/isAvailable');
+const { guildsData } = require('../functions/MongoDB');
+const { auditLog } = require('../functions/auditLog');
+const { hasPermissions } = require('../functions/hasPermissions');
+const { Error } = require('../handlers/Error');
 
 module.exports = {
 	name: 'messageDelete',
 
 	async execute(message) {
         try {
-            if (!message.guild.members.cache.get(message.client.user.id).permissions.has(PermissionFlagsBits.ViewAuditLog)) return;
-            const AuditLogs = await message.guild.fetchAuditLogs({ limit: 1 });
+            const guild = await guildsData(message.guild);
 
-            const log = AuditLogs.entries.first();
-            const member = message.guild.members.cache.get(log.executor.id);
+            if (!hasPermissions(message.guild.members.cache.get(message.client.user.id), PermissionFlagsBits.ViewAuditLog)) return;
+            if (!await isCreatedGuild(message.guild)) return;
+            if (!guild.logging.enable || guild.logging.enable == undefined) return;
+
+            const log = await auditLog(message.guild);
+            const executor = message.guild.members.cache.get(log.executor.id);
             const target = message.guild.members.cache.get(log.target.id);
 
             const logEmbed = new EmbedBuilder()
                 .setColor('#59b9c6')
-                .setAuthor({ name: member.user.tag, iconURL: member.displayAvatarURL({extension: 'png'}) })
+                .setAuthor({ name: executor.user.tag, iconURL: executor.displayAvatarURL({extension: 'png'}) })
                 .setTitle('メッセージ削除')
                 .setDescription(
-                    `<@${member.id}> が <@${target.id}> のメッセージを削除しました。`
+                    `<@${executor.id}> が <@${target.id}> のメッセージを削除しました。`
                 )
                 .addFields(
                     {
@@ -33,12 +40,13 @@ module.exports = {
                 .setTimestamp()
                 .setFooter({ text: '© 2021-2022 HitoriYuu, Hitrin' });
 
-            const guildsData = await logsChannelsModel.find();
-            const data = guildsData.filter(data => data.guild.id === message.guild.id);
-            if (data[0] == undefined) return;
-            message.guild.channels.cache.find(ch => ch.id === data[0].channel.id).send({embeds: [logEmbed]});
+            if (guild.logging.enable && guild.logging.channel.id) {
+                message.guild.channels.cache.get(guild.logging.channel.id).send({
+                    embeds: [logEmbed]
+                });
+            };
         } catch (error) {
-            return console.error('[エラー]イベント時にエラーが発生しました。\n内容: ' + error.message);
+            return Error(error);
         }
 	},
 };

@@ -1,6 +1,7 @@
 const { SlashCommandBuilder, EmbedBuilder } = require('discord.js');
 const { default: axios } = require("axios");
-const wordsModel = require('../../models/wordsSchema');
+const { wordsData } = require('../../functions/MongoDB');
+const { CustomError } = require('../../handlers/error');
 const rpc = axios.create({ baseURL: "http://127.0.0.1:50021", proxy: false });
 
 module.exports = {
@@ -33,12 +34,11 @@ module.exports = {
 
 	async execute(interaction) {
         const surface = interaction.options.getString('surface');
-
-        const wordsData = await wordsModel.find();
-        const data = wordsData.filter(data => data.word === surface);
-        if (data[0] == undefined) return interaction.followUp({ content: 'その単語は登録されていません。' });
+        const words = wordsData(surface);
+        if (words.length >= 0) return CustomError(interaction, 'その単語は登録されていません。');
 
         await rpc.delete(`user_dict_word/${data[0].word_id}`);
+        await words.deleteOne();
         const wordEmbed = new EmbedBuilder()
             .setColor('#93ca76')
             .setAuthor({ name: interaction.user.tag, iconURL: interaction.user.displayAvatarURL({extension: 'png'}), url: interaction.user.displayAvatarURL({extension: 'png'}) })
@@ -49,6 +49,5 @@ module.exports = {
         interaction.followUp({
             embeds: [wordEmbed]
         });
-        await wordsModel.deleteOne({ word: surface });
 	},
 };

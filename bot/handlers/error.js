@@ -5,7 +5,6 @@ async function Error(error) {
 }
 
 async function InteractionError(error, interaction) {
-    const error_message = codeBlock('js', error);
     const errorEmbed = new EmbedBuilder()
         .setColor('#d9333f')
         .setAuthor({ name: 'エラーが発生しました。' })
@@ -15,23 +14,37 @@ async function InteractionError(error, interaction) {
     const logEmbed = new EmbedBuilder()
         .setColor('#d9333f')
         .setAuthor({ name: interaction.user.tag, iconURL: interaction.user.displayAvatarURL({extension: 'png'}), url: interaction.user.displayAvatarURL({extension: 'png'}) })
-        .setDescription(error_message)
+        .setDescription(codeBlock('js', error))
         .setTimestamp()
         .setFooter({ text: '© 2021-2022 HitoriYuu, Hitrin' });
 
-    await interaction.channel.send({
+    await interaction.followUp({
         embeds: [errorEmbed]
     });
     interaction.client.channels.cache.get('1023587000261025883').send({
         embeds: [logEmbed]
     });
-    console.error('[エラー] エラーが発生しました。\n内容: ' + error.message);
+    console.log('[エラー] エラーが発生しました。\n' + error);
+    interaction.client.errors.set(interaction.id, interaction.user.username);
 };
 
 async function PermissionError(interaction, permission) {
     const errorEmbed = new EmbedBuilder()
         .setColor('#d9333f')
-        .setAuthor({ name: `あなたには、実行するために必要な権限がありません: \`${permission}\`` })
+        .setAuthor({ name: `あなたに実行するために必要な権限がありません: \`${permission}\`` })
+        .setTimestamp()
+        .setFooter({ text: '© 2021-2022 HitoriYuu, Hitrin' });
+
+    await interaction.followUp({
+        embeds: [errorEmbed]
+    });
+};
+
+async function BotPermissionError(interaction, permission) {
+    const errorEmbed = new EmbedBuilder()
+        .setColor('#d9333f')
+        .setAuthor({ name: `Botに必要な権限がありません。` })
+        .setDescription(codeBlock(permission))
         .setTimestamp()
         .setFooter({ text: '© 2021-2022 HitoriYuu, Hitrin' });
 
@@ -43,7 +56,8 @@ async function PermissionError(interaction, permission) {
 async function ArgumentError(interaction, args) {
     const errorEmbed = new EmbedBuilder()
         .setColor('#d9333f')
-        .setAuthor({ name: `あなたには、実行するために必要な引数がないまたは無効です: \`${args}\`` })
+        .setAuthor({ name: `実行するために必要な引数がないまたは無効です。` })
+        .setDescription(`無効な引数: \`${args}\``)
         .setTimestamp()
         .setFooter({ text: '© 2021-2022 HitoriYuu, Hitrin' });
 
@@ -57,7 +71,20 @@ async function TTSError(error, message) {
     setTimeout(() => {
         message.reactions.cache.get('🔇').remove()
     }, 3000);
-    console.error('[エラー] エラーが発生しました。\n内容: ' + error.message);
+    console.log('[エラー] エラーが発生しました。\n' + error);
 };
 
-module.exports = { Error, InteractionError, PermissionError, ArgumentError, TTSError };
+async function CustomError(interaction, message) {
+    const errorEmbed = new EmbedBuilder()
+        .setColor('#d9333f')
+        .setAuthor({ name: `エラーが発生しました。` })
+        .setDescription(codeBlock(message))
+        .setTimestamp()
+        .setFooter({ text: '© 2021-2022 HitoriYuu, Hitrin' });
+
+    await interaction.followUp({
+        embeds: [errorEmbed]
+    });
+};
+
+module.exports = { Error, InteractionError, PermissionError, BotPermissionError, ArgumentError, TTSError, CustomError};

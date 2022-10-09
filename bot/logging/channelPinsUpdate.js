@@ -1,23 +1,33 @@
 const { EmbedBuilder, PermissionFlagsBits } = require('discord.js');
-const logsChannelsModel = require('../models/logsChannelsSchema');
+const { isCreatedGuild } = require('../functions/isAvailable');
+const { guildsData } = require('../functions/MongoDB');
+const { auditLog } = require('../functions/auditLog');
+const { hasPermissions } = require('../functions/hasPermissions');
+const { Error } = require('../handlers/Error');
 
 module.exports = {
 	name: 'channelPinsUpdate',
 
 	async execute(channel) {
         try {
-            if (!channel.guild.members.cache.get(channel.client.user.id).permissions.has(PermissionFlagsBits.ViewAuditLog)) return;
-            const AuditLogs = await channel.guild.fetchAuditLogs({ limit: 1 });
+            const guild = await guildsData(channel.guild);
 
-            const log = AuditLogs.entries.first()
-            const member = channel.guild.members.cache.get(log.target.id)
+            if (!hasPermissions(channel.guild.members.cache.get(channel.client.user.id), PermissionFlagsBits.ViewAuditLog)) return;
+            if (!await isCreatedGuild(channel.guild)) return;
+            if (!guild.logging.enable || guild.logging.enable == undefined) return;
+
+            const log = await auditLog(channel.guild);
+            const executor = channel.guild.members.cache.get(log.executor.id);
+
+            var type = '作成'
+            if (log.actionType == 'Delete') type = '削除';
 
             const logEmbed = new EmbedBuilder()
                 .setColor('#59b9c6')
-                .setAuthor({ name: member.user.tag, iconURL: member.displayAvatarURL({extension: 'png'}) })
-                .setTitle('チャンネル作成')
+                .setAuthor({ name: executor.user.tag.toString(), iconURL: executor.displayAvatarURL({extension: 'png'}) })
+                .setTitle(`ピンの${type}`)
                 .setDescription(
-                    `<@${member.id}> が \`#${log.extra.channel.name}\` でのピン留めを更新しました。`
+                    `<@${executor.id}> が チャンネル \`#${log.extra.channel.name}\` でピンを${type}しました。`
                 )
                 .addFields(
                     {
@@ -28,12 +38,13 @@ module.exports = {
                 .setTimestamp()
                 .setFooter({ text: '© 2021-2022 HitoriYuu, Hitrin' });
 
-            const guildsData = await logsChannelsModel.find();
-            const data = guildsData.filter(data => data.guild.id === channel.guild.id);
-            if (data[0] == undefined) return;
-            channel.guild.channels.cache.get(data[0].channel.id).send({embeds: [logEmbed]});
+            if (guild.logging.enable && guild.logging.channel.id) {
+                channel.guild.channels.cache.get(guild.logging.channel.id).send({
+                    embeds: [logEmbed]
+                });
+            };
         } catch (error) {
-            return console.error('[エラー]イベント時にエラーが発生しました。\n内容: ' + error.message);
+            return Error(error);
         }
 	},
 };

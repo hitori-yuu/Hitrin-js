@@ -1,17 +1,24 @@
+const { EmbedBuilder, PermissionFlagsBits } = require('discord.js');
+const { getVoiceConnection, createAudioResource, StreamType, createAudioPlayer, NoSubscriberBehavior } = require("@discordjs/voice");
+const { isCreatedGuild } = require('../functions/isAvailable');
+const { guildsData } = require('../functions/MongoDB');
+const { hasPermissions } = require('../functions/hasPermissions');
+const { Error } = require('../handlers/Error');
 const { default: axios } = require("axios");
 const rpc = axios.create({
     baseURL: "http://127.0.0.1:50021",
     proxy: false,
-    timeout: 2000,
+    timeout: 5000,
 });
-const { getVoiceConnection, createAudioResource, StreamType, createAudioPlayer, NoSubscriberBehavior } = require("@discordjs/voice");
 const fs = require('fs');
+
 
 module.exports = {
 	name: 'voiceStateUpdate',
 
 	async execute(oldState, newState) {
         try {
+            const guild = await guildsData(oldState.guild);
             var channel = oldState.guild.channels.cache.get(oldState.client.voiceChannels.get(oldState.channelId || newState.channelId));
             const member = oldState.guild.members.cache.get(oldState.id);
             const oldCh = oldState.guild.channels.cache.get(oldState.channelId);
@@ -19,8 +26,11 @@ module.exports = {
             const filepath = "./sounds/" + oldState.guild.id + ".wav"
             var text;
 
-            if (oldState.channelId === newState.channelId) return;
+            if (!hasPermissions(oldState.guild.members.cache.get(oldState.client.user.id), PermissionFlagsBits.ViewAuditLog)) return;
+            if (!await isCreatedGuild(oldState.guild)) return;
+            if (!guild.settings.TTS.vcLog || guild.settings.TTS.vcLog == undefined) return;
 
+            if (oldState.channelId === newState.channelId) return;
             if (!oldState.channelId && newState.channelId) {
                 channel.send({ content: `**${member.displayName}** が ${newCh} に参加しました。` });
                 text = `${member.displayName}が参加しました。`;
@@ -34,7 +44,7 @@ module.exports = {
             await generateAudio(text, filepath, 5);
             await play(oldState.guild.id, filepath);
         } catch (error) {
-            return console.error('[エラー]イベント時にエラーが発生しました。\n内容: ' + error.message);
+            return Error(error);
         }
 	},
 };

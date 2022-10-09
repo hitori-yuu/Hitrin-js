@@ -3,9 +3,13 @@ const rpc = axios.create({
     baseURL: 'http://127.0.0.1:50021',
     proxy: false,
 });
-const { getVoiceConnection, createAudioResource, StreamType, createAudioPlayer, NoSubscriberBehavior } = require('@discordjs/voice');
+const { entersState, AudioPlayerStatus, getVoiceConnection, createAudioResource, StreamType, createAudioPlayer, NoSubscriberBehavior, joinVoiceChannel} = require('@discordjs/voice');
+const { TTSError } = require('../handlers/error');
 const fs = require('fs');
 const usersModel = require('../models/usersSchema');
+
+let queue = []
+let isPlaying = false
 
 module.exports = {
     name: 'messageCreate',
@@ -14,6 +18,7 @@ module.exports = {
         if (message.author.bot || !message.guild) return;
         const channel = message.member.voice.channel;
         if (!channel) return;
+        if (!message.channel.id === message.client.voiceChannels.get(channel.id)) return;
         var voice;
 
         if (message.channel.id === message.client.voiceChannels.get(channel.id)) {
@@ -30,7 +35,10 @@ module.exports = {
             try {
                 var text = convertMessage(message.cleanContent);
                 await generateAudio(text, filepath, voice);
-                await play(message, filepath);
+                addAudioToQueue(filepath, channel);
+                if (!isPlaying) {
+                    await play(message, filepath);
+                }
             } catch(error) {
                 return TTSError(error, message);
             }
@@ -64,6 +72,12 @@ async function generateAudio(text, filepath, voice) {
     fs.writeFileSync(filepath, new Buffer.from(synthesis.data), 'binary');
 }
 
+function addAudioToQueue(path, voiceChannel) {
+    queue.push(
+        { path: path, voiceChannel: voiceChannel }
+    );
+};
+
 async function play(interaction, filepath) {
     const connection = await getVoiceConnection(interaction.guild.id);
 
@@ -75,6 +89,21 @@ async function play(interaction, filepath) {
         },
     });
 
-    player.play(resource);
-    connection.subscribe(player);
+    // const dispatcher = player.play(resource);
+    // dispatcher.on('finish', () => {
+    //     queue.shift()
+    //     play()
+    //     isPlaying = true
+    // })
+
+    if (queue.length >= 1 && !isPlaying ) {
+        player.play(resource);
+        connection.on('finish', () => {
+            queue.shift()
+            play()
+            isPlaying = true
+        });
+    } else {
+        isPlaying = false
+    }
 }

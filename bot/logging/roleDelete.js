@@ -1,23 +1,29 @@
 const { EmbedBuilder, PermissionFlagsBits } = require('discord.js');
-const logsChannelsModel = require('../models/logsChannelsSchema');
+const { isCreatedGuild } = require('../functions/isAvailable');
+const { guildsData } = require('../functions/MongoDB');
+const { auditLog } = require('../functions/auditLog');
+const { hasPermissions } = require('../functions/hasPermissions');
+const { Error } = require('../handlers/Error');
 
 module.exports = {
 	name: 'roleDelete',
 
 	async execute(role) {
         try {
-            if (!role.guild.members.cache.get(role.client.user.id).permissions.has(PermissionFlagsBits.ViewAuditLog)) return;
-            const AuditLogs = await role.guild.fetchAuditLogs({ limit: 1 });
+            const guild = await guildsData(role.guild);
 
-            const log = AuditLogs.entries.first()
-            const member = role.guild.members.cache.get(log.executor.id)
+            if (!hasPermissions(role.guild.members.cache.get(role.client.user.id), PermissionFlagsBits.ViewAuditLog)) return;
+            if (!await isCreatedGuild(role.guild)) return;
+            if (!guild.logging.enable || guild.logging.enable == undefined) return;
 
+            const log = await auditLog(role.guild);
+            const executor = role.guild.members.cache.get(log.executor.id);
             const logEmbed = new EmbedBuilder()
                 .setColor('#59b9c6')
-                .setAuthor({ name: member.user.tag, iconURL: member.displayAvatarURL({extension: 'png'}) })
+                .setAuthor({ name: executor.user.tag, iconURL: executor.displayAvatarURL({extension: 'png'}) })
                 .setTitle('ロール削除')
                 .setDescription(
-                    `<@${member.id}> が ロール \`${role.name}\` を削除しました。`
+                    `<@${executor.id}> が ロール \`${role.name}\` を削除しました。`
                 )
                 .addFields(
                     {
@@ -28,12 +34,13 @@ module.exports = {
                 .setTimestamp()
                 .setFooter({ text: '© 2021-2022 HitoriYuu, Hitrin' });
 
-            const guildsData = await logsChannelsModel.find();
-            const data = guildsData.filter(data => data.guild.id === role.guild.id);
-            if (data[0] == undefined) return;
-            role.guild.channels.cache.get(data[0].channel.id).send({embeds: [logEmbed]});
+            if (guild.logging.enable && guild.logging.channel.id) {
+                role.guild.channels.cache.get(guild.logging.channel.id).send({
+                    embeds: [logEmbed]
+                });
+            };
         } catch (error) {
-            return console.error('[エラー]イベント時にエラーが発生しました。\n内容: ' + error.message);
+            return Error(error);
         }
 	},
 };

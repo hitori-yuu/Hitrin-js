@@ -18,6 +18,4 @@ const usersSchema = new mongoose.Schema({
     createdDate : { type: String },
 });
 
-const model = mongoose.model('Users', usersSchema);
-
-module.exports = model;
+module.exports = mongoose.model('Users', usersSchema);

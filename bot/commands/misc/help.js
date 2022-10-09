@@ -1,4 +1,5 @@
 const { EmbedBuilder, SlashCommandBuilder } = require('discord.js');
+const { Error, InteractionError, PermissionError, BotPermissionError, ArgumentError, TTSError, CustomError } = require('../../handlers/error');
 
 module.exports = {
 	data: new SlashCommandBuilder()
@@ -28,47 +29,44 @@ module.exports = {
         ),
 
 	async execute(interaction) {
-		let name = interaction.options.getString('command');
-		const helpEmbed = new EmbedBuilder().setColor('#59b9c6');
+		try {
+			let name = interaction.options.getString('command');
+			const helpEmbed = new EmbedBuilder().setColor('#59b9c6');
 
-		if (name) {
-			name = name.toLowerCase();
+			if (name) {
+				name = name.toLowerCase();
 
-			helpEmbed.setTitle(`コマンド \`${name}\``);
-			helpEmbed.setAuthor({ name: interaction.user.tag, iconURL: interaction.user.displayAvatarURL({format: 'png'}), url: interaction.user.displayAvatarURL({format: 'png'}) });
+				helpEmbed.setTitle(`コマンド \`${name}\``);
+				helpEmbed.setAuthor({ name: interaction.user.tag, iconURL: interaction.user.displayAvatarURL({format: 'png'}), url: interaction.user.displayAvatarURL({format: 'png'}) });
 
-			if (interaction.client.slashCommands.has(name)) {
-				const command = interaction.client.slashCommands.get(name);
+				if (interaction.client.slashCommands.has(name)) {
+					const command = interaction.client.slashCommands.get(name);
 
-                var DM = '使用可能';
-                if (command.data.dmPermission == false) DM = '使用不可能';
+					var DM = '使用可能';
+					if (command.data.dmPermission == false) DM = '使用不可能';
 
-                var permissions = '誰でも使用可能';
-                if (command.data.default_member_permissions) permissions = '必須権限あり';
+					var permissions = '誰でも使用可能';
+					if (command.data.default_member_permissions) permissions = '必須権限あり';
 
-				if (command.data.description)
-					helpEmbed.setDescription(
-						`**[English]** ${command.data.description}\n**[日本語]** ${command.data.description_localizations.ja}\n\n**[DM]** ${DM}\n**[必要権限]** ${permissions}`
-					);
+					if (command.data.description) {
+						helpEmbed.setDescription(
+							`**[English]** ${command.data.description}\n**[日本語]** ${command.data.description_localizations.ja}\n\n**[DM]** ${DM}\n**[必要権限]** ${permissions}`
+						);
+					};
+				} else {
+					return ArgumentError(interaction, name);
+				}
 			} else {
 				helpEmbed
-					.setDescription(`コマンド \`${name}\` は存在しません。`)
-					.setColor('#59b9c6');
+					.setTitle('全コマンド')
+					.setDescription(`${interaction.client.slashCommands.map((command) => command.data.name).join('`, `')}`);
 			}
-		} else {
-			helpEmbed
-				.setTitle('全コマンド')
-				.setDescription(
-					'`' +
-						interaction.client.slashCommands
-							.map((command) => command.data.name)
-							.join('`, `') +
-						'`'
-				);
-		}
 
-		interaction.followUp({
-			embeds: [helpEmbed],
-		});
+			interaction.followUp({
+				embeds: [helpEmbed],
+			});
+		} catch (error) {
+			return InteractionError(error, interaction);
+		}
 	},
 };
