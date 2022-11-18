@@ -9,9 +9,8 @@ module.exports = {
 			const { client } = interaction;
 			const command = client.buttons.get(interaction.customId);
 
+			if (!interaction.isButton()) return;
 			if (!command) return;
-			if (!interaction.type == InteractionType.MessageComponent) return;
-			if (!interaction.componentType == ComponentType.Button) return;
 
 			await interaction.deferReply();
 			await command.execute(interaction);

@@ -40,6 +40,8 @@ client.slashCommands = new Collection();
 client.buttons = new Collection();
 client.voiceChannels = new Collection();
 client.voiceGuilds = new Collection();
+client.audioQueue = [];
+client.isPlaying = false;
 client.errors = new Collection();
 
 const { loadHandlers } = require('./handlers/loadHandlers');

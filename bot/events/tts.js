@@ -8,9 +8,6 @@ const { TTSError } = require('../handlers/error');
 const fs = require('fs');
 const usersModel = require('../models/usersSchema');
 
-let queue = []
-let isPlaying = false
-
 module.exports = {
     name: 'messageCreate',
 
@@ -18,7 +15,7 @@ module.exports = {
         if (message.author.bot || !message.guild) return;
         const channel = message.member.voice.channel;
         if (!channel) return;
-        if (!message.channel.id === message.client.voiceChannels.get(channel.id)) return;
+        if (!message.channel.id == message.client.voiceChannels.get(channel.id)) return;
         var voice;
 
         if (message.channel.id === message.client.voiceChannels.get(channel.id)) {
@@ -35,9 +32,10 @@ module.exports = {
             try {
                 var text = convertMessage(message.cleanContent);
                 await generateAudio(text, filepath, voice);
-                addAudioToQueue(filepath, channel);
-                if (!isPlaying) {
-                    await play(message, filepath);
+                addAudioToQueue(message.client, filepath, channel)
+
+                if (!message.client.isPlaying) {
+                    await play(message);
                 }
             } catch(error) {
                 return TTSError(error, message);
@@ -47,10 +45,10 @@ module.exports = {
 };
 
 function convertMessage(text) {
-    text = text.replace(/<:[a-zA-Z0-9_]+:[0-9]+>/g, '絵文字')
-    text = text.replace(emojiRegex(), '絵文字')
-    text = text.replace(/(https?|http?|ftp)(:\/\/[\w\/:%#\$&\?\(\)~\.=\+\-]+)/g, 'URL')
-    text = text.replace(/\r?\n/g, '、')
+    text = text.replace(/<:[a-zA-Z0-9_]+:[0-9]+>/g, '絵文字');
+    text = text.replace(emojiRegex(), '絵文字');
+    text = text.replace(/(https?|http?|ftp)(:\/\/[\w\/:%#\$&\?\(\)~\.=\+\-]+)/g, 'URL');
+    text = text.replace(/\r?\n/g, '、');
 
     return text
 }
@@ -72,38 +70,34 @@ async function generateAudio(text, filepath, voice) {
     fs.writeFileSync(filepath, new Buffer.from(synthesis.data), 'binary');
 }
 
-function addAudioToQueue(path, voiceChannel) {
-    queue.push(
-        { path: path, voiceChannel: voiceChannel }
+function addAudioToQueue(client, filepath, channel) {
+    client.audioQueue.push(
+        { path: filepath, voiceChannel: channel }
     );
-};
+}
 
-async function play(interaction, filepath) {
+async function play(interaction) {
     const connection = await getVoiceConnection(interaction.guild.id);
-
     if (!connection) return;
-    const resource = createAudioResource(filepath, { inputType: StreamType.Arbitrary });
-    const player = createAudioPlayer({
-        behaviors: {
-            noSubscriber: NoSubscriberBehavior.Pause,
-        },
-    });
 
-    // const dispatcher = player.play(resource);
-    // dispatcher.on('finish', () => {
-    //     queue.shift()
-    //     play()
-    //     isPlaying = true
-    // })
-
-    if (queue.length >= 1 && !isPlaying ) {
+    if (interaction.client.audioQueue.length >= 1 && !interaction.client.isPlaying) {
+        interaction.client.isPlaying = true;
+        const resource = createAudioResource(interaction.client.audioQueue[0].path, { inputType: StreamType.Arbitrary });
+        const player = createAudioPlayer({
+            behaviors: {
+                noSubscriber: NoSubscriberBehavior.Pause,
+            },
+        });
         player.play(resource);
-        connection.on('finish', () => {
-            queue.shift()
-            play()
-            isPlaying = true
+        connection.subscribe(player);
+
+        player.on(AudioPlayerStatus.Idle, () => {
+            interaction.client.audioQueue.shift();
+            play(interaction);
+            interaction.client.isPlaying = false;
         });
     } else {
-        isPlaying = false
+        interaction.client.isPlaying = false;
+        return;
     }
 }

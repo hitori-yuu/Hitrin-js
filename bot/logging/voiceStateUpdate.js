@@ -1,5 +1,5 @@
 const { EmbedBuilder, PermissionFlagsBits } = require('discord.js');
-const { getVoiceConnection, createAudioResource, StreamType, createAudioPlayer, NoSubscriberBehavior } = require("@discordjs/voice");
+const { entersState, AudioPlayerStatus, getVoiceConnection, createAudioResource, StreamType, createAudioPlayer, NoSubscriberBehavior, joinVoiceChannel} = require('@discordjs/voice');
 const { isCreatedGuild } = require('../functions/isAvailable');
 const { guildsData } = require('../functions/MongoDB');
 const { hasPermissions } = require('../functions/hasPermissions');
@@ -11,7 +11,6 @@ const rpc = axios.create({
     timeout: 5000,
 });
 const fs = require('fs');
-
 
 module.exports = {
 	name: 'voiceStateUpdate',
@@ -42,7 +41,11 @@ module.exports = {
             };
 
             await generateAudio(text, filepath, 5);
-            await play(oldState.guild.id, filepath);
+            addAudioToQueue(oldState.client, filepath, oldState.channel)
+
+            if (!oldState.client.isPlaying) {
+                await play(oldState);
+            }
         } catch (error) {
             return Error(error);
         }
@@ -62,17 +65,34 @@ async function generateAudio(text, filepath, voice) {
     fs.writeFileSync(filepath, new Buffer.from(synthesis.data), 'binary');
 }
 
-async function play(guild, filepath) {
-    const connection = await getVoiceConnection(guild);
+function addAudioToQueue(client, filepath, channel) {
+    client.audioQueue.push(
+        { path: filepath, voiceChannel: channel }
+    );
+}
 
+async function play(oldState) {
+    const connection = await getVoiceConnection(oldState.guild.id);
     if (!connection) return;
-    const resource = createAudioResource(filepath, { inputType: StreamType.Arbitrary });
-    const player = createAudioPlayer({
-        behaviors: {
-            noSubscriber: NoSubscriberBehavior.Pause,
-        },
-    });
 
-    player.play(resource);
-    connection.subscribe(player);
+    if (oldState.client.audioQueue.length >= 1 && !oldState.client.isPlaying) {
+        oldState.client.isPlaying = true;
+        const resource = createAudioResource(oldState.client.audioQueue[0].path, { inputType: StreamType.Arbitrary });
+        const player = createAudioPlayer({
+            behaviors: {
+                noSubscriber: NoSubscriberBehavior.Pause,
+            },
+        });
+        player.play(resource);
+        connection.subscribe(player);
+
+        player.on(AudioPlayerStatus.Idle, () => {
+            oldState.client.audioQueue.shift();
+            play(oldState);
+            oldState.client.isPlaying = false;
+        });
+    } else {
+        oldState.client.isPlaying = false;
+        return;
+    }
 }

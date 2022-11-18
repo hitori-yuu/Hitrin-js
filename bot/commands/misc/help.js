@@ -1,4 +1,4 @@
-const { EmbedBuilder, SlashCommandBuilder } = require('discord.js');
+const { EmbedBuilder, SlashCommandBuilder, inlineCode } = require('discord.js');
 const { Error, InteractionError, PermissionError, BotPermissionError, ArgumentError, TTSError, CustomError } = require('../../handlers/error');
 
 module.exports = {
@@ -57,9 +57,14 @@ module.exports = {
 					return ArgumentError(interaction, name);
 				}
 			} else {
+				const commands = [];
+				interaction.client.slashCommands.forEach(command => {
+					commands.push(inlineCode(command.data.name))
+				});
+
 				helpEmbed
 					.setTitle('全コマンド')
-					.setDescription(`${interaction.client.slashCommands.map((command) => command.data.name).join('`, `')}`);
+					.setDescription(commands.join(', '));
 			}
 
 			interaction.followUp({

@@ -21,7 +21,7 @@ async function InteractionError(error, interaction) {
     await interaction.followUp({
         embeds: [errorEmbed]
     });
-    interaction.client.channels.cache.get('1023587000261025883').send({
+    interaction.followUp({
         embeds: [logEmbed]
     });
     console.log('[エラー] エラーが発生しました。\n' + error);
