@@ -1,6 +1,6 @@
 const { ActionRowBuilder, ButtonBuilder, ButtonStyle, InteractionType, EmbedBuilder } = require('discord.js');
 const { InteractionError } = require('../handlers/error');
-const { isAvailableUser, isCreatedUser, isCreatedGuild } = require('../functions/isAvailable');
+const { isCreatedUser, isCreatedGuild, isAvailableUser } = require('../functions/isAvailable');
 const { MongoDB, usersData, guildsData, warnsData, wordsData, createUserData, createGuildData } = require('../functions/MongoDB');
 
 module.exports = {
@@ -17,11 +17,14 @@ module.exports = {
 
                 if (!await isCreatedUser(interaction.user)) await createUserData(interaction.user);
                 if (!await isCreatedGuild(interaction.guild)) await createGuildData(interaction.guild);
-                if (!await isAvailableUser(interaction.user)) return TOS(interaction);
+                if (await isCreatedUser(interaction.user)) {
+                    if (!await isAvailableUser(interaction.user)) return TOS(interaction);
+                }
 
                 await command.execute(interaction);
             }
         } catch (error) {
+            console.error(error);
 			return InteractionError(error, interaction);
         }
 	},
