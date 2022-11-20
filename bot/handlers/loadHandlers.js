@@ -4,7 +4,7 @@ async function loadHandlers(client) {
     const { loadContextCommands } = require('./contextCommands');
     const { loadSlashCommands } = require('./slashCommands');
     const { loadButtons } = require('./buttons');
-    const { MongoDB } = require('../functions/mongoDB');
+    const { MongoDB } = require('../functions/MongoDB');
     loadEvents(client);
     loadLogging(client);
     loadContextCommands(client);
