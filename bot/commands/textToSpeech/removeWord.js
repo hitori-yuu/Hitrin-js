@@ -1,6 +1,7 @@
 const { SlashCommandBuilder, EmbedBuilder } = require('discord.js');
 const { default: axios } = require("axios");
 const { wordsData } = require('../../functions/MongoDB');
+const Model = require(`../../models/wordsSchema`);
 const { CustomError } = require('../../handlers/error');
 const rpc = axios.create({ baseURL: "http://127.0.0.1:50021", proxy: false });
 
@@ -34,11 +35,11 @@ module.exports = {
 
 	async execute(interaction) {
         const surface = interaction.options.getString('surface');
-        const words = wordsData(surface);
-        if (words.length >= 0) return CustomError(interaction, 'その単語は登録されていません。');
+        const words = await wordsData(surface);
+        if (words.length <= 0) return CustomError(interaction, 'その単語は登録されていません。');
 
-        await rpc.delete(`user_dict_word/${data[0].word_id}`);
-        await words.deleteOne();
+        await rpc.delete(`user_dict_word/${words[0].word_id}`);
+        await Model.findOneAndDelete({ word_id: words[0].word_id });
         const wordEmbed = new EmbedBuilder()
             .setColor('#93ca76')
             .setAuthor({ name: interaction.user.tag, iconURL: interaction.user.displayAvatarURL({extension: 'png'}), url: interaction.user.displayAvatarURL({extension: 'png'}) })
