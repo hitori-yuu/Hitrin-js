@@ -3,7 +3,7 @@ const { isCreatedGuild } = require('../functions/isAvailable');
 const { guildsData } = require('../functions/MongoDB');
 const { auditLog } = require('../functions/auditLog');
 const { hasPermissions } = require('../functions/hasPermissions');
-const { Error } = require('../handlers/Error');
+const { Error } = require('../handlers/error');
 
 const key = {
     'name': '名前',

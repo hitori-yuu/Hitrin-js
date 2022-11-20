@@ -1,7 +1,7 @@
 const { isCreatedGuild } = require('../functions/isAvailable');
 const { guildsData } = require('../functions/MongoDB');
 const { textToSpeech } = require('../functions/textToSpeech');
-const { Error } = require('../handlers/Error');
+const { Error } = require('../handlers/error');
 
 module.exports = {
 	name: 'voiceStateUpdate',
