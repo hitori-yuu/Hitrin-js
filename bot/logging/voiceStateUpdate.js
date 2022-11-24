@@ -16,20 +16,20 @@ module.exports = {
             var text;
 
             if (!await isCreatedGuild(oldState.guild)) return;
-            if (!guild.settings.TTS.vcLog || guild.settings.TTS.vcLog == undefined) return;
+            if (!guild.settings.TTS.vcLog || guild.settings.TTS.vcLog === undefined) return;
+            if (!channel) return;
 
             if (oldState.channelId === newState.channelId) return;
-            if (!oldState.channelId && newState.channelId) {
+            else if (oldState.channelId == null && newState.channelId) {
                 channel.send({ content: `**${member.displayName}** が ${newCh} に参加しました。` });
                 text = `${member.displayName}が参加しました。`;
-            };
-            if (oldState.channelID && !newState.channelID) {
-                if (!oldState.client.voiceChannels.get(oldState.channelId)) return;
-                channel.send({ content: `**${member.displayName}** が ${oldCh} から切断しました。` });
+            }
+            else if (oldState.channelId && newState.channelId == null) {
+                oldState.guild.channels.cache.get(oldState.client.voiceChannels.get(oldState.channelId)).send({ content: `**${member.displayName}** が ${oldCh} から切断しました。` });
                 text = `${member.displayName}が切断しました。`;
             };
 
-            await textToSpeech(oldState.client, oldState.guild, oldState.guild.id, channel, text, 5);
+            await textToSpeech(oldState.client, oldState.guild, oldState.guild.id, channel, text, 5, 'none');
         } catch (error) {
             return Error(error);
         }

@@ -21,7 +21,7 @@ module.exports = {
                     voice = data[0].speaker
                 }
 
-                await textToSpeech(message.client, message.guild, message.author.id, channel, message.cleanContent.toLowerCase(), voice);
+                await textToSpeech(message.client, message.guild, message.author.id, channel, message.cleanContent.toLowerCase(), voice, message);
             }
         } catch(error) {
             return TTSError(error, message);

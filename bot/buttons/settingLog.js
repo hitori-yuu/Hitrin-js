@@ -9,28 +9,28 @@ module.exports = {
             const row = new ActionRowBuilder()
             .addComponents(
                 new ButtonBuilder()
-                    .setCustomId('settingLogEnabled')
+                    .setCustomId('logEnabled')
                     .setLabel('有効化')
                     .setEmoji('✔')
                     .setStyle(ButtonStyle.Secondary),
             )
             .addComponents(
                 new ButtonBuilder()
-                    .setCustomId('settingLogDisabled')
+                    .setCustomId('logDisabled')
                     .setLabel('無効化')
                     .setEmoji('❌')
                     .setStyle(ButtonStyle.Secondary),
             );
 
-        const TTSvcLogEmbed = new EmbedBuilder()
+        const LogEmbed = new EmbedBuilder()
             .setColor('#59b9c6')
             .setAuthor({ name: interaction.user.tag, iconURL: interaction.user.displayAvatarURL({ extension: 'png' }), url: interaction.user.displayAvatarURL({ extension: 'png' }) })
-            .setDescription('**ボイスチャンネルの参加・退出読み上げ** を有効化・無効化します。\n以下のいずれかのボタンをクリックしてください。')
+            .setDescription('**コマンド・自動管理のログ** を有効化・無効化します。\n以下のいずれかのボタンをクリックしてください。')
             .setTimestamp()
             .setFooter({ text: '© 2021-2022 HitoriYuu, Hitrin' });
 
         await interaction.followUp({
-            embeds: [TTSvcLogEmbed],
+            embeds: [LogEmbed],
             components: [row],
         });
         } catch (error) {

@@ -2,7 +2,7 @@ const { EmbedBuilder, SlashCommandBuilder, ActionRowBuilder,ButtonBuilder, Butto
 const { Error, InteractionError, PermissionError, BotPermissionError, ArgumentError, TTSError, CustomError } = require('../handlers/error');
 
 module.exports = {
-	id: 'autoPublishDisabled',
+	id: 'logDisabled',
 
 	async execute(interaction) {
         try {
@@ -13,12 +13,12 @@ module.exports = {
                 },
                 {
                     $set: {
-                        'settings.autoPublish': false
+                        'settings.logging.boolean': false
                     }
                 },
             );
 
-            const TTSvcLogDisabledEmbed = new EmbedBuilder()
+            const LogDisabledEmbed = new EmbedBuilder()
                 .setColor('#59b9c6')
                 .setAuthor({ name: interaction.user.tag, iconURL: interaction.user.displayAvatarURL({ extension: 'png' }), url: interaction.user.displayAvatarURL({ extension: 'png' }) })
                 .setDescription('ログを**無効化**しました。')
@@ -26,10 +26,9 @@ module.exports = {
                 .setFooter({ text: '© 2021-2022 HitoriYuu, Hitrin' });
 
             await interaction.followUp({
-                embeds: [TTSvcLogDisabledEmbed],
+                embeds: [LogDisabledEmbed],
             });
         } catch (error) {
-            console.log(error);
             return InteractionError(interaction, error);
         }
 	},

@@ -36,7 +36,7 @@ module.exports = {
             await interaction.client.voiceChannels.set(channel.id, interaction.channel.id);
             await interaction.client.voiceGuilds.set(interaction.guild.id, channel.id);
             await interaction.followUp({
-                content: `<#${interaction.channel.id}> でのチャットを <#${channel.id}> で読み上げます。`
+                content: `🗣️｜<#${interaction.channel.id}> でのチャットを <#${channel.id}> で読み上げます。`
             });
         } catch (error) {
 			return InteractionError(error, interaction);

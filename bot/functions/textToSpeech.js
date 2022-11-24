@@ -5,10 +5,25 @@ const rpc = axios.create({
 });
 const { AudioPlayerStatus, getVoiceConnection, createAudioResource, StreamType, createAudioPlayer, NoSubscriberBehavior } = require('@discordjs/voice');
 const { Error } = require('../handlers/error');
+const { reactionAdd, reactionRemove } = require('./reaction');
 const fs = require('fs');
 
-async function textToSpeech(client, guild, id, channel, text, voice) {
+async function textToSpeech(client, guild, id, channel, text, voice, message) {
     if (!client | !guild | !id | !channel | !text | !voice) return;
+    var map = [];
+
+    if (!message == 'none') {
+        const values = client.voiceChannels.values();
+
+        for (const value of values) {
+            map.push(value);
+        };
+
+        console.log(client.voiceChannels.values());
+        console.log(map);
+        console.log(map.includes(message.channel.id));
+        if (!map.includes(message.channel.id)) return;
+    }
 
     const filepath = './sounds/' + id + '.wav';
 
@@ -17,7 +32,7 @@ async function textToSpeech(client, guild, id, channel, text, voice) {
         addAudioToQueue(client, filepath, channel)
 
         if (!client.isPlaying) {
-            await play(client, guild);
+            await play(client, guild, message);
         }
     } catch(error) {
         return Error(error);
@@ -56,7 +71,7 @@ function addAudioToQueue(client, filepath, channel) {
     );
 }
 
-async function play(client, guild) {
+async function play(client, guild, message) {
     const connection = await getVoiceConnection(guild.id);
     if (!connection) return;
 
@@ -69,11 +84,13 @@ async function play(client, guild) {
             },
         });
         player.play(resource);
+        if (message !== 'none') await message.react('🔊');
         connection.subscribe(player);
 
-        player.on(AudioPlayerStatus.Idle, () => {
+        player.on(AudioPlayerStatus.Idle, async () => {
+            if (message !== 'none') await message.reactions.cache.get('🔊').users.remove(client.user);
             client.audioQueue.shift();
-            play(client, guild)
+            play(client, guild, message)
             client.isPlaying = false;
         });
     } else {

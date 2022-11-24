@@ -34,7 +34,7 @@ const guildsSchema = new mongoose.Schema({
         },
     },
     logging: {
-        enable: { type: Boolean, default: false },
+        boolean: { type: Boolean, default: false },
         channel: {
             name: { type: String, default: 'None'},
             id: { type: String, default: 'None' },

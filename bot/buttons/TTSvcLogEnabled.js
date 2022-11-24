@@ -29,7 +29,6 @@ module.exports = {
                 embeds: [TTSvcLogEnabledEmbed],
             });
         } catch (error) {
-            console.log(error);
             return InteractionError(interaction, error);
         }
 	},
