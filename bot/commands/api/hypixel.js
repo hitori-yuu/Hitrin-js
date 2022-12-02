@@ -1,7 +1,7 @@
 const { SlashCommandBuilder, EmbedBuilder, codeBlock } = require('discord.js');
 const Hypixel = require('hypixel-api-reborn');
 const MojangAPI = require('mojang-api');
-const date = new Date();
+const { InteractionError } = require('../../handlers/error');
 
 module.exports = {
 	data: new SlashCommandBuilder()
@@ -139,20 +139,6 @@ module.exports = {
 						});
 					}, 1000)
 				})
-			}).catch(error => {
-				const error_message = codeBlock('js', error.message);
-
-				console.error('[エラー] コマンド実行中にエラーが発生しました。\n内容: ' + error.message);
-				const errorEmbed = new EmbedBuilder()
-					.setColor('#d9333f')
-					.setAuthor({ name: interaction.user.tag, iconURL: interaction.user.displayAvatarURL({ format: 'png'}), url: interaction.user.displayAvatarURL({ format: 'png'}) })
-					.setDescription('コマンド実行時にエラーが発生しました。\n' + error_message)
-					.setTimestamp()
-					.setFooter({ text: '© 2021-2022 HitoriYuu, Hitrin' });
-				interaction.followUp({
-					embeds: [errorEmbed]
-				});
-				return;
 			})
 		} else if (interaction.options.getSubcommand() === 'guild') {
 			hypixel.getGuild('name', guild).then(guild => {
