@@ -1,5 +1,6 @@
 const { Client, GatewayIntentBits, Partials, Collection } = require('discord.js');
 const { REST } = require('@discordjs/rest');
+const Hypixel = require('hypixel-api-reborn');
 const { Routes } = require('discord-api-types/v10');
 require('dotenv').config()
 
@@ -34,6 +35,7 @@ const client = new Client({
 	],
 });
 
+client.hypixel = new Hypixel.Client(process.env.HYPIXEL);
 client.events = new Collection();
 client.contextCommands = new Collection();
 client.slashCommands = new Collection();

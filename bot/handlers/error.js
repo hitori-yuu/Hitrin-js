@@ -120,4 +120,4 @@ async function CustomError(interaction, message) {
     });
 };
 
-module.exports = { Error, InteractionError, PermissionError, BotPermissionError, ArgumentError, TTSError, CustomError};
+module.exports = { Error, InteractionError, PermissionError, BotPermissionError, ArgumentError, TTSError, CustomError };
