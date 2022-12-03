@@ -79,59 +79,39 @@ module.exports = {
 						content: '情報を取得中...'
 					}).then(msg => {
 						setTimeout(()=> {
-							let playerEmbed;
-							if (!player.guild) {
-								playerEmbed = new EmbedBuilder()
-									.setColor('#59b9c6')
-									.setAuthor({ name: interaction.user.tag, iconURL: interaction.user.displayAvatarURL({extension: 'png'}), url: interaction.user.displayAvatarURL({extension: 'png'}) })
-									.setTitle(`${player} の詳細`)
-									.setThumbnail('https://mineskin.eu/avatar/' + player)
-									.addFields(
-										{
-											name: '__**一般:**__',
-											value: `**[表示名]** ${player}\n**[UUID]** ${player.uuid}\n**[ランク]** ${player.rank}`
-										},
-										{
-											name: '__**時間:**__',
-											value: `**[初ログイン]** ${new Date(player.firstLogin).toLocaleString('ja-JP', { timeZone: 'Asia/Tokyo' })}\n**[最終ログイン]** ${new Date(player.lastLogin).toLocaleString('ja-JP', { timeZone: 'Asia/Tokyo' })}`
-										},
-										{
-											name: '__**統計:**__',
-											value: `**[レベル]** ${player.level}\n**[実績ポイント]** ${player.achievementPoints}`
-										},
-									)
-									.setTimestamp()
-									.setFooter({ text: '© 2021-2022 HitoriYuu, Hitrin' });
-							} else {
-								const guild = player.guild;
-								let playerName = player;
-								if (guild.tag) playerName = `${player} [${guild.tag}]`;
+							let playerName = player;
+							if (player.guild) playerName = `${player} [${player.guild.name}]`;
+							const playerEmbed = new EmbedBuilder()
+								.setColor('#59b9c6')
+								.setAuthor({ name: interaction.user.tag, iconURL: interaction.user.displayAvatarURL({extension: 'png'}), url: interaction.user.displayAvatarURL({extension: 'png'}) })
+								.setTitle(`${playerName} の詳細`)
+								.setThumbnail('https://mineskin.eu/avatar/' + player)
+								.addFields(
+									{
+										name: '__**一般:**__',
+										value: `**[ユーザー名]** ${player}\n**[UUID]** ${player.uuid}\n**[ランク]** ${player.rank}`
+									},
+									{
+										name: '__**時間:**__',
+										value: `**[初ログイン]** ${new Date(player.firstLogin).toLocaleString('ja-JP', { timeZone: 'Asia/Tokyo' })}\n**[最終ログイン]** ${new Date(player.lastLogin).toLocaleString('ja-JP', { timeZone: 'Asia/Tokyo' })}`
+									},
+									{
+										name: '__**統計:**__',
+										value: `**[レベル]** ${player.level}\n**[実績ポイント]** ${player.achievementPoints}`
+									},
+								)
+								.setTimestamp()
+								.setFooter({ text: '© 2021-2022 HitoriYuu, Hitrin' });
 
-								playerEmbed = new EmbedBuilder()
-									.setColor('#59b9c6')
-									.setAuthor({ name: interaction.user.tag, iconURL: interaction.user.displayAvatarURL({extension: 'png'}), url: interaction.user.displayAvatarURL({extension: 'png'}) })
-									.setTitle(`${player} の詳細`)
-									.setThumbnail('https://mineskin.eu/avatar/' + player)
+							if (player.guild) {
+								const guild = player.guild;
+								playerEmbed
 									.addFields(
-										{
-											name: '__**一般:**__',
-											value: `**[表示名]** ${playerName}\n**[UUID]** ${player.uuid}\n**[ランク]** ${player.rank}`
-										},
-										{
-											name: '__**時間:**__',
-											value: `**[初ログイン]** ${new Date(player.firstLogin).toLocaleString('ja-JP', { timeZone: 'Asia/Tokyo' })}\n**[最終ログイン]** ${new Date(player.lastLogin).toLocaleString('ja-JP', { timeZone: 'Asia/Tokyo' })}`
-										},
-										{
-											name: '__**統計:**__',
-											value: `**[レベル]** ${player.level}\n**[実績ポイント]** ${player.achievementPoints}`
-										},
 										{
 											name: '__**ギルド:**__',
 											value: `**[名前]** ${guild.name || 'None'}\n**[ID]** ${guild.id}\n**[レベル]** ${guild.level || 'None'}\n**[説明]** ${guild.description || 'None'}`
 										},
 									)
-									.setTimestamp()
-									.setFooter({ text: '© 2021-2022 HitoriYuu, Hitrin' });
 							}
 
 							msg.edit({
