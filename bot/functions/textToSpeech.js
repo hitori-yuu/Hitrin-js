@@ -99,4 +99,9 @@ async function play(client, guild, message) {
     }
 }
 
-module.exports = { textToSpeech };
+async function startTTS(client, guildId, textChannelId, voiceChannelId) {
+    await client.voiceChannels.set(voiceChannelId, textChannelId);
+    await client.voiceGuilds.set(guildId, voiceChannelId);
+};
+
+module.exports = { textToSpeech, startTTS };

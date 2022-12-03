@@ -1,5 +1,6 @@
-const { SlashCommandBuilder } = require('discord.js');
+const { SlashCommandBuilder, PermissionFlagsBits } = require('discord.js');
 const { joinVoiceChannel } = require("@discordjs/voice");
+const { textToSpeech, startTTS } = require('../../functions/textToSpeech');
 const { Error, InteractionError, PermissionError, BotPermissionError, ArgumentError, TTSError, CustomError } = require('../../handlers/error');
 
 module.exports = {
@@ -21,9 +22,9 @@ module.exports = {
             const channel = interaction.member.voice.channel;
 
             if (!channel) return CustomError(interaction, 'あなたが先にVCに入っている必要があります。');
-            if (!channel.joinable) return BotPermissionError(interaction, 'ボイスチャンネルへの参加');
+            if (!interaction.guild.me.permissions.has(PermissionFlagsBits.Connect)) return BotPermissionError(interaction, 'ボイスチャンネルへの参加');
             if (!channel.type === 'GUILD_STAGE_VOICE') {
-                if (!channel.speakable) return BotPermissionError(interaction, 'ボイスチャンネルでの再生');
+                if (!interaction.guild.me.permissions.has(PermissionFlagsBits.Speak)) return BotPermissionError(interaction, 'ボイスチャンネルでの発言');
             };
 
             await joinVoiceChannel({
@@ -33,8 +34,7 @@ module.exports = {
                 selfMute: false,
                 selfDeaf: true,
             });
-            await interaction.client.voiceChannels.set(channel.id, interaction.channel.id);
-            await interaction.client.voiceGuilds.set(interaction.guild.id, channel.id);
+            await startTTS(client, interaction.guild.id, interaction.channel.id, channel.id);
             await interaction.followUp({
                 content: `🗣️｜<#${interaction.channel.id}> でのチャットを <#${channel.id}> で読み上げます。`
             });

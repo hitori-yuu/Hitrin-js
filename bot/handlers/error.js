@@ -4,7 +4,7 @@ async function Error(error) {
     console.error('[エラー] エラーが発生しました。\n' + error);
 }
 
-async function InteractionError(error, interaction) {
+async function InteractionError(interaction, error) {
     const errorEmbed = new EmbedBuilder()
         .setColor('#d9333f')
         .setAuthor({ name: 'エラーが発生しました。' })
@@ -35,6 +35,7 @@ async function InteractionError(error, interaction) {
         .setColor('#d9333f')
         .setTitle('エラーログ')
         .setThumbnail(interaction.user.displayAvatarURL({extension: 'png', size: 128}))
+        .setDescription(codeBlock('js', error))
         .addFields(
             {
                 name: '__**コマンド:**__',
@@ -76,7 +77,7 @@ async function PermissionError(interaction, permission) {
 async function BotPermissionError(interaction, permission) {
     const errorEmbed = new EmbedBuilder()
         .setColor('#d9333f')
-        .setAuthor({ name: `Botに必要な権限がありません。` })
+        .setAuthor({ name: `Botに必要な権限がありません: ${permission}` })
         .setDescription(codeBlock(permission))
         .setTimestamp()
         .setFooter({ text: '© 2021-2022 HitoriYuu, Hitrin' });
