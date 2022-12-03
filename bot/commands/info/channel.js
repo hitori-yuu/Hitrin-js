@@ -50,7 +50,7 @@ module.exports = {
                 15: '💭フォーラム'
             };
 
-            if (channel.type === (0 || 5 || 10 || 11 || 12)) { //TextChannel
+            if (channel.type === (0 || 5 || 10 || 11 || 12)) { //テキストチャンネル
                 var lastMessage = new Date(channel.createdAt).toLocaleString('ja-JP', { timeZone: 'Asia/Tokyo' });
                 if (channel.lastMessage) lastMessage = new Date(channel.lastMessage.createdAt).toLocaleString('ja-JP', { timeZone: 'Asia/Tokyo' });
                 channelEmbed = new EmbedBuilder()
@@ -109,7 +109,7 @@ module.exports = {
                     )
                 }
             }
-            else if (channel.type === (2 || 13)) {
+            else if (channel.type === (2 || 13)) { //ボイスチャンネル
                 channelEmbed = new EmbedBuilder()
                     .setColor('#59b9c6')
                     .setAuthor({ name: interaction.user.tag, iconURL: interaction.user.displayAvatarURL({ extension: 'png' }), url: interaction.user.displayAvatarURL({ extension: 'png' }) })
@@ -166,8 +166,7 @@ module.exports = {
                             },
                         )
                 }
-            }
-
+            };
 
             await interaction.followUp({
                 embeds: [channelEmbed]

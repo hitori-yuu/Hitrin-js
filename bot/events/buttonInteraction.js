@@ -15,7 +15,7 @@ module.exports = {
 			await interaction.deferReply();
 			await command.execute(interaction);
 		} catch (error) {
-			return InteractionError(error, interaction);
+			return InteractionError(interaction, error);
 		}
 	},
 };
