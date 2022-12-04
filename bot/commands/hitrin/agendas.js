@@ -19,6 +19,7 @@ module.exports = {
 
 	async execute(interaction) {
 		try {
+            if (!interaction.guild.id === '876116489902653513') return CustomError(interaction, 'この機能は専用のサーバーでのみ使用できます。');
             const data = await agendas(interaction.guild);
             if (data.length <= 0) return CustomError(interaction, 'このサーバーでは議題がありません');
             const inquiryEmbed = new EmbedBuilder()

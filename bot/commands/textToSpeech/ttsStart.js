@@ -39,7 +39,7 @@ module.exports = {
                 content: `🗣️｜<#${interaction.channel.id}> でのチャットを <#${channel.id}> で読み上げます。`
             });
         } catch (error) {
-			return InteractionError(error, interaction);
+			return InteractionError(interaction, error);
         }
 	},
 };

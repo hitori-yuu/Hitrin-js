@@ -73,7 +73,7 @@ module.exports = {
                 content: `音声読み上げを \`${speakerName[speaker]}\` に設定しました。`
             });
         } catch (error) {
-			return InteractionError(error, interaction);
+			return InteractionError(interaction, error);
         }
 	},
 };

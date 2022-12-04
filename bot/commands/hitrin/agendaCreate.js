@@ -33,6 +33,7 @@ module.exports = {
 
 	async execute(interaction) {
 		try {
+            if (!interaction.guild.id === '876116489902653513') return CustomError(interaction, 'この機能は専用のサーバーでのみ使用できます。');
             const content = interaction.options.getString('content');
             if (!content) return ArgumentError(interaction, content);
 

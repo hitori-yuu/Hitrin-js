@@ -30,7 +30,7 @@ module.exports = {
                 content: '読み上げを終了しました。'
             });
         } catch (error) {
-			return InteractionError(error, interaction);
+			return InteractionError(interaction, error);
         }
 	},
 };

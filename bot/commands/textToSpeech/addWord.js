@@ -1,6 +1,7 @@
 const { SlashCommandBuilder, EmbedBuilder } = require('discord.js');
 const { default: axios } = require("axios");
 const wordsModel = require('../../models/wordsSchema');
+const { CustomError } = require('../../handlers/error');
 const rpc = axios.create({ baseURL: "http://127.0.0.1:50021", proxy: false });
 
 module.exports = {
@@ -80,38 +81,42 @@ module.exports = {
         ),
 
 	async execute(interaction) {
-        const surface = interaction.options.getString('surface').toLowerCase();
-        const pronunciation = interaction.options.getString('pronunciation');
-        const accent = interaction.options.getNumber('accent');
-        const type = interaction.options.getString('type') || 'COMMON_NOUN';
+        try {
+            const surface = interaction.options.getString('surface').toLowerCase();
+            const pronunciation = interaction.options.getString('pronunciation');
+            const accent = interaction.options.getNumber('accent');
+            const type = interaction.options.getString('type') || 'COMMON_NOUN';
 
-        if (accent <= 0 || accent > pronunciation.length) return interaction.followUp({ content: 'アクセントの場所が0以下または発音文字数を超えています。' });
-        if (!pronunciation.match(/^[ァ-ヶー　]*$/)) return interaction.followUp({ content: '発音はカタカナで入力してください。' });
+            if (accent <= 0 || accent > pronunciation.length) return CustomError(interaction, 'アクセントの場所が0以下または発音文字数を超えています。');
+            if (!pronunciation.match(/^[ァ-ヶー　]*$/)) return CustomError(interaction, '発音はカタカナで入力してください。');
 
-        const wordsData = await wordsModel.find();
-        const data = wordsData.filter(data => data.word  === surface);
-        if (data.length > 0) return interaction.followUp({ content: 'その単語は既に追加されています' });
+            const wordsData = await wordsModel.find();
+            const data = wordsData.filter(data => data.word  === surface);
+            if (data.length > 0) return CustomError(interaction, 'その単語は既に追加されています');
 
-        const res = await rpc.post(`user_dict_word?surface=${encodeURI(surface)}&pronunciation=${encodeURI(pronunciation)}&accent_type=${encodeURI(accent)}&word_type=${encodeURI(type)}`);
-        const wordEmbed = new EmbedBuilder()
-            .setColor('#93ca76')
-            .setAuthor({ name: interaction.user.tag, iconURL: interaction.user.displayAvatarURL({extension: 'png'}), url: interaction.user.displayAvatarURL({extension: 'png'}) })
-            .setDescription(`単語の追加に成功しました。\n**[表層形]** ${surface}\n**[発音]** ${pronunciation}\n**[アクセント]** ${accent.toString() || 'None'}\n**[種類]** ${type || 'None'}`)
-            .setTimestamp()
-            .setFooter({ text: '© 2021-2022 HitoriYuu, Hitrin' });
-        const wordData = await wordsModel.create({
-            word: surface,
-            word_id: res.data.toString(),
-            author: {
-                name: interaction.user.username,
-                id:  interaction.user.id,
-            },
-            date: new Date().toLocaleString({ timeZone: 'Asia/Tokyo' }),
-        });
+            const res = await rpc.post(`user_dict_word?surface=${encodeURI(surface)}&pronunciation=${encodeURI(pronunciation)}&accent_type=${encodeURI(accent)}&word_type=${encodeURI(type)}`);
+            const wordEmbed = new EmbedBuilder()
+                .setColor('#93ca76')
+                .setAuthor({ name: interaction.user.tag, iconURL: interaction.user.displayAvatarURL({extension: 'png'}), url: interaction.user.displayAvatarURL({extension: 'png'}) })
+                .setDescription(`単語の追加に成功しました。\n**[表層形]** ${surface}\n**[発音]** ${pronunciation}\n**[アクセント]** ${accent.toString() || 'None'}\n**[種類]** ${type || 'None'}`)
+                .setTimestamp()
+                .setFooter({ text: '© 2021-2022 HitoriYuu, Hitrin' });
+            const wordData = await wordsModel.create({
+                word: surface,
+                word_id: res.data.toString(),
+                author: {
+                    name: interaction.user.username,
+                    id:  interaction.user.id,
+                },
+                date: new Date().toLocaleString({ timeZone: 'Asia/Tokyo' }),
+            });
 
-        wordData.save();
-        interaction.followUp({
-            embeds: [wordEmbed]
-        });
+            wordData.save();
+            await interaction.followUp({
+                embeds: [wordEmbed]
+            });
+        } catch (error) {
+            return InteractionError(interaction, error);
+        }
 	},
 };
