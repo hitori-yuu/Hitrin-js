@@ -26,7 +26,7 @@ module.exports = {
 
             if (!hasPermissions(oldEmoji.guild.members.cache.get(oldEmoji.client.user.id), PermissionFlagsBits.ViewAuditLog)) return;
             if (!await isCreatedGuild(oldEmoji.guild)) return;
-            if (!guild.logging.enable || guild.logging.enable == undefined) return;
+            if (!guild.logging.boolean == true) return;
 
             const log = await auditLog(oldEmoji.guild);
             const executor = oldEmoji.guild.members.cache.get(log.executor.id);
@@ -57,7 +57,7 @@ module.exports = {
                 )
             };
 
-            if (guild.logging.enable && guild.logging.channel.id) {
+            if (guild.logging.boolean && guild.logging.channel.id) {
                 oldEmoji.guild.channels.cache.get(guild.logging.channel.id).send({
                     embeds: [logEmbed]
                 });

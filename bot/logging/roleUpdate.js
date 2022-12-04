@@ -26,7 +26,7 @@ module.exports = {
 
             if (!hasPermissions(oldRole.guild.members.cache.get(oldRole.client.user.id), PermissionFlagsBits.ViewAuditLog)) return;
             if (!await isCreatedGuild(oldRole.guild)) return;
-            if (!guild.logging.enable || guild.logging.enable == undefined) return;
+            if (!guild.logging.boolean == true) return;
 
             const log = await auditLog(oldRole.guild);
             const executor = oldRole.guild.members.cache.get(log.executor.id);
@@ -61,7 +61,7 @@ module.exports = {
                 )
             };
 
-            if (guild.logging.enable && guild.logging.channel.id) {
+            if (guild.logging.boolean && guild.logging.channel.id) {
                 oldRole.guild.Roles.cache.get(guild.logging.channel.id).send({
                     embeds: [logEmbed]
                 });

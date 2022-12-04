@@ -14,7 +14,7 @@ module.exports = {
 
             if (!hasPermissions(emoji.guild.members.cache.get(emoji.client.user.id), PermissionFlagsBits.ViewAuditLog)) return;
             if (!await isCreatedGuild(emoji.guild)) return;
-            if (!guild.logging.enable || guild.logging.enable == undefined) return;
+            if (!guild.logging.boolean == true) return;
             var anime = '静止画';
             if (emoji.animated) anime = 'アニメーション';
 
@@ -36,7 +36,7 @@ module.exports = {
                 .setTimestamp()
                 .setFooter({ text: '© 2021-2022 HitoriYuu, Hitrin' });
 
-            if (guild.logging.enable && guild.logging.channel.id) {
+            if (guild.logging.boolean && guild.logging.channel.id) {
                 emoji.guild.channels.cache.get(guild.logging.channel.id).send({
                     embeds: [logEmbed]
                 });
