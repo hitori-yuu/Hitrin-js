@@ -1,5 +1,6 @@
 const { SlashCommandBuilder } = require('discord.js');
 const segmenter = new Intl.Segmenter("ja", {granularity: "grapheme"});
+const { Error, InteractionError, PermissionError, BotPermissionError, ArgumentError, TTSError, CustomError } = require('../../handlers/error');
 
 module.exports = {
 	data: new SlashCommandBuilder()
@@ -30,18 +31,22 @@ module.exports = {
         ),
 
 	async execute(interaction) {
-        const words = segmenter.segment(interaction.options.getString('words'));
-        const list = [...words];
-        var wordsList = [];
+        try {
+            const words = segmenter.segment(interaction.options.getString('words'));
+            const list = [...words];
+            var wordsList = [];
 
-        for (let i = 0; i < list.length; i++) {
-            wordsList.push(list[i].segment)
-        };
+            for (let i = 0; i < list.length; i++) {
+                wordsList.push(list[i].segment)
+            };
 
-        if (list.length > 300) return interaction.followUp({ content: '入力する文字は **300文字** までにしてください。' });
+            if (list.length > 300) return await interaction.followUp({ content: '入力する文字は **300文字** までにしてください。' });
 
-        interaction.followUp({
-            content: `${list.length}個の文字が組み合わさっています。\n\`${wordsList.join(', ')}\`` || 'None'
-        });
+            await interaction.followUp({
+                content: `${list.length}個の文字が組み合わさっています。\n\`${wordsList.join(', ')}\`` || 'None'
+            });
+        } catch (error) {
+            return InteractionError(interaction, error);
+        }
 	},
 };

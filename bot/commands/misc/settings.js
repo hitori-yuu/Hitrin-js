@@ -55,7 +55,7 @@ module.exports = {
                 components: [row],
             });
         } catch (error) {
-			return InteractionError(error, interaction);
+			return InteractionError(interaction, error);
         }
 	},
 };

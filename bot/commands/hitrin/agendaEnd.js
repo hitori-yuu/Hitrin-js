@@ -47,7 +47,7 @@ module.exports = {
                 content: '会議を終了しました。'
             });
 		} catch (error) {
-			return InteractionError(error, interaction);
+			return InteractionError(interaction, error);
 		}
 	},
 };

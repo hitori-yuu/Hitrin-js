@@ -42,11 +42,11 @@ module.exports = {
                 .setTimestamp()
                 .setFooter({ text: '© 2021-2022 HitoriYuu, Hitrin' });
 
-            interaction.followUp({
+            await interaction.followUp({
                 embeds: [inquiryEmbed]
             });
 		} catch (error) {
-			return InteractionError(error, interaction);
+			return InteractionError(interaction, error);
 		}
 	},
 };

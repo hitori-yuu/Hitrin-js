@@ -53,7 +53,7 @@ module.exports = {
                 embeds: [agendaEmbed]
             });
 		} catch (error) {
-			return InteractionError(error, interaction);
+			return InteractionError(interaction, error);
 		}
 	},
 };

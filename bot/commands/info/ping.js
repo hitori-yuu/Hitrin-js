@@ -13,7 +13,7 @@ module.exports = {
 				content: `pong: \`${interaction.client.ws.ping} ms\``
 			});
 		} catch (error) {
-			return InteractionError(error, interaction);
+			return InteractionError(interaction, error);
 		}
 	},
 };

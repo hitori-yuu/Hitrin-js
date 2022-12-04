@@ -42,7 +42,7 @@ module.exports = {
                 content: '情報を取得中...'
             });
 		} catch (error) {
-			return InteractionError(error, interaction);
+			return InteractionError(interaction, error);
 		}
 	},
 };

@@ -30,7 +30,7 @@ module.exports = {
                 embeds: [thanksEmbed]
             });
         } catch (error) {
-			return InteractionError(error, interaction);
+			return InteractionError(interaction, error);
         }
 	},
 };
