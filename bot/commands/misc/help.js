@@ -67,11 +67,11 @@ module.exports = {
 					.setDescription(commands.join(', '));
 			}
 
-			interaction.followUp({
+			await interaction.followUp({
 				embeds: [helpEmbed],
 			});
 		} catch (error) {
-			return InteractionError(error, interaction);
+			return InteractionError(interaction, error);
 		}
 	},
 };

@@ -1,4 +1,5 @@
 const { SlashCommandBuilder, EmbedBuilder, PermissionFlagsBits } = require('discord.js');
+const { Error, InteractionError, PermissionError, BotPermissionError, ArgumentError, TTSError, CustomError } = require('../../handlers/error');
 
 module.exports = {
 	data: new SlashCommandBuilder()
@@ -29,12 +30,16 @@ module.exports = {
         ),
 
 	async execute(interaction) {
-        const words = interaction.options.getString('words');
-        const list = words.split('');
-        const reserved = list.reverse();
+        try {
+            const words = interaction.options.getString('words');
+            const list = words.split('');
+            const reserved = list.reverse();
 
-        interaction.followUp({
-            content: reserved.join('') || 'None'
-        });
+            interaction.followUp({
+                content: reserved.join('') || 'None'
+            });
+        } catch (error) {
+            return InteractionError(interaction, error);
+        }
 	},
 };

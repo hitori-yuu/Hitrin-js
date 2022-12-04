@@ -1,4 +1,4 @@
-const { EmbedBuilder, SlashCommandBuilder, codeBlock } = require('discord.js');
+const { EmbedBuilder, SlashCommandBuilder, codeBlock, PermissionFlagsBits } = require('discord.js');
 const { agendaGet, agendaEnd } = require('../../functions/meetings');
 const { guildsData } = require('../../functions/MongoDB');
 const { Error, InteractionError, PermissionError, BotPermissionError, ArgumentError, TTSError, CustomError } = require('../../handlers/error');
@@ -16,6 +16,7 @@ module.exports = {
             'ja': '全コマンドまたは特定のコマンドの詳細を表示します。',
         })
 		.setDMPermission(false)
+        .setDefaultMemberPermissions(PermissionFlagsBits.ManageGuild)
         .addStringOption(
             option => option
             .setName('message_id')
@@ -47,7 +48,7 @@ module.exports = {
                 content: '会議を終了しました。'
             });
 		} catch (error) {
-			return InteractionError(error, interaction);
+			return InteractionError(interaction, error);
 		}
 	},
 };

@@ -1,10 +1,11 @@
 const { guildsData } = require("./MongoDB");
 const { EmbedBuilder } = require('discord.js');
+const { Error, InteractionError, PermissionError, BotPermissionError, ArgumentError, TTSError, CustomError } = require('../handlers/error')
 
 async function agendas(guild) {
     const Model = require(`../models/meetingsSchema`);
     const DB = await Model.find();
-    const Data = await DB.filter(data => data.id === guild.id);
+    const Data = await DB.filter(data => data.locate.id === guild.id);
 
     return Data;
 }
@@ -20,6 +21,8 @@ async function agendaGet(messageId) {
 async function agendaCreate(interaction, agenda) {
     const guild = await guildsData(interaction.guild);
 
+    if (guild.settings.meetingChannel === 'None') return CustomError(interaction, '/settings からミーティングチャンネルを先に設定してください。');
+
     const meetingEmbed = new EmbedBuilder()
         .setColor('#59b9c6')
         .setAuthor({ name: interaction.user.tag, iconURL: interaction.user.displayAvatarURL({extension: 'png'}), url: interaction.user.displayAvatarURL({extension: 'png'}) })
@@ -33,30 +36,28 @@ async function agendaCreate(interaction, agenda) {
         .setTimestamp()
         .setFooter({ text: '© 2021-2022 HitoriYuu, Hitrin' });
 
-    if (guild.settings.meetingChannel !== 'None') {
-        const message = await interaction.guild.channels.cache.get(guild.settings.meetingChannel).send({
-            embeds: [meetingEmbed]
-        });
-        await interaction.guild.channels.cache.get(guild.settings.meetingChannel).send({
-            content: `会議を終了するには次のコマンドを入力してください: \`/agenda-end メッセージid: ${message.id}\``
-        })
-        const emojis = ['✅', '❌']
-        emojis.forEach(emoji => message.react(emoji));
-        const Model = require(`../models/meetingsSchema`);
-        Model.create({
-            agenda: agenda,
-            executer: {
-                name: interaction.user.username,
-                id: interaction.user.id,
-            },
-            locate: {
-                name: interaction.guild.name,
-                id: interaction.guild.id,
-            },
-            messageId: await message.id,
-            createdDate: new Date().toLocaleString({ timeZone: 'Asia/Tokyo' }),
-        });
-    }
+    const message = await interaction.guild.channels.cache.get(guild.settings.meetingChannel).send({
+        embeds: [meetingEmbed]
+    });
+    await interaction.guild.channels.cache.get(guild.settings.meetingChannel).send({
+        content: `会議を終了するには次のコマンドを入力してください: \`/agenda-end メッセージid: ${message.id}\``
+    })
+    const emojis = ['✅', '❌']
+    emojis.forEach(emoji => message.react(emoji));
+    const Model = require(`../models/meetingsSchema`);
+    Model.create({
+        agenda: agenda,
+        executer: {
+            name: interaction.user.username,
+            id: interaction.user.id,
+        },
+        locate: {
+            name: interaction.guild.name,
+            id: interaction.guild.id,
+        },
+        messageId: await message.id,
+        createdDate: new Date().toLocaleString({ timeZone: 'Asia/Tokyo' }),
+    });
 }
 
 async function agendaEnd(interaction, messageId) {

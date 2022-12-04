@@ -1,4 +1,5 @@
 const { InteractionError } = require('../handlers/error');
+const { ActionRowBuilder, ButtonBuilder, ButtonStyle, InteractionType, EmbedBuilder } = require('discord.js');
 
 module.exports = {
 	name: "interactionCreate",
@@ -7,28 +8,14 @@ module.exports = {
 		try {
 			const { client } = interaction;
 
-			if (!interaction.isContextMenuCommand()) return;
+			if (!interaction.isUserContextMenuCommand()) return;
 
-			if (interaction.isUserContextMenuCommand()) {
-				const command = client.contextCommands.get(
-					"USER " + interaction.commandName
-				);
-
-				await interaction.deferReply();
-				await command.execute(interaction);
-				return;
-			}
-			else if (interaction.isMessageContextMenuCommand()) {
-				const command = client.contextCommands.get(
-					"MESSAGE " + interaction.commandName
-				);
-
-				await interaction.deferReply();
-				await command.execute(interaction);
-				return;
-			}
+			const command = client.contextCommands.get(interaction.commandName);
+			await interaction.deferReply();
+			await command.execute(interaction);
 		} catch (error) {
-			return InteractionError(error, interaction);
+			console.log(error);
+			return InteractionError(interaction, error);
 		}
 	},
 };

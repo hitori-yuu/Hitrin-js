@@ -33,7 +33,7 @@ module.exports = {
 				.setTimestamp()
 				.setFooter({ text: '© 2021-2022 HitoriYuu, Hitrin' });
 
-			interaction.followUp({
+			await interaction.followUp({
 				embeds: [memberEmbed]
 			});
 		} catch (error) {

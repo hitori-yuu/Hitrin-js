@@ -25,7 +25,7 @@ module.exports = {
             }
         } catch (error) {
             console.error(error);
-			return InteractionError(error, interaction);
+			return InteractionError(interaction, error);
         }
 	},
 };
