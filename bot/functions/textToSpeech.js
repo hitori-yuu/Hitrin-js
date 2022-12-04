@@ -88,7 +88,9 @@ async function play(client, guild, message) {
         if (message !== 'none') await message.react('🔊');
 
         player.on(AudioPlayerStatus.Idle, async () => {
-            if (message !== 'none') await message.reactions.cache.get('🔊').users.remove(client.user);
+            if (message !== 'none') {
+                if (message.reactions.cache.me) message.reactions.cache.get('🔊').users.remove(client.user);
+            }
             client.audioQueue.shift();
             play(client, guild, message);
             client.isPlaying = false;
