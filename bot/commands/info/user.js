@@ -60,7 +60,7 @@ module.exports = {
                 userEmbed
                     .addFields(
                         {
-                            name: '__**ボット情報**__',
+                            name: '__**ボット情報:**__',
                             value: `**[評価値]** ${data.evaluation}\n**[ユーザーカラー]** ${data.profile.color}\n**[誕生日]** ${data.profile.birthday.date || 'None'}\n**[説明]** ${data.profile.description || 'None'}`
                         }
                     )

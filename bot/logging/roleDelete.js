@@ -14,7 +14,7 @@ module.exports = {
 
             if (!hasPermissions(role.guild.members.cache.get(role.client.user.id), PermissionFlagsBits.ViewAuditLog)) return;
             if (!await isCreatedGuild(role.guild)) return;
-            if (!guild.logging.enable || guild.logging.enable == undefined) return;
+            if (!guild.logging.boolean == true) return;
 
             const log = await auditLog(role.guild);
             const executor = role.guild.members.cache.get(log.executor.id);
@@ -34,7 +34,7 @@ module.exports = {
                 .setTimestamp()
                 .setFooter({ text: '© 2021-2022 HitoriYuu, Hitrin' });
 
-            if (guild.logging.enable && guild.logging.channel.id) {
+            if (guild.logging.boolean && guild.logging.channel.id) {
                 role.guild.channels.cache.get(guild.logging.channel.id).send({
                     embeds: [logEmbed]
                 });

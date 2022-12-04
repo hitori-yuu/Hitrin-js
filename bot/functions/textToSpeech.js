@@ -84,13 +84,13 @@ async function play(client, guild, message) {
             },
         });
         player.play(resource);
-        if (message !== 'none') await message.react('🔊');
         connection.subscribe(player);
+        if (message !== 'none') await message.react('🔊');
 
         player.on(AudioPlayerStatus.Idle, async () => {
             if (message !== 'none') await message.reactions.cache.get('🔊').users.remove(client.user);
             client.audioQueue.shift();
-            play(client, guild, message)
+            play(client, guild, message);
             client.isPlaying = false;
         });
     } else {

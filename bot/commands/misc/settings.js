@@ -38,7 +38,7 @@ module.exports = {
                 )
                 .addComponents(
                     new ButtonBuilder()
-                        .setCustomId('settingLog')
+                        .setCustomId('settingLoggingCh')
                         .setEmoji('4⃣')
                         .setStyle(ButtonStyle.Secondary),
                 )

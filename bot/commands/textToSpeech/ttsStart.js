@@ -34,7 +34,7 @@ module.exports = {
                 selfMute: false,
                 selfDeaf: true,
             });
-            await startTTS(client, interaction.guild.id, interaction.channel.id, channel.id);
+            await startTTS(interaction.client, interaction.guild.id, interaction.channel.id, channel.id);
             await interaction.followUp({
                 content: `🗣️｜<#${interaction.channel.id}> でのチャットを <#${channel.id}> で読み上げます。`
             });
