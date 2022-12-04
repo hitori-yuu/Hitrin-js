@@ -41,12 +41,18 @@ module.exports = {
                         .setCustomId('settingLog')
                         .setEmoji('4⃣')
                         .setStyle(ButtonStyle.Secondary),
+                )
+                .addComponents(
+                    new ButtonBuilder()
+                        .setCustomId('settingMeetingCh')
+                        .setEmoji('5⃣')
+                        .setStyle(ButtonStyle.Secondary),
                 );
 
             const settingsEmbed = new EmbedBuilder()
                 .setColor('#93ca76')
                 .setAuthor({ name: interaction.user.tag, iconURL: interaction.user.displayAvatarURL({ extension: 'png' }), url: interaction.user.displayAvatarURL({ extension: 'png' }) })
-                .setDescription('以下のいずれかのボタンをクリックして設定を行ってください。\n\n**1⃣:** 自動管理についての設定\n**2⃣:** 読み上げに関する設定\n**3⃣:** 自動公開に関する設定\n**4⃣:** ログに関する設定')
+                .setDescription('以下のいずれかのボタンをクリックして設定を行ってください。\n\n**1⃣:** 自動管理についての設定\n**2⃣:** 読み上げに関する設定\n**3⃣:** 自動公開に関する設定\n**4⃣:** ログに関する設定\n**5⃣:** ミーティングチャンネルに関する設定')
                 .setTimestamp()
                 .setFooter({ text: '© 2021-2022 HitoriYuu, Hitrin' });
 

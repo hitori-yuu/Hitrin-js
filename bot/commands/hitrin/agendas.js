@@ -18,28 +18,40 @@ module.exports = {
 
 	async execute(interaction) {
 		try {
-            console.log(await agendas(interaction.guild))
-            // const inquiryEmbed = new EmbedBuilder()
-            //     .setColor('#93ca76')
-            //     .setAuthor({ name: interaction.user.tag, iconURL: interaction.user.displayAvatarURL({extension: 'png'}), url: interaction.user.displayAvatarURL({extension: 'png'}) })
-            //     .addFields(
-            //         {
-            //             name: '__**議題:**__',
-            //             value: content
-            //         },
-            //         {
-            //             name: '__**理由:**__',
-            //             value: reason || 'None'
-            //         },
-            //     )
-            //     .setTimestamp()
-            //     .setFooter({ text: '© 2021-2022 HitoriYuu, Hitrin' });
+            const data = await agendas(interaction.guild);
+            if (data.length <= 0) return CustomError(interaction, 'このサーバーでは議題がありません');
+            const inquiryEmbed = new EmbedBuilder()
+                .setColor('#93ca76')
+                .setAuthor({ name: interaction.user.tag, iconURL: interaction.user.displayAvatarURL({extension: 'png'}), url: interaction.user.displayAvatarURL({extension: 'png'}) })
+                .setTimestamp()
+                .setFooter({ text: '© 2021-2022 HitoriYuu, Hitrin' });
 
-            // interaction.followUp({
-            //     embeds: [inquiryEmbed]
-            // });
-            interaction.followUp({
-                content: '情報を取得中...'
+            if (data.length <= 4) {
+                data.forEach(data => {
+                    inquiryEmbed
+                        .addFields(
+                            {
+                                name: `__**議題名[${data.agenda}]:**__`,
+                                value: `**[議題ID]** ${data.messageId}\n**[状態]** ${data.isClosed ? '終了済' : '進行中'}\n**[作成日時]** ${data.createdDate}\n**[獲得票]** 賛成:${data.agree} 反対:${data.oppose}`
+                            },
+                        )
+                })
+            } else if (data.length >= 5) {
+                inquiryEmbed.setDescription('議題数が５以上のため終了済の議題は除外しています。')
+                data.forEach(data => {
+                    if (data.isClosed) return;
+                    inquiryEmbed
+                        .addFields(
+                            {
+                                name: `__**議題名[${data.agenda}]:**__`,
+                                value: `**[議題ID]** ${data.messageId}\n**[状態]** ${data.isClosed ? '終了済' : '進行中'}\n**[作成日時]** ${data.createdDate}\n**[獲得票]** 賛成:${data.agree} 反対:${data.oppose}`
+                            },
+                        )
+                })
+            }
+
+            await interaction.followUp({
+                embeds: [inquiryEmbed]
             });
 		} catch (error) {
 			return InteractionError(interaction, error);

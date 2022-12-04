@@ -49,7 +49,7 @@ module.exports = {
                 .setFooter({ text: '© 2021-2022 HitoriYuu, Hitrin' });
 
             await agendaCreate(interaction, content);
-            interaction.followUp({
+            await interaction.followUp({
                 embeds: [agendaEmbed]
             });
 		} catch (error) {
