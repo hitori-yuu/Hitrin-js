@@ -1,7 +1,7 @@
 const { ChannelType, AttachmentBuilder, EmbedBuilder } = require('discord.js');
 const { Error } = require('../handlers/error');
-const Canvas = require('canvas');
-const path = require('path');
+// const Canvas = require('canvas');
+// const path = require('path');
 
 module.exports = {
     name: 'messageCreate',
