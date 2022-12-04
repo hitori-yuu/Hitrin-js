@@ -4,37 +4,37 @@ const { Error, InteractionError, PermissionError, BotPermissionError, ArgumentEr
 
 module.exports = {
 	data: new SlashCommandBuilder()
-        .setName('agenda-create')
+        .setName('approved-add')
         .setNameLocalizations({
-            'en-US': 'agenda-create',
-            'ja': '議題作成',
+            'en-US': 'approved-add',
+            'ja': '承認済追加',
         })
-        .setDescription('Send an inquiry to the Bot\'s management.')
+        .setDescription('Candidate the specified member as approved.')
         .setDescriptionLocalizations({
-            'en-US': 'Send an inquiry to the Bot\'s management.',
-            'ja': '全コマンドまたは特定のコマンドの詳細を表示します。',
+            'en-US': 'Candidate the specified member as approved.',
+            'ja': '指定されたメンバーを承認候補とします。',
         })
 		.setDMPermission(false)
         .setDefaultMemberPermissions(PermissionFlagsBits.ManageGuild)
-        .addStringOption(
+        .addUserOption(
             option => option
-            .setName('content')
+            .setName('member')
             .setNameLocalizations({
-                'en-US': 'content',
-                'ja': '内容',
+                'en-US': 'member',
+                'ja': 'メンバー',
             })
-            .setDescription('Enter the inquiry details.')
+            .setDescription('Select members to list as approved candidates.')
             .setDescriptionLocalizations({
-                'en-US': 'Enter the inquiry details.',
-                'ja': '議題を入力。',
+                'en-US': 'Select members to list as approved candidates.',
+                'ja': '承認済の候補として挙げるメンバーを選択。',
             })
             .setRequired(true)
         ),
 
 	async execute(interaction) {
 		try {
-            const content = interaction.options.getString('content');
-            if (!content) return ArgumentError(interaction, content);
+            const member = interaction.options.getMember('member');
+            if (!member) return ArgumentError(interaction, member);
 
             const agendaEmbed = new EmbedBuilder()
                 .setColor('#93ca76')
@@ -43,13 +43,13 @@ module.exports = {
                 .addFields(
                     {
                         name: '__**議題:**__',
-                        value: `${content}`,
+                        value: `${member} を承認済に追加。`,
                     },
                 )
                 .setTimestamp()
                 .setFooter({ text: '© 2021-2022 HitoriYuu, Hitrin' });
 
-            await agendaCreate(interaction, content);
+            await agendaCreate(interaction, `${member} を承認済に追加。`);
             await interaction.followUp({
                 embeds: [agendaEmbed]
             });

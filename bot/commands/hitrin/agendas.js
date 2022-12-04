@@ -1,4 +1,4 @@
-const { EmbedBuilder, SlashCommandBuilder, codeBlock } = require('discord.js');
+const { EmbedBuilder, SlashCommandBuilder, codeBlock, PermissionFlagsBits } = require('discord.js');
 const { agendas } = require('../../functions/meetings');
 const { Error, InteractionError, PermissionError, BotPermissionError, ArgumentError, TTSError, CustomError } = require('../../handlers/error');
 
@@ -14,7 +14,8 @@ module.exports = {
             'en-US': 'Send an inquiry to the Bot\'s management.',
             'ja': '全コマンドまたは特定のコマンドの詳細を表示します。',
         })
-		.setDMPermission(false),
+		.setDMPermission(false)
+        .setDefaultMemberPermissions(PermissionFlagsBits.ManageGuild),
 
 	async execute(interaction) {
 		try {
@@ -37,7 +38,7 @@ module.exports = {
                         )
                 })
             } else if (data.length >= 5) {
-                inquiryEmbed.setDescription('議題数が５以上のため終了済の議題は除外しています。')
+                inquiryEmbed.setDescription('議題数が5以上のため終了済の議題は除外しています。')
                 data.forEach(data => {
                     if (data.isClosed) return;
                     inquiryEmbed
@@ -48,7 +49,9 @@ module.exports = {
                             },
                         )
                 })
-            }
+            } else {
+                return CustomError(interaction, 'この機能はまだ開発途中です。')
+            };
 
             await interaction.followUp({
                 embeds: [inquiryEmbed]
