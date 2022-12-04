@@ -4,13 +4,13 @@ const guildsSchema = new mongoose.Schema({
     id: { type: String },
     name: { type: String },
     settings: {
-        autoMod: { type: Boolean, default: true },
-        autoPublish: { type: Boolean, default: true },
+        autoMod: { type: Boolean, default: false },
+        autoPublish: { type: Boolean, default: false },
         meetingChannel: { type: String, default: 'None' },
-        globalBan: { type: Boolean, default: true },
+        globalBan: { type: Boolean, default: false },
         authRole: { type: String, default: 'None' },
         TTS: {
-            vcLog: { type: Boolean, default: true },
+            vcLog: { type: Boolean, default: false },
         }
     },
     autoMod: {

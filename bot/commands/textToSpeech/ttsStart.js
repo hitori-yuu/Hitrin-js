@@ -22,9 +22,9 @@ module.exports = {
             const channel = interaction.member.voice.channel;
 
             if (!channel) return CustomError(interaction, 'あなたが先にVCに入っている必要があります。');
-            if (!interaction.guild.me.permissions.has(PermissionFlagsBits.Connect)) return BotPermissionError(interaction, 'ボイスチャンネルへの参加');
+            if (!interaction.guild.members.me.permissions.has(PermissionFlagsBits.Connect)) return BotPermissionError(interaction, 'ボイスチャンネルへの参加');
             if (!channel.type === 'GUILD_STAGE_VOICE') {
-                if (!interaction.guild.me.permissions.has(PermissionFlagsBits.Speak)) return BotPermissionError(interaction, 'ボイスチャンネルでの発言');
+                if (!interaction.guild.members.me.permissions.has(PermissionFlagsBits.Speak)) return BotPermissionError(interaction, 'ボイスチャンネルでの発言');
             };
 
             await joinVoiceChannel({
