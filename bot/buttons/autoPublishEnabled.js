@@ -1,11 +1,18 @@
 const { EmbedBuilder, SlashCommandBuilder, ActionRowBuilder,ButtonBuilder, ButtonStyle } = require('discord.js');
 const { Error, InteractionError, PermissionError, BotPermissionError, ArgumentError, TTSError, CustomError } = require('../handlers/error');
+const { isCreatedUser, isCreatedGuild, isAvailableUser } = require('../functions/isAvailable');
+const { MongoDB, usersData, guildsData, warnsData, wordsData, createUserData, createGuildData } = require('../functions/MongoDB');
 
 module.exports = {
 	id: 'autoPublishEnabled',
 
 	async execute(interaction) {
         try {
+            if (!await isCreatedGuild(interaction.guild)) {
+                await createGuildData(interaction.guild);
+                CustomError(interaction, 'サーバーデータがありません。再度実行してください。');
+                return;
+            }
             const Model = require('../models/guildsSchema')
             await Model.updateOne(
                 {
