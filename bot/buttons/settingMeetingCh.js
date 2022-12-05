@@ -1,6 +1,7 @@
 const { EmbedBuilder, SlashCommandBuilder, ActionRowBuilder,ButtonBuilder, ButtonStyle } = require('discord.js');
 const { Error, InteractionError, PermissionError, BotPermissionError, ArgumentError, TTSError, CustomError } = require('../handlers/error');
-const { guildsData } = require('../functions/MongoDB');
+const { isCreatedUser, isCreatedGuild, isAvailableUser } = require('../functions/isAvailable');
+const { MongoDB, usersData, guildsData, warnsData, wordsData, createUserData, createGuildData } = require('../functions/MongoDB');
 const Model = require('../models/guildsSchema')
 
 module.exports = {
@@ -23,6 +24,11 @@ module.exports = {
 			interaction.channel.awaitMessages({ filter, max: 1, time: 30000 })
 				.then(async collected => {
                     const data = await guildsData(interaction.guild);
+                    if (!data) {
+                        await createGuildData(interaction.guild);
+                        CustomError(interaction, 'サーバーデータがありません。再度実行してください。');
+                        return;
+                    }
                     const meetingChId = data.settings.meetingChannel
                     var meetingCh = 'None';
                     if (meetingChId) meetingCh = interaction.guild.channels.cache.get(meetingChId);

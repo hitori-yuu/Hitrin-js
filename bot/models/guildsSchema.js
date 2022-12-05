@@ -16,22 +16,19 @@ const guildsSchema = new mongoose.Schema({
     autoMod: {
         blacklistsWords: {
             permission: { type: Boolean, default: false },
-            words: { type: Array , default: 'None'},
-            ignore: { type: Array, default: 'None' },
+            words: { type: Array },
+            ignore: { type: Array },
         },
         antiInvite: {
             permission: { type: Boolean, default: false },
-            ignore: { type: Array, default: 'None' },
-        },
-        antiCapitals: {
-            permission: { type: Boolean, default: false },
-            ignore: { type: Array, default: 'None' },
+            ignore: { type: Array },
         },
         antiLinks: {
             permission: { type: Boolean, default: false },
-            links: { type: Array, default: 'None' },
-            ignore: { type: Array, default: 'None' },
+            links: { type: Array },
+            ignore: { type: Array },
         },
+        boolean: { type: Boolean, default: false },
     },
     logging: {
         boolean: { type: Boolean, default: false },
