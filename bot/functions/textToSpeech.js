@@ -89,7 +89,7 @@ async function play(client, guild, message) {
 
         player.on(AudioPlayerStatus.Idle, async () => {
             if (message !== 'none') {
-                if (message.reactions.cache.me) message.reactions.cache.get('🔊').users.remove(client.user);
+                if (message.reactions.cache.get('🔊').me) await message.reactions.cache.get('🔊').users.remove(client.user);
             }
             client.audioQueue.shift();
             play(client, guild, message);
