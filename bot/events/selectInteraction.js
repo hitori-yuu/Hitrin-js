@@ -17,6 +17,7 @@ module.exports = {
 			return;
 		} catch (error) {
 			console.error(error);
+			interaction.client.errors.set(interaction.id, interaction.user.username);
             await interaction.followUp({
                 embeds: [ErrorEmbed(error)]
             });

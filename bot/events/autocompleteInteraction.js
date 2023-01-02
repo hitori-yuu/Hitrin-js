@@ -1,5 +1,5 @@
 module.exports = {
-	name: "interactionCreate",
+	name: 'interactionCreate',
 
 	async execute(interaction) {
 		const { client } = interaction;
@@ -13,6 +13,7 @@ module.exports = {
 		try {
 			await request.execute(interaction);
 		} catch (error) {
+			interaction.client.errors.set(interaction.id, interaction.user.username);
 			return console.error(error);
 		}
 	},

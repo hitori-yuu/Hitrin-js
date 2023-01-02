@@ -28,6 +28,7 @@ module.exports = {
 			await command.execute(interaction);
 		} catch (error) {
 			console.error(error);
+			interaction.client.errors.set(interaction.id, interaction.user.username);
             await interaction.reply({
                 embeds: [ErrorEmbed(error)]
             });

@@ -80,6 +80,7 @@ module.exports = {
 			command.execute(message, args);
 		} catch (error) {
 			console.error(error);
+			message.client.errors.set(message.id, message.author.username);
             message.channel.send({
                 embeds: [ErrorEmbed(error)]
             });
