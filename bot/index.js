@@ -62,7 +62,7 @@ client.slashCommandsInfo = new Collection();
 client.slashCommandsTts = new Collection();
 client.slashCommandsOwner = new Collection();
 
-const { MongoDB } = require('./functions/mongodb');
+const { MongoDB } = require('./functions/MongoDB');
 const { loadAutocompleteInteractions } = require('./handlers/autocomplete');
 const { loadButtonCommands } = require('./handlers/buttons');
 const { loadCommands } = require('./handlers/commands');
