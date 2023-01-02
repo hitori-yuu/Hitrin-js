@@ -91,9 +91,9 @@ const commandJsonData = [
 (async () => {
 	try {
 		await rest.put(
-			Routes.applicationGuildCommands(process.env.CLIENT_ID, process.env.GUILD_ID),
+			// Routes.applicationGuildCommands(process.env.CLIENT_ID, process.env.GUILD_ID),
 
-			// Routes.applicationCommands(client_id)
+			Routes.applicationCommands(process.env.CLIENT_ID),
 
 			{ body: commandJsonData }
 		);
