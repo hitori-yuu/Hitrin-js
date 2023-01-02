@@ -69,7 +69,9 @@ module.exports = {
 		setTimeout(() => timestamps.delete(message.author.id), cooldownAmount);
 
 		if (!await isCreatedUser(message.author)) await createUserData(message.author);
-		if (!await isCreatedGuild(message.guild)) await createGuildData(message.guild);
+		if (message.channel.type == ChannelType.GuildText) {
+			if (!await isCreatedGuild(message.guild)) await createGuildData(message.guild);
+		};
 		if (await isCreatedUser(message.author)) {
 			if (!await isAvailableUser(message.author)) return TOS(message);
 		};
@@ -81,6 +83,7 @@ module.exports = {
             message.channel.send({
                 embeds: [ErrorEmbed(error)]
             });
+			return;
 		};
 	},
 };
