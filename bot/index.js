@@ -50,10 +50,17 @@ client.voiceChannels = new Collection(); // (voice, text)
 client.audioQueue = [];
 client.isPlaying = false;
 
+client.errors = new Collection();
+
 client.commandsMisc = new Collection();
 client.commandsInfo = new Collection();
 client.commandsTts = new Collection();
 client.commandsOwner = new Collection();
+
+client.slashCommandsMisc = new Collection();
+client.slashCommandsInfo = new Collection();
+client.slashCommandsTts = new Collection();
+client.slashCommandsOwner = new Collection();
 
 const { MongoDB } = require('./functions/mongodb');
 const { loadAutocompleteInteractions } = require('./handlers/autocomplete');
@@ -84,20 +91,7 @@ const commandJsonData = [
 (async () => {
 	try {
 		await rest.put(
-			/**
-			 * By default, you will be using guild commands during development.
-			 * Once you are done and ready to use global commands (which have 1 hour cache time),
-			 * 1. Please uncomment the below (commented) line to deploy global commands.
-			 * 2. Please comment the below (uncommented) line (for guild commands).
-			 */
-
 			Routes.applicationGuildCommands(process.env.CLIENT_ID, process.env.GUILD_ID),
-
-			/**
-			 * Good advice for global commands, you need to execute them only once to update
-			 * your commands to the Discord API. Please comment it again after running the bot once
-			 * to ensure they don't get re-deployed on the next restart.
-			 */
 
 			// Routes.applicationCommands(client_id)
 

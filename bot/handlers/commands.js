@@ -24,7 +24,7 @@ async function loadCommands(client) {
                 case 'owner':
                     client.commandsOwner.set(command.name, command);
                     break;
-            }
+            };
         };
     };
     console.log(client.commands.size + '個のコマンドを読み込みました。');

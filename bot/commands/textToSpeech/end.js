@@ -2,8 +2,8 @@ const { ErrorEmbed, CustomErrorEmbed, SuccessEmbed } = require('../../functions/
 const { getVoiceConnection } = require('@discordjs/voice');
 
 module.exports = {
-	name: 'disconnect',
-    aliases: ['end'],
+	name: 'end',
+    aliases: ['disconnect', 'dc'],
 	description: '読み上げを終了します。',
     category: 'tts',
 

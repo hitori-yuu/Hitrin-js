@@ -2,7 +2,7 @@ const { EmbedBuilder, ChannelType } = require('discord.js');
 const config = require('../../config.json');
 
 module.exports = {
-    name: 'guild',
+    name: 'server',
     description: 'サーバーの詳細を表示します。',
     category: 'information',
 

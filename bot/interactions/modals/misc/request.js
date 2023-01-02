@@ -22,8 +22,6 @@ module.exports = {
 			.setTimestamp()
 			.setFooter({ text: '© 2021-2022 HitoriYuu, Hitrin' });
 
-		console.log(interaction)
-
 		await interaction.followUp({
 			embeds: [SuccessEmbed('要望を送信しました。')]
 		});

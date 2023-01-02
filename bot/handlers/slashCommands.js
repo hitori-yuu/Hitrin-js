@@ -11,6 +11,20 @@ async function loadSlashCommands(client) {
         for (const commandFile of commandFiles) {
             const command = require(`../interactions/slashCommands/${module}/${commandFile}`);
             client.slashCommands.set(command.data.name, command);
+            switch (command.category) {
+                case 'misc':
+                    client.slashCommandsMisc.set(command.data.name, command);
+                    break;
+                case 'information':
+                    client.slashCommandsInfo.set(command.data.name, command);
+                    break;
+                case 'tts':
+                    client.slashCommandsTts.set(command.data.name, command);
+                    break;
+                case 'owner':
+                    client.slashCommandsOwner.set(command.data.name, command);
+                    break;
+            };
         };
     };
     console.log(client.slashCommands.size + '個のスラッシュコマンドを読み込みました。');
