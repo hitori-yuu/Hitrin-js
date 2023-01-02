@@ -17,8 +17,10 @@ async function consentTOS(interaction) {
     );
 
     await Data.save();
-    await interaction.followUp({
+    await interaction.update({
         content: '利用規約に**同意**しました。',
+        embeds: [],
+        components: [],
     });
 };
 
@@ -38,8 +40,10 @@ async function opposeTOS(interaction) {
     );
 
     await Data.save();
-    await interaction.followUp({
+    await interaction.update({
         content: '利用規約に**反対**しました。',
+        embeds: [],
+        components: [],
     });
 };
 

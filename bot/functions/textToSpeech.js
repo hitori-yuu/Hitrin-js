@@ -4,12 +4,12 @@ const rpc = axios.create({
     proxy: false,
 });
 const { AudioPlayerStatus, getVoiceConnection, createAudioResource, StreamType, createAudioPlayer, NoSubscriberBehavior } = require('@discordjs/voice');
-const { Error } = require('../handlers/error');
-const { reactionAdd, reactionRemove } = require('./reaction');
+const config = require('../config.json')
 const fs = require('fs');
 
 async function textToSpeech(client, guild, id, channel, text, voice, message) {
     if (!client | !guild | !id | !channel | !text | !voice) return;
+    const filepath = './sounds/' + id + '.wav';
     var map = [];
 
     if (!message == 'none') {
@@ -19,24 +19,18 @@ async function textToSpeech(client, guild, id, channel, text, voice, message) {
             map.push(value);
         };
 
-        console.log(client.voiceChannels.values());
-        console.log(map);
-        console.log(map.includes(message.channel.id));
         if (!map.includes(message.channel.id)) return;
-    }
-
-    const filepath = './sounds/' + id + '.wav';
+    };
 
     try {
+        if (text == `${config.prefix}start`) text = '読み上げを始めます。';
         await generateAudio(convertMessage(text), filepath, voice);
-        addAudioToQueue(client, filepath, channel)
+        addAudioToQueue(client, filepath, channel);
 
-        if (!client.isPlaying) {
-            await play(client, guild, message);
-        }
+        if (!client.isPlaying) await play(client, guild, message);
     } catch(error) {
-        return Error(error);
-    }
+        return console.error(error);
+    };
 };
 
 function convertMessage(text) {
@@ -63,13 +57,13 @@ async function generateAudio(text, filepath, voice) {
     });
 
     fs.writeFileSync(filepath, new Buffer.from(synthesis.data), 'binary');
-}
+};
 
 function addAudioToQueue(client, filepath, channel) {
     client.audioQueue.push(
         { path: filepath, voiceChannel: channel }
     );
-}
+};
 
 async function play(client, guild, message) {
     const connection = await getVoiceConnection(guild.id);
@@ -98,12 +92,7 @@ async function play(client, guild, message) {
     } else {
         client.isPlaying = false;
         return;
-    }
-}
-
-async function startTTS(client, guildId, textChannelId, voiceChannelId) {
-    await client.voiceChannels.set(voiceChannelId, textChannelId);
-    await client.voiceGuilds.set(guildId, voiceChannelId);
+    };
 };
 
-module.exports = { textToSpeech, startTTS };
+module.exports = { textToSpeech };

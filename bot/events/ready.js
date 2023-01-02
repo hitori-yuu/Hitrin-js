@@ -1,19 +1,21 @@
-const { Error } = require('../handlers/error');
+const config = require('../config.json');
 
 module.exports = {
 	name: 'ready',
+	once: true,
 
 	async execute(client) {
 		try {
 			console.log(`ログイン完了: ${client.user.tag}`);
-			client.user.setStatus('dnd');
 			setInterval(() => {
-				client.user.setActivity({
-					  name: `2.0.0v-β | ${client.guilds.cache.size} Servers`,
-				})
+				if (config.mode == 'NORMAL') {
+					client.user.setPresence({ activities: [{ name: `v${config.version} | ${client.guilds.cache.size} Servers` }], status: 'online' });
+				} else {
+					client.user.setPresence({ activities: [{ name: `v${config.version} | 現在調整中...` }], status: 'idle' });
+				};
 			}, 30000)
 		} catch (error) {
-			return Error(error);
+			return console.error(error);
 		}
 	},
 };

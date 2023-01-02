@@ -1,77 +1,120 @@
-const { EmbedBuilder, SlashCommandBuilder, inlineCode } = require('discord.js');
-const { Error, InteractionError, PermissionError, BotPermissionError, ArgumentError, TTSError, CustomError } = require('../../handlers/error');
+const { EmbedBuilder, ActionRowBuilder, StringSelectMenuBuilder } = require('discord.js');
+const { ErrorEmbed, CustomErrorEmbed, SuccessEmbed } = require('../../functions/embeds');
+const config = require('../../config.json');
 
 module.exports = {
-	data: new SlashCommandBuilder()
-        .setName('help')
-        .setNameLocalizations({
-            'en-US': 'help',
-            'ja': 'ヘルプ',
-        })
-        .setDescription('Displays information about all commands or that command.')
-        .setDescriptionLocalizations({
-            'en-US': 'Displays information about all commands or that command.',
-            'ja': '全コマンドまたは特定のコマンドの詳細を表示します。',
-        })
-		.setDMPermission(true)
-        .addStringOption(
-            option => option
-            .setName('command')
-            .setNameLocalizations({
-                'en-US': 'command',
-                'ja': 'コマンド名',
-            })
-            .setDescription('Enter the name of command.')
-            .setDescriptionLocalizations({
-                'en-US': 'Enter the name of command.',
-                'ja': 'コマンドの名前を入力。',
-            })
-        ),
+    name: 'help',
+    description: '指定したコマンドの詳細または全てのコマンドを表示します。',
+    usage: '[コマンド名]',
+    category: 'misc',
 
-	async execute(interaction) {
-		try {
-			let name = interaction.options.getString('command');
-			const helpEmbed = new EmbedBuilder().setColor('#59b9c6');
+    async execute(message, args) {
+        let helpEmbed = new EmbedBuilder()
+            .setColor(config.embedColor)
+            .setAuthor({ name: message.author.tag, iconURL: message.author.displayAvatarURL({ extension: 'png' }), url: message.author.displayAvatarURL({ extension: 'png' }) })
 
-			if (name) {
-				name = name.toLowerCase();
+        if (args[0]) {
+            const commandName = args[0].toLowerCase();
+            const command = message.client.commands.get(commandName) || message.client.commands.find((cmd) => cmd.aliases && cmd.aliases.includes(commandName));
+            if (!command) {
+                if (~commandName.indexOf('h.')) {
+                    return message.channel.send({ embeds: [CustomErrorEmbed('指定したコマンドは存在しません。', `${config.prefix}help ${commandName.replace(`${config.prefix}`, '')}`)] });
+                }
+                return message.channel.send({ embeds: [CustomErrorEmbed('指定したコマンドは存在しません。')] });
+            };
 
-				helpEmbed.setTitle(`コマンド \`${name}\``);
-				helpEmbed.setAuthor({ name: interaction.user.tag, iconURL: interaction.user.displayAvatarURL({format: 'png'}), url: interaction.user.displayAvatarURL({format: 'png'}) });
+            helpEmbed.setTitle(`${config.prefix}${command.name} の詳細`);
 
-				if (interaction.client.slashCommands.has(name)) {
-					const command = interaction.client.slashCommands.get(name);
+            if (command.description) helpEmbed
+                .setDescription(command.description)
+                .addFields(
+                    {
+                        name: '__**クールダウン:**__',
+                        value: `${command.cooldown || 3} 秒`,
+                        inline: true,
+                    },
+                );
 
-					var DM = '使用可能';
-					if (command.data.dmPermission == false) DM = '使用不可能';
+            if (command.aliases) helpEmbed.addFields(
+                    {
+                        name: '__**別名:**__',
+                        value: `\`${command.aliases.join(', ')}\``,
+                        inline: true,
+                    },
+                );
+            if (command.usage) helpEmbed.addFields(
+                    {
+                        name: '__**使用方法:**__',
+                        value: `${config.prefix}${command.name} ${command.usage}`,
+                        inline: true,
+                    },
+                );
 
-					var permissions = '誰でも使用可能';
-					if (command.data.default_member_permissions) permissions = '必須権限あり';
+            message.channel.send({
+                embeds: [helpEmbed]
+            });
+        } else {
+            const row = new ActionRowBuilder()
+                .addComponents(
+                    new StringSelectMenuBuilder()
+                        .setCustomId('help')
+                        .setPlaceholder('カテゴリを選択')
+                        .addOptions(
+                            {
+                                label: '🏠 | ホームに戻る',
+                                description: 'ホームに戻ります',
+                                value: 'helpHome',
+                            },
+                            {
+                                label: '🎨 | 様々',
+                                description: '他のカテゴリに分類されないような様々なコマンド',
+                                value: 'helpMisc',
+                            },
+                            {
+                                label: '🪪 | 詳細',
+                                description: '指定したものの詳細を表示するコマンド',
+                                value: 'helpInfo',
+                            },
+                            {
+								label: '🗣️ | 読み上げ',
+								description: '読み上げ系のコマンド',
+								value: 'helpTts',
+							},
+                            {
+								label: '🔐 | 運営専用',
+								description: '運営のみ使用できるコマンド',
+								value: 'helpOwner',
+							},
+                        ),
+                );
 
-					if (command.data.description) {
-						helpEmbed.setDescription(
-							`**[English]** ${command.data.description}\n**[日本語]** ${command.data.description_localizations.ja}\n\n**[DM]** ${DM}\n**[必要権限]** ${permissions}`
-						);
-					};
-				} else {
-					return ArgumentError(interaction, name);
-				}
-			} else {
-				const commands = [];
-				interaction.client.slashCommands.forEach(command => {
-					commands.push(inlineCode(command.data.name))
-				});
+            helpEmbed
+                .setColor(config.embedColor)
+                .setAuthor({ name: message.author.tag, iconURL: message.author.displayAvatarURL({ extension: 'png' }), url: message.author.displayAvatarURL({ extension: 'png' }) })
+                .addFields(
+                    {
+                        name: '**🎨 様々 🎨**',
+                        value: `他のカテゴリに分類されないような様々なコマンド。 ${message.client.commandsMisc.size}コマンド`
+                    },
+                    {
+                        name: '**🪪 詳細 🪪**',
+                        value: `指定したものの詳細を表示するコマンド。 ${message.client.commandsInfo.size}コマンド`
+                    },
+                    {
+                        name: '**🗣️ 読み上げ 🗣️**',
+                        value: `読み上げ系のコマンド。 ${message.client.commandsTts.size}コマンド`
+                    },
+                    {
+                        name: '**🔐 運営専用 🔐**',
+                        value: `運営のみ使用できるコマンド。 ${message.client.commandsOwner.size}コマンド`
+                    },
+                )
+                .setTimestamp()
+                .setFooter({ text: '© 2021-2022 HitoriYuu, Hitrin' });
 
-				helpEmbed
-					.setTitle('全コマンド')
-					.setDescription(commands.join(', '));
-			}
-
-			await interaction.followUp({
-				embeds: [helpEmbed],
-			});
-		} catch (error) {
-			return InteractionError(interaction, error);
-		}
-	},
+            message.channel.send({
+                embeds: [helpEmbed], components: [row]
+            });
+        };
+    },
 };

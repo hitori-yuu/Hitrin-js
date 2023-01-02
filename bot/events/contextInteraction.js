@@ -1,21 +1,46 @@
-const { InteractionError } = require('../handlers/error');
-const { ActionRowBuilder, ButtonBuilder, ButtonStyle, InteractionType, EmbedBuilder } = require('discord.js');
+const { ErrorEmbed, CustomErrorEmbed, SuccessEmbed } = require('../functions/embeds');
+const { InteractionType, ComponentType } = require('discord-api-types/v10');
 
 module.exports = {
-	name: "interactionCreate",
+	name: 'interactionCreate',
 
-	async execute(interaction) {
-		try {
-			const { client } = interaction;
+	execute: async (interaction) => {
+		const { client } = interaction;
 
-			if (!interaction.isUserContextMenuCommand()) return;
+		if (!interaction.isContextMenuCommand()) return;
 
-			const command = client.contextCommands.get(interaction.commandName);
-			await interaction.deferReply();
-			await command.execute(interaction);
-		} catch (error) {
-			console.log(error);
-			return InteractionError(interaction, error);
+		if (interaction.isUserContextMenuCommand()) {
+			const command = client.contextMenus.get('USER ' + interaction.commandName);
+
+			try {
+                await interaction.deferReply();
+				await command.execute(interaction);
+				return;
+			} catch (error) {
+                console.error(error);
+                await interaction.followUp({
+                    embeds: [ErrorEmbed(error)]
+                });
+                return;
+			}
 		}
+		else if (interaction.isMessageContextMenuCommand()) {
+			const command = client.contextMenus.get('MESSAGE ' + interaction.commandName);
+
+			try {
+                await interaction.deferReply();
+				await command.execute(interaction);
+				return;
+			} catch (error) {
+                console.error(error);
+                await interaction.followUp({
+                    embeds: [ErrorEmbed(error)]
+                });
+                return;
+			}
+		}
+		else {
+			console.error(error);
+		};
 	},
 };

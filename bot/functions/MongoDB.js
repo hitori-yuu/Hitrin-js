@@ -1,6 +1,5 @@
 const mongoose = require('mongoose');
 const { EmbedBuilder } = require('discord.js');
-const { Error } = require('../handlers/error');
 require('dotenv').config()
 
 async function MongoDB() {
@@ -13,7 +12,7 @@ async function MongoDB() {
             console.log('データベースに接続しました。');
         });
     } catch (error) {
-        return Error(error);
+        return console.error(error);
     }
     return;
 };

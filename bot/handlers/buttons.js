@@ -1,13 +1,19 @@
 const fs = require('fs');
 
-async function loadButtons(client) {
-    const buttonDir = fs.readdirSync('buttons');
+async function loadButtonCommands(client) {
+    const buttonCommands = fs.readdirSync('interactions/buttons');
 
-    for (const file of buttonDir) {
-        const button = require(`../buttons/${file}`);
+    for (const module of buttonCommands) {
+        const commandFiles = fs
+            .readdirSync(`interactions/buttons/${module}`)
+            .filter((file) => file.endsWith('.js'));
 
-		client.buttons.set(button.id, button);
+        for (const commandFile of commandFiles) {
+            const command = require(`../interactions/buttons/${module}/${commandFile}`);
+            client.buttonCommands.set(command.id, command);
+        };
     };
+    console.log(client.buttonCommands.size + '個のボタンを読み込みました。');
 };
 
-module.exports = { loadButtons };
+module.exports = { loadButtonCommands };

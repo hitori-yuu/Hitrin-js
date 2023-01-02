@@ -1,5 +1,4 @@
 const { ErrorEmbed, CustomErrorEmbed, SuccessEmbed } = require('../functions/embeds');
-const { InteractionType, ComponentType } = require('discord-api-types/v10');
 
 module.exports = {
 	name: 'interactionCreate',
@@ -7,10 +6,9 @@ module.exports = {
 	async execute(interaction) {
 		const { client } = interaction;
 
-		if (interaction.type !== InteractionType.MessageComponent) return;
-		if (interaction.componentType !== ComponentType.Button) return;
+		if (!interaction.isStringSelectMenu()) return;
 
-		const command = client.buttonCommands.get(interaction.customId);
+		const command = client.selectCommands.get(interaction.customId);
 
 		if (!command) return;
 

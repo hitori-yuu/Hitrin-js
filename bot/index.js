@@ -1,8 +1,9 @@
-const { Client, GatewayIntentBits, Partials, Collection } = require('discord.js');
+const fs = require('fs');
+const { Client, Collection, GatewayIntentBits, Partials } = require('discord.js');
 const { REST } = require('@discordjs/rest');
-const Hypixel = require('hypixel-api-reborn');
 const { Routes } = require('discord-api-types/v10');
-require('dotenv').config()
+const config = require('./config.json');
+require('dotenv').config();
 
 const client = new Client({
 	intents: [
@@ -35,44 +36,78 @@ const client = new Client({
 	],
 });
 
-client.hypixel = new Hypixel.Client(process.env.HYPIXEL);
+client.commands = new Collection();
 client.events = new Collection();
-client.contextCommands = new Collection();
 client.slashCommands = new Collection();
-client.buttons = new Collection();
-client.voiceChannels = new Collection();
-client.voiceGuilds = new Collection();
+client.buttonCommands = new Collection();
+client.selectCommands = new Collection();
+client.contextMenus = new Collection();
+client.modalCommands = new Collection();
+client.cooldowns = new Collection();
+client.autocompleteInteractions = new Collection();
+
+client.voiceChannels = new Collection(); // (voice, text)
 client.audioQueue = [];
 client.isPlaying = false;
-client.errors = new Collection();
 
-const { loadHandlers } = require('./handlers/loadHandlers');
-loadHandlers(client);
+client.commandsMisc = new Collection();
+client.commandsInfo = new Collection();
+client.commandsTts = new Collection();
+client.commandsOwner = new Collection();
+
+const { MongoDB } = require('./functions/mongodb');
+const { loadAutocompleteInteractions } = require('./handlers/autocomplete');
+const { loadButtonCommands } = require('./handlers/buttons');
+const { loadCommands } = require('./handlers/commands');
+const { loadContextMenus } = require('./handlers/contextMenus');
+const { loadEvents } = require('./handlers/events');
+const { loadModalCommands } = require('./handlers/modalCommands');
+const { loadSelectCommands } = require('./handlers/selectMenus');
+const { loadSlashCommands } = require('./handlers/slashCommands');
+MongoDB();
+loadAutocompleteInteractions(client);
+loadButtonCommands(client);
+loadCommands(client);
+loadContextMenus(client);
+loadEvents(client);
+loadModalCommands(client);
+loadSelectCommands(client);
+loadSlashCommands(client);
 
 const rest = new REST({ version: '10' }).setToken(process.env.TOKEN);
 
 const commandJsonData = [
-	...Array.from(client.slashCommands.values()).map((command) => command.data.toJSON()),
-	...Array.from(client.contextCommands.values()).map((command) => command.data),
+	...Array.from(client.slashCommands.values()).map((c) => c.data.toJSON()),
+	...Array.from(client.contextMenus.values()).map((c) => c.data),
 ];
 
 (async () => {
 	try {
-		console.log('アプリケーションコマンドの再読み込みを開始しました。');
-
 		await rest.put(
-			// Routes.applicationGuildCommands(process.env.CLIENT_ID, process.env.GUILD_ID),
-            Routes.applicationCommands(process.env.CLIENT_ID),
+			/**
+			 * By default, you will be using guild commands during development.
+			 * Once you are done and ready to use global commands (which have 1 hour cache time),
+			 * 1. Please uncomment the below (commented) line to deploy global commands.
+			 * 2. Please comment the below (uncommented) line (for guild commands).
+			 */
+
+			Routes.applicationGuildCommands(process.env.CLIENT_ID, process.env.GUILD_ID),
+
+			/**
+			 * Good advice for global commands, you need to execute them only once to update
+			 * your commands to the Discord API. Please comment it again after running the bot once
+			 * to ensure they don't get re-deployed on the next restart.
+			 */
+
+			// Routes.applicationCommands(client_id)
+
 			{ body: commandJsonData }
 		);
 
-		console.log('アプリケーションのコマンドの再読み込みに成功しました。');
+		console.log('スラッシュコマンドの再読み込みに成功しました。');
 	} catch (error) {
-		console.error('[エラー] ボット起動時にエラーが発生しました。\n内容: ' + error.message);
+        return console.error(error);
 	}
 })();
 
-// ログイン
-client.login(process.env.TOKEN).catch(error => {
-    console.error('[エラー] ボット起動時にエラーが発生しました。\n内容: ' + error.message);
-});
+client.login(process.env.TOKEN);

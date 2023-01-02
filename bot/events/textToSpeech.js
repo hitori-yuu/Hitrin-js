@@ -1,6 +1,6 @@
-const { TTSError } = require('../handlers/error');
 const { textToSpeech } = require('../functions/textToSpeech');
-const usersModel = require('../models/usersSchema');
+// const usersModel = require('../models/usersSchema');
+const config = require('../config.json');
 
 module.exports = {
     name: 'messageCreate',
@@ -12,19 +12,10 @@ module.exports = {
             if (!channel) return;
 
             if (message.channel.id === message.client.voiceChannels.get(channel.id)) {
-                var voice;
-                const usersData = await usersModel.find();
-                const data = usersData.filter(data => data.id  == message.author.id);
-                if (!data.length > 0 || !data) {
-                    voice = 5;
-                } else {
-                    voice = data[0].speaker
-                }
-
-                await textToSpeech(message.client, message.guild, message.author.id, channel, message.cleanContent.toLowerCase(), voice, message);
+                await textToSpeech(message.client, message.guild, message.author.id, channel, message.cleanContent.toLowerCase(), config.defaultSpeaker | 2, message);
             }
         } catch(error) {
-            return TTSError(error, message);
+            return console.error(error);
         }
     },
 };
