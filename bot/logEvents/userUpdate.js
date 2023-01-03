@@ -1,10 +1,10 @@
-const config = require('../config.json');
+// const config = require('../config.json');
 
-module.exports = {
-	name: 'userUpdate',
+// module.exports = {
+// 	name: 'userUpdate',
 
-	async execute(oldUser, newUser) {
-        console.log(oldUser);
-        console.log(newUser);
-	},
-};
+// 	async execute(oldUser, newUser) {
+//         console.log(oldUser);
+//         console.log(newUser);
+// 	},
+// };

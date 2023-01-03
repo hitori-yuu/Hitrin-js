@@ -1,13 +1,32 @@
-const { EmbedBuilder, ChannelType } = require('discord.js');
-const config = require('../../config.json');
+const { EmbedBuilder, SlashCommandBuilder, StringSelectMenuBuilder, ModalBuilder, TextInputBuilder, TextInputStyle, ActionRowBuilder, ChannelType } = require('discord.js');
+const { ErrorEmbed, CustomErrorEmbed, SuccessEmbed } = require('../../../functions/embeds');
+const config = require('../../../config.json');
 
 module.exports = {
-    name: 'server',
-    description: 'サーバーの詳細を表示します。',
-    category: 'information',
+    category: 'owner',
 
-    async execute(message, args) {
-        const guild = message.guild;
+	data: new SlashCommandBuilder()
+		.setName('guild')
+        .setDescription('Displays specified server details.')
+        .setDescriptionLocalizations({
+            'en-US': 'Displays specified server details.',
+            'ja': 'サーバーの詳細を表示します。',
+        })
+        .addStringOption(
+            option => option
+            .setName('server')
+            .setDescription('サーバー情報を入力')
+            .setRequired(true)
+        ),
+
+    async execute(interaction) {
+        const server = interaction.options.getString('server');
+        const guild = interaction.client.guilds.cache.get(server) || interaction.client.guilds.cache.find(guild => guild.name == server);
+
+        if (!guild) return interaction.reply({
+            embeds: [CustomErrorEmbed('指定したサーバーは存在しません。')]
+        });
+
         const members = guild.members.cache;
 
         var afk_ch = 'None';
@@ -19,7 +38,7 @@ module.exports = {
 
         const serverEmbed = new EmbedBuilder()
             .setColor(config.embedColor)
-            .setAuthor({ name: message.author.tag, iconURL: message.author.displayAvatarURL({extension: 'png'}), url: message.author.displayAvatarURL({extension: 'png'}) })
+            .setAuthor({ name: interaction.user.tag, iconURL: interaction.user.displayAvatarURL({extension: 'png'}), url: interaction.user.displayAvatarURL({extension: 'png'}) })
             .setTitle(`${guild.name} の詳細`)
             .setThumbnail(guild.iconURL({extension: 'png'}))
             .addFields(
@@ -45,7 +64,7 @@ module.exports = {
             .setTimestamp()
             .setFooter({ text: '© 2021-2022 HitoriYuu, Hitrin' });
 
-        message.channel.send({
+        await interaction.reply({
             embeds: [serverEmbed]
         });
     },

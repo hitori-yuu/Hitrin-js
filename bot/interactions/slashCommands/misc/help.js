@@ -60,27 +60,32 @@ module.exports = {
                         .setPlaceholder('カテゴリを選択')
                         .addOptions(
                             {
-                                label: '🏠 | ホームに戻る',
+                                emoji: '🏠',
+                                label: 'ホームに戻る',
                                 description: 'ホームに戻ります',
                                 value: 'slashHelpHome',
                             },
                             {
-                                label: '🎨 | 様々',
+                                emoji: '🎨',
+                                label: '様々',
                                 description: '他のカテゴリに分類されないような様々なコマンド',
                                 value: 'slashHelpMisc',
                             },
                             {
-                                label: '🪪 | 詳細',
+                                emoji: '🪪',
+                                label: '詳細',
                                 description: '指定したものの詳細を表示するコマンド',
                                 value: 'slashHelpInfo',
                             },
                             {
-								label: '🗣️ | 読み上げ',
+                                emoji: '🗣️',
+								label: '読み上げ',
 								description: '読み上げ系のコマンド',
 								value: 'slashHelpTts',
 							},
                             {
-								label: '🔐 | 運営専用',
+                                emoji: '🔐',
+								label: '運営専用',
 								description: '運営のみ使用できるコマンド',
 								value: 'slashHelpOwner',
 							},
