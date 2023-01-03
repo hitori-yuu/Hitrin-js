@@ -33,13 +33,9 @@ module.exports = {
             let logData;
             let commandEmbed = new EmbedBuilder()
                 .setColor('#59b9c6')
-                .setTitle('コマンドログ')
+                .setAuthor({ name: `/${interaction.commandName}`})
                 .setThumbnail(interaction.user.displayAvatarURL({extension: 'png', size: 128}))
                 .addFields(
-                    {
-                        name: '__**コマンド:**__',
-                        value: `**[名前]** ${interaction.commandName}`
-                    },
                     {
                         name: '__**引数:**__',
                         value: Args

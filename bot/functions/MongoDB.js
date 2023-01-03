@@ -5,6 +5,7 @@ require('dotenv').config()
 async function MongoDB() {
     try {
         mongoose
+        .set('strictQuery', false)
         .connect(process.env.MONGO_URL, {
             useNewUrlParser: true,
         })

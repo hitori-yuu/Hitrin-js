@@ -35,9 +35,11 @@ const client = new Client({
 		Partials.ThreadMember,
 	],
 });
+client.setMaxListeners(20);
 
 client.commands = new Collection();
 client.events = new Collection();
+client.logEvents = new Collection();
 client.slashCommands = new Collection();
 client.buttonCommands = new Collection();
 client.selectCommands = new Collection();
@@ -68,6 +70,7 @@ const { loadButtonCommands } = require('./handlers/buttons');
 const { loadCommands } = require('./handlers/commands');
 const { loadContextMenus } = require('./handlers/contextMenus');
 const { loadEvents } = require('./handlers/events');
+const { loadLogEvents } = require('./handlers/logEvents');
 const { loadModalCommands } = require('./handlers/modalCommands');
 const { loadSelectCommands } = require('./handlers/selectMenus');
 const { loadSlashCommands } = require('./handlers/slashCommands');
@@ -77,6 +80,7 @@ loadButtonCommands(client);
 loadCommands(client);
 loadContextMenus(client);
 loadEvents(client);
+loadLogEvents(client);
 loadModalCommands(client);
 loadSelectCommands(client);
 loadSlashCommands(client);

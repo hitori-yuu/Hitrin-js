@@ -1,4 +1,5 @@
 const { EmbedBuilder, SlashCommandBuilder, StringSelectMenuBuilder, ModalBuilder, TextInputBuilder, TextInputStyle, ActionRowBuilder } = require('discord.js');
+const { config } = require('dotenv');
 const { ErrorEmbed, CustomErrorEmbed, SuccessEmbed } = require('../../../functions/embeds');
 const { loadCommands } = require('../../../handlers/commands');
 const { loadEvents } = require('../../../handlers/events');

@@ -31,13 +31,9 @@ module.exports = {
             let logData;
             let commandEmbed = new EmbedBuilder()
                 .setColor('#59b9c6')
-                .setTitle('コマンドログ')
+                .setAuthor({ name: `${config.prefix}${commandName}`})
                 .setThumbnail(message.author.displayAvatarURL({ extension: 'png' }))
                 .addFields(
-                    {
-                        name: '__**コマンド:**__',
-                        value: `**[名前]** ${commandName}`
-                    },
                     {
                         name: '__**引数:**__',
                         value: args.join('\n') || 'None'

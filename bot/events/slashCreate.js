@@ -16,6 +16,10 @@ module.exports = {
 
 		if (!command) return;
 
+        if (command.category == 'owner' && interaction.user.id !== config.owner) return interaction.reply({
+            embeds: [CustomErrorEmbed('このコマンドは管理者のみ使用できます。')]
+        });
+
 		if (!await isCreatedUser(interaction.user)) await createUserData(interaction.user);
 		if (interaction.channel.type == ChannelType.GuildText) {
 			if (!await isCreatedGuild(interaction.guild)) await createGuildData(interaction.guild);
