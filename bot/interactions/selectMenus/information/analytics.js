@@ -1,5 +1,6 @@
 const { EmbedBuilder, ActionRowBuilder, StringSelectMenuBuilder, AttachmentBuilder } = require('discord.js');
 const { MongoDB, usersData, guildsData, warnsData, wordsData, createUserData, createGuildData, logsData } = require('../../../functions/MongoDB');
+const { ErrorEmbed, CustomErrorEmbed, SuccessEmbed } = require('../../../functions/embeds');
 const { ChartJSNodeCanvas } = require('chartjs-node-canvas');
 const config = require('../../../config.json');
 
@@ -27,7 +28,6 @@ module.exports = {
             }
         };
         const guildData = await guildsData(interaction.guild);
-        var data = await guildData.analytics.members;
         var row, image, attachment;
 
         switch (selected) {
@@ -59,6 +59,8 @@ module.exports = {
                 });
                 break;
             case 'analyticsTransition':
+                const data = await guildData.analytics.members;
+                if (!data.date) return interaction.update({ embeds: [CustomErrorEmbed('データがありません。')] });
                 const lineData = {
                     labels: data.date.slice(-7),
                     datasets: [
