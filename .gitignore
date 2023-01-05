@@ -7,3 +7,4 @@ sounds/*.wav
 voicevox.lnk
 voicevox.sh
 launch.sh
+bot/config.json

@@ -118,7 +118,8 @@ module.exports = {
                 .setFooter({ text: '© 2021-2022 HitoriYuu, Hitrin' });
 
             message.channel.send({
-                embeds: [helpEmbed], components: [row]
+                embeds: [helpEmbed],
+                components: [row]
             });
         };
     },

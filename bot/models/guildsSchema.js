@@ -13,6 +13,14 @@ const guildsSchema = new mongoose.Schema({
             vcLog: { type: Boolean, default: false },
         }
     },
+    analytics: {
+        members: {
+            member: { type: Number },
+            user: { type: Number },
+            bot: { type: Number },
+            date: { type: String },
+        }
+    },
     autoMod: {
         blacklistsWords: {
             permission: { type: Boolean, default: false },

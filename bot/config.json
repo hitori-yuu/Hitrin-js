@@ -1,8 +1,8 @@
 {
-    "version": "2.0.0",
-    "prefix": "h.",
+    "version": "β",
+    "prefix": ".",
     "owner": "874184214130602015",
     "embedColor": "#59b9c6",
     "defaultSpeaker": 2,
-    "mode": "NORMAL"
+    "mode": "DEBUG"
 }
