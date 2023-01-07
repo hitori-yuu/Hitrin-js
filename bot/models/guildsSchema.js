@@ -1,8 +1,8 @@
 const mongoose = require('mongoose');
 
 const guildsSchema = new mongoose.Schema({
-    id: { type: String },
-    name: { type: String },
+    id: { type: String, unique: true },
+    name: { type: String, unique: true },
     settings: {
         autoMod: { type: Boolean, default: false },
         autoPublish: { type: Boolean, default: false },
@@ -18,7 +18,11 @@ const guildsSchema = new mongoose.Schema({
             member: { type: Number },
             user: { type: Number },
             bot: { type: Number },
-            date: { type: String },
+            date: { type: String, unique: true },
+        },
+        messages: {
+            number: { type: Number },
+            date: { type: String, unique: true },
         }
     },
     autoMod: {

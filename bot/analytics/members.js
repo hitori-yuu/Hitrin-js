@@ -13,6 +13,7 @@ module.exports = {
         cron.schedule('0 0 9 * * *', () => {
             client.guilds.cache.forEach(async guild => {
                 if (!await isCreatedGuild(guild)) return;
+                console.log('[アナリティクス] データの取得を開始します。');
 
                 var today = new Date();
                 var year = today.getFullYear();
@@ -20,6 +21,23 @@ module.exports = {
                 var day = today.getDate();
 
                 const members = guild.members.cache;
+
+                const logEmbed = new EmbedBuilder()
+                    .setColor('#59b9c6')
+                    .setAuthor({ name: `メンバー数の取得が完了しました。`})
+                    .setThumbnail(guild.iconURL({ extension: 'png' }))
+                    .addFields(
+                        {
+                            name: '__**一般:**__',
+                            value: `**[名前]** ${guild.name}\n**[ID]** ${guild.id}\n**[オーナー]** <@${guild.ownerId}>`
+                        },
+                        {
+                            name: '__**メンバー数:**__',
+                            value: `**[メンバー]** ${members.size}\n**[ユーザー]** ${members.filter(member => !member.user.bot).size}\n**[ボット]** ${members.filter(member => member.user.bot).size}`
+                        },
+                    )
+                    .setTimestamp()
+                    .setFooter({ text: '© 2021-2022 HitoriYuu, Hitrin' });
                 const guildData = await guildModel.findOneAndUpdate(
                     {
                         id: guild.id,
@@ -36,6 +54,9 @@ module.exports = {
                     },
                 );
                 guildData.save();
+                await client.channels.cache.get('1022444125980741642').send({
+                    embeds: [logEmbed]
+                });
             });
         });
 	},

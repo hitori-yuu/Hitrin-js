@@ -21,7 +21,7 @@ module.exports = {
             .setColor(config.embedColor)
             .setAuthor({ name: message.author.tag, iconURL: message.author.displayAvatarURL({extension: 'png'}), url: message.author.displayAvatarURL({extension: 'png'}) })
             .setTitle(`${guild.name} の詳細`)
-            .setThumbnail(guild.iconURL({extension: 'png'}))
+            .setThumbnail(guild.iconURL({ extension: 'png' }))
             .addFields(
                 {
                     name: '__**一般:**__',
