@@ -1,10 +1,11 @@
-const { EmbedBuilder } = require('discord.js');
+const { EmbedBuilder, PermissionsBitField } = require('discord.js');
 const { ErrorEmbed, CustomErrorEmbed, SuccessEmbed } = require('../functions/embeds');
 const { isCreatedUser, isCreatedGuild, isAvailableUser } = require('../functions/isAvailable');
 const { MongoDB, usersData, guildsData, warnsData, wordsData, createUserData, createGuildData } = require('../functions/MongoDB');
 const guildModel = require('../models/guildsSchema');
 const config = require('../config.json');
 const cron = require('node-cron');
+const { hasPermissions } = require('../functions/hasPermissions');
 
 module.exports = {
 	name: 'ready',
