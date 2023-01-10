@@ -59,6 +59,7 @@ module.exports = {
 
                 guild.channels.cache.forEach(async channel => {
                     if (channel.type !== ChannelType.GuildText) return;
+                    if (!channel.viewable) return;
                     const msg = await fetchMore(channel, 5000);
                     messageCount.member += msg.size;
                     messageCount.user += msg.filter(msg => !msg.author.bot).size;
