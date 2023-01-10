@@ -54,9 +54,9 @@ module.exports = {
                     components: []
                 });
                 try {
+                    console.log('[アナリティクス] データの取得を開始します。');
                     interaction.client.guilds.cache.forEach(async guild => {
                         if (!await isCreatedGuild(guild)) return;
-                        console.log('[アナリティクス] データの取得を開始します。');
 
                         var today = new Date();
                         var year = today.getFullYear();

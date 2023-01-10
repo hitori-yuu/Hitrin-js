@@ -46,10 +46,10 @@ module.exports = {
 
 	async execute(client) {
         cron.schedule('0 0 9 * * *', () => {
+            console.log('[アナリティクス] データの取得を開始します。');
             client.guilds.cache.forEach(async guild => {
                 if (!await isCreatedGuild(guild)) return;
                 if (!await hasPermissions(guild.members.cache.get(client.user.id), PermissionsBitField.Flags.ReadMessageHistory)) return;
-                console.log('[アナリティクス] データの取得を開始します。');
 
                 var messageCount = {
                     member: 0,
