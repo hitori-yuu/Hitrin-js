@@ -19,7 +19,8 @@ module.exports = {
 			return;
 		};
 
-		const checkPrefix = config.prefix.toLowerCase();
+		var checkPrefix = config.prefix.toLowerCase();
+		if (config.mode !== 'NORMAL') checkPrefix = config.shadowPrefix.toLowerCase();
 		const prefixRegex = new RegExp(`^(<@!?${client.user.id}>|${escapeRegex(checkPrefix)})\\s*`);
 
 		if (!prefixRegex.test(content.toLowerCase())) return;

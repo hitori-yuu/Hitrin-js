@@ -60,7 +60,7 @@ module.exports = {
                 break;
             case 'analyticsMembers':
                 data = await guildData.analytics.members;
-                if (!data.date) return interaction.update({ embeds: [CustomErrorEmbed('データがありません。')] });
+                if (!data.date) return interaction.update({ embeds: [CustomErrorEmbed('データがありません。')], files: [] });
                 lineData = {
                     labels: data.date.slice(-7),
                     datasets: [
@@ -134,7 +134,7 @@ module.exports = {
                 break;
             case 'analyticsMessages':
                 data = await guildData.analytics.messages;
-                if (!data.date) return interaction.update({ embeds: [CustomErrorEmbed('データがありません。')] });
+                if (!data.date) return interaction.update({ embeds: [CustomErrorEmbed('データがありません。')], files: [] });
                 lineData = {
                     labels: data.date.slice(-7),
                     datasets: [

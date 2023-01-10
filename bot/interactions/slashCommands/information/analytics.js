@@ -8,7 +8,7 @@ module.exports = {
     .setDescription('Displays the analytics of this server.')
     .setDescriptionLocalizations({
         'en-US': 'Displays the analytics of this server.',
-        'ja': 'このーサーバーのアナリティクスを表示します。',
+        'ja': 'このサーバーのアナリティクスを表示します。',
     }),
 
 	async execute(interaction) {
@@ -26,7 +26,7 @@ module.exports = {
                         {
                             label: 'メンバー数の推移',
                             description: 'メンバーの数の推移を表示します。',
-                            value: 'analyticsTransition',
+                            value: 'analyticsMembers',
                         },
                         {
                             label: 'メッセージ数の推移',

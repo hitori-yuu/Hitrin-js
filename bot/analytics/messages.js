@@ -1,4 +1,4 @@
-const { EmbedBuilder, ChannelType, PermissionsBitField } = require('discord.js');
+const { EmbedBuilder, ChannelType, PermissionsBitField, Collection } = require('discord.js');
 const { ErrorEmbed, CustomErrorEmbed, SuccessEmbed } = require('../functions/embeds');
 const { hasPermissions } = require('../functions/hasPermissions');
 const { isCreatedUser, isCreatedGuild, isAvailableUser } = require('../functions/isAvailable');
@@ -6,8 +6,6 @@ const { MongoDB, usersData, guildsData, warnsData, wordsData, createUserData, cr
 const guildModel = require('../models/guildsSchema');
 const config = require('../config.json');
 const cron = require('node-cron');
-
-const { Collection } = require('discord.js');
 
 async function fetchMore(channel, limit = 500) {
     if (!channel) {
@@ -41,7 +39,7 @@ async function fetchMore(channel, limit = 500) {
     }
 
     return collection;
-}
+};
 
 module.exports = {
 	name: 'ready',
@@ -50,7 +48,7 @@ module.exports = {
         cron.schedule('0 0 9 * * *', () => {
             client.guilds.cache.forEach(async guild => {
                 if (!await isCreatedGuild(guild)) return;
-                if (!await hasPermissions(client, PermissionsBitField.Flags.ReadMessageHistory)) return;
+                if (!await hasPermissions(guild.members.cache.get(client.user.id), PermissionsBitField.Flags.ReadMessageHistory)) return;
                 console.log('[アナリティクス] データの取得を開始します。');
 
                 var messageCount = {
@@ -89,7 +87,7 @@ module.exports = {
                         )
                         .setTimestamp()
                         .setFooter({ text: '© 2021-2022 HitoriYuu, Hitrin' });
-                    const guildData = await guildModel.findOneAndUpdate(
+                    await guildModel.findOneAndUpdate(
                         {
                             id: guild.id,
                         },
@@ -104,11 +102,10 @@ module.exports = {
                             },
                         },
                     );
-                    guildData.save();
-                    await client.channels.cache.get('1022444125980741642').send({
+                    client.channels.cache.get('1022444125980741642').send({
                         embeds: [logEmbed]
                     });
-                }, 600000);
+                }, 180000);
             });
         });
 	},

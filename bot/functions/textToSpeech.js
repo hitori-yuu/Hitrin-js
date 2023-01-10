@@ -9,6 +9,7 @@ const fs = require('fs');
 
 async function textToSpeech(client, guild, id, channel, text, voice, message) {
     if (!client | !guild | !id | !channel | !text | !voice) return;
+
     const filepath = './sounds/' + id + '.wav';
     var map = [];
 
@@ -79,12 +80,8 @@ async function play(client, guild, message) {
         });
         player.play(resource);
         connection.subscribe(player);
-        if (message !== 'none') await message.react('🔊');
 
         player.on(AudioPlayerStatus.Idle, async () => {
-            if (message !== 'none') {
-                if (message.reactions.cache.get('🔊').me) await message.reactions.cache.get('🔊').users.remove(client.user);
-            }
             client.audioQueue.shift();
             play(client, guild, message);
             client.isPlaying = false;
