@@ -1,5 +1,6 @@
 const { EmbedBuilder, ChannelType, PermissionsBitField } = require('discord.js');
 const { ErrorEmbed, CustomErrorEmbed, SuccessEmbed } = require('../functions/embeds');
+const { hasPermissions } = require('../functions/hasPermissions');
 const { isCreatedUser, isCreatedGuild, isAvailableUser } = require('../functions/isAvailable');
 const { MongoDB, usersData, guildsData, warnsData, wordsData, createUserData, createGuildData } = require('../functions/MongoDB');
 const guildModel = require('../models/guildsSchema');
@@ -49,7 +50,7 @@ module.exports = {
         cron.schedule('0 0 9 * * *', () => {
             client.guilds.cache.forEach(async guild => {
                 if (!await isCreatedGuild(guild)) return;
-                if (!hasPermissions(client, PermissionsBitField.Flags.ReadMessageHistory)) return;
+                if (!await hasPermissions(client, PermissionsBitField.Flags.ReadMessageHistory)) return;
                 console.log('[アナリティクス] データの取得を開始します。');
 
                 var messageCount = {
