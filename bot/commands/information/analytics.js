@@ -20,7 +20,12 @@ module.exports = {
                         {
                             label: 'メンバー数の推移',
                             description: 'メンバーの数の推移を表示します。',
-                            value: 'analyticsTransition',
+                            value: 'analyticsMembers',
+                        },
+                        {
+                            label: 'メッセージ数の推移',
+                            description: 'メッセージの数の推移を表示します。',
+                            value: 'analyticsMessages',
                         },
                     ),
             );
@@ -38,6 +43,10 @@ module.exports = {
                 {
                     name: 'メンバー数の推移',
                     value: 'メンバーの数の推移を表示します。'
+                },
+                {
+                    name: 'メッセージ数の推移',
+                    value: 'メッセージの数の推移を表示します。'
                 },
             )
             .setTimestamp()

@@ -28,7 +28,7 @@ module.exports = {
             }
         };
         const guildData = await guildsData(interaction.guild);
-        var row, image, attachment;
+        var row, image, attachment, data, lineData, lineChartConfig;
 
         switch (selected) {
             case 'analyticsBreakdown':
@@ -58,10 +58,10 @@ module.exports = {
                     files: [attachment],
                 });
                 break;
-            case 'analyticsTransition':
-                const data = await guildData.analytics.members;
+            case 'analyticsMembers':
+                data = await guildData.analytics.members;
                 if (!data.date) return interaction.update({ embeds: [CustomErrorEmbed('データがありません。')] });
-                const lineData = {
+                lineData = {
                     labels: data.date.slice(-7),
                     datasets: [
                         {
@@ -87,7 +87,7 @@ module.exports = {
                         }
                     ]
                 };
-                const lineChartConfig = {
+                lineChartConfig = {
                     type: 'line',
                     data: lineData,
                     plugins: [plugin],
@@ -125,6 +125,80 @@ module.exports = {
                 attachment = await new AttachmentBuilder(image, { name: 'chart.png' });
                 analyticsEmbed
                     .setTitle(`${interaction.guild.name} のメンバー数推移（7日間）`);
+
+                await interaction.update({
+                    embeds: [analyticsEmbed],
+                    files: [attachment],
+                    components: [row],
+                });
+                break;
+            case 'analyticsMessages':
+                data = await guildData.analytics.messages;
+                if (!data.date) return interaction.update({ embeds: [CustomErrorEmbed('データがありません。')] });
+                lineData = {
+                    labels: data.date.slice(-7),
+                    datasets: [
+                        {
+                            label: '総メッセージ数',
+                            data: data.member.slice(-7),
+                            borderColor: '#4d4398',
+                            borderWidth: 4,
+                            tension: 0.1
+                        },
+                        {
+                            label: 'ユーザー送信数',
+                            data: data.user.slice(-7),
+                            borderColor: '#a22041',
+                            borderWidth: 4,
+                            tension: 0.1
+                        },
+                        {
+                            label: 'ボット送信数',
+                            data: data.bot.slice(-7),
+                            borderColor: '#53727d',
+                            borderWidth: 4,
+                            tension: 0.1
+                        }
+                    ]
+                };
+                lineChartConfig = {
+                    type: 'line',
+                    data: lineData,
+                    plugins: [plugin],
+                };
+
+                row = new ActionRowBuilder()
+                    .addComponents(
+                        new StringSelectMenuBuilder()
+                            .setCustomId('messages')
+                            .setPlaceholder('表示する日数を選択')
+                            .addOptions(
+                                {
+                                    label: '3日間',
+                                    description: '直近3日間のメッセージ数推移を表示します。',
+                                    value: 'messagesThree',
+                                },
+                                {
+                                    label: '7日間',
+                                    description: '直近7日間のメッセージ数推移を表示します。',
+                                    value: 'messagesSeven',
+                                },
+                                {
+                                    label: '14日間',
+                                    description: '直近14日間のメッセージ数推移を表示します。',
+                                    value: 'messagesFourteen',
+                                },
+                                {
+                                    label: '1ヶ月',
+                                    description: '直近1ヶ月間のメッセージ数推移を表示します。',
+                                    value: 'messagesMonth',
+                                },
+                            ),
+                    );
+                image = await chartJSNodeCanvas.renderToBuffer(lineChartConfig);
+                attachment = await new AttachmentBuilder(image, { name: 'chart.png' });
+                analyticsEmbed
+                    .setTitle(`${interaction.guild.name} のメッセージ数推移（7日間）`);
 
                 await interaction.update({
                     embeds: [analyticsEmbed],
