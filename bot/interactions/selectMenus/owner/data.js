@@ -116,10 +116,10 @@ module.exports = {
                     components: []
                 });
                 try {
+                    console.log('[アナリティクス] データの取得を開始します。');
                     interaction.client.guilds.cache.forEach(async guild => {
                         if (!await isCreatedGuild(guild)) return;
                         if (!await hasPermissions(guild.members.cache.get(interaction.client.user.id), PermissionsBitField.Flags.ReadMessageHistory)) return;
-                        console.log('[アナリティクス] データの取得を開始します。');
 
                         var messageCount = {
                             member: 0,
