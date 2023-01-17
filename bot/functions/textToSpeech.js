@@ -7,6 +7,9 @@ const { AudioPlayerStatus, getVoiceConnection, createAudioResource, StreamType, 
 const config = require('../config.json')
 const fs = require('fs');
 
+let isPlaying = false;
+let queue = [];
+
 async function textToSpeech(client, guild, id, channel, text, voice, message) {
     if (!client | !guild | !id | !channel | !text | !voice) return;
 
@@ -26,9 +29,9 @@ async function textToSpeech(client, guild, id, channel, text, voice, message) {
     try {
         if (text == `${config.prefix}start`) text = '読み上げを始めます。';
         await generateAudio(convertMessage(text), filepath, voice);
-        addAudioToQueue(client, filepath, channel);
+        addAudioToQueue(filepath, channel);
 
-        if (!client.isPlaying) await play(client, guild, message);
+        if (!isPlaying) await play(guild, message);
     } catch(error) {
         return console.error(error);
     };
@@ -60,19 +63,19 @@ async function generateAudio(text, filepath, voice) {
     fs.writeFileSync(filepath, new Buffer.from(synthesis.data), 'binary');
 };
 
-function addAudioToQueue(client, filepath, channel) {
-    client.audioQueue.push(
+function addAudioToQueue(filepath, channel) {
+    queue.push(
         { path: filepath, voiceChannel: channel }
     );
 };
 
-async function play(client, guild, message) {
+async function play(guild, message) {
     const connection = await getVoiceConnection(guild.id);
     if (!connection) return;
 
-    if (client.audioQueue.length >= 1 && !client.isPlaying) {
-        client.isPlaying = true;
-        const resource = createAudioResource(client.audioQueue[0].path, { inputType: StreamType.Arbitrary });
+    if (queue.length >= 1 && !isPlaying) {
+        isPlaying = true;
+        const resource = createAudioResource(queue[0].path, { inputType: StreamType.Arbitrary });
         const player = createAudioPlayer({
             behaviors: {
                 noSubscriber: NoSubscriberBehavior.Pause,
@@ -82,12 +85,12 @@ async function play(client, guild, message) {
         connection.subscribe(player);
 
         player.on(AudioPlayerStatus.Idle, async () => {
-            client.audioQueue.shift();
-            play(client, guild, message);
-            client.isPlaying = false;
+            queue.shift();
+            play(guild, message);
+            isPlaying = false;
         });
     } else {
-        client.isPlaying = false;
+        isPlaying = false;
         return;
     };
 };

@@ -6,7 +6,14 @@ module.exports = {
 
 	async execute(client) {
 		try {
-			console.log(`ログイン完了: ${client.user.tag}`);
+			switch (config.mode) {
+				case 'NORMAL':
+					console.log(`ログイン完了: ${client.user.tag}`);
+					break;
+				case 'DEBUG':
+					console.log(`ログイン完了: ${client.user.tag}`);
+					console.log('=== デバッグモードで動作します ===');
+			}
 			setInterval(() => {
 				if (config.mode == 'NORMAL') {
 					client.user.setPresence({ activities: [{ name: `v${config.version} | ${client.guilds.cache.size} Servers` }], status: 'online' });

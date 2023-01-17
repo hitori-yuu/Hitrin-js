@@ -7,7 +7,7 @@ const guildModel = require('../models/guildsSchema');
 const config = require('../config.json');
 const cron = require('node-cron');
 
-async function fetchMore(channel, limit = 500) {
+async function fetchMore(channel, limit) {
     if (!channel) {
         throw new Error(`Expected channel, got ${typeof channel}.`);
     }
@@ -60,7 +60,7 @@ module.exports = {
                 guild.channels.cache.forEach(async channel => {
                     if (channel.type !== ChannelType.GuildText) return;
                     if (!channel.viewable) return;
-                    const msg = await fetchMore(channel, 5000);
+                    const msg = await fetchMore(channel, 30000);
                     messageCount.member += msg.size;
                     messageCount.user += msg.filter(msg => !msg.author.bot).size;
                     messageCount.bot += msg.filter(msg => msg.author.bot).size;
@@ -71,42 +71,40 @@ module.exports = {
                 var month = today.getMonth() + 1;
                 var day = today.getDate();
 
-                setTimeout(async () => {
-                    const logEmbed = new EmbedBuilder()
-                        .setColor('#59b9c6')
-                        .setAuthor({ name: `メッセージ数の取得が完了しました。`})
-                        .setThumbnail(guild.iconURL({ extension: 'png' }))
-                        .addFields(
-                            {
-                                name: '__**一般:**__',
-                                value: `**[名前]** ${guild.name}\n**[ID]** ${guild.id}\n**[オーナー]** <@${guild.ownerId}>`
-                            },
-                            {
-                                name: '__**メッセージ数:**__',
-                                value: `**[総メッセージ]** ${messageCount.member}\n**[ユーザー]** ${messageCount.user}\n**[ボット]** ${messageCount.bot}`
-                            },
-                        )
-                        .setTimestamp()
-                        .setFooter({ text: '© 2021-2022 HitoriYuu, Hitrin' });
-                    await guildModel.findOneAndUpdate(
+                const logEmbed = new EmbedBuilder()
+                    .setColor('#59b9c6')
+                    .setAuthor({ name: `メッセージ数の取得が完了しました。`})
+                    .setThumbnail(guild.iconURL({ extension: 'png' }))
+                    .addFields(
                         {
-                            id: guild.id,
+                            name: '__**一般:**__',
+                            value: `**[名前]** ${guild.name}\n**[ID]** ${guild.id}\n**[オーナー]** <@${guild.ownerId}>`
                         },
                         {
-                            $push: {
-                                'analytics.messages': {
-                                    'member': messageCount.member,
-                                    'user': messageCount.user,
-                                    'bot': messageCount.bot,
-                                    'date': `${year}/${month}/${day}`,
-                                }
-                            },
+                            name: '__**メッセージ数:**__',
+                            value: `**[総メッセージ]** ${messageCount.member}\n**[ユーザー]** ${messageCount.user}\n**[ボット]** ${messageCount.bot}`
                         },
-                    );
-                    client.channels.cache.get('1022444125980741642').send({
-                        embeds: [logEmbed]
-                    });
-                }, 180000);
+                    )
+                    .setTimestamp()
+                    .setFooter({ text: '© 2021-2022 HitoriYuu, Hitrin' });
+                await guildModel.findOneAndUpdate(
+                    {
+                        id: guild.id,
+                    },
+                    {
+                        $push: {
+                            'analytics.messages': {
+                                'member': messageCount.member,
+                                'user': messageCount.user,
+                                'bot': messageCount.bot,
+                                'date': `${year}/${month}/${day}`,
+                            }
+                        },
+                    },
+                );
+                client.channels.cache.get('1022444125980741642').send({
+                    embeds: [logEmbed]
+                });
             });
         });
 	},
