@@ -38,25 +38,36 @@ async function fetchMore(channel, limit) {
 
 module.exports = {
 	name: 'messages',
-	description: '指定したチャンネル内で送信されたメッセージ数を取得します。',
-	usage: '[チャンネルID]',
+	description: '指定したサーバー内で送信されたメッセージ数を取得します。',
+	usage: '[サーバーID]',
     category: 'owner',
 	ownerOnly: true,
 
 	async execute(message, args) {
-        const channel = message.guild.channels.cache.get(args[0]) || message.channel;
+        const guild = message.client.guilds.cache.get(args[0]) || message.guild;
 
-        if (channel.type !== ChannelType.GuildText) return;
-        if (!channel.viewable) return;
-        const msg = await fetchMore(channel, 5000);
+        var messageCount = {
+            member: 0,
+            user: 0,
+            bot: 0
+        };
+
+        guild.channels.cache.forEach(async channel => {
+            if (channel.type !== ChannelType.GuildText) return;
+            if (!channel.viewable) return;
+            const msg = await fetchMore(channel, 30000);
+            messageCount.member += msg.size;
+            messageCount.user += msg.filter(msg => !msg.author.bot).size;
+            messageCount.bot += msg.filter(msg => msg.author.bot).size;
+        });
 
         message.channel.send({
-            content: `**${channel.name}** のメッセージ数\nMember: ${msg.size} messages\nUser: ${msg.filter(msg => !msg.author.bot).size} messages\nBot: ${msg.filter(msg => msg.author.bot).size} messages`
+            content: `**${guild.name}** のメッセージ数\nMember: ${messageCount.member} messages\nUser: ${messageCount.user} messages\nBot: ${messageCount.bot} messages`
         });
         setTimeout(async () => {
             message.channel.send({
-                content: `**${channel.name}** のメッセージ数\nMember: ${msg.size} messages\nUser: ${msg.filter(msg => !msg.author.bot).size} messages\nBot: ${msg.filter(msg => msg.author.bot).size} messages`
+                content: `**${guild.name}** のメッセージ数\nMember: ${messageCount.member} messages\nUser: ${messageCount.user} messages\nBot: ${messageCount.bot} messages`
             });
-        }, 5000);
+        }, 15000);
 	},
 };

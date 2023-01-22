@@ -66,45 +66,47 @@ module.exports = {
                     messageCount.bot += msg.filter(msg => msg.author.bot).size;
                 });
 
-                var today = new Date();
-                var year = today.getFullYear();
-                var month = today.getMonth() + 1;
-                var day = today.getDate();
+                setTimeout(async () => {
+                    var today = new Date();
+                    var year = today.getFullYear();
+                    var month = today.getMonth() + 1;
+                    var day = today.getDate();
 
-                const logEmbed = new EmbedBuilder()
-                    .setColor('#59b9c6')
-                    .setAuthor({ name: `メッセージ数の取得が完了しました。`})
-                    .setThumbnail(guild.iconURL({ extension: 'png' }))
-                    .addFields(
+                    const logEmbed = new EmbedBuilder()
+                        .setColor('#59b9c6')
+                        .setAuthor({ name: `メッセージ数の取得が完了しました。`})
+                        .setThumbnail(guild.iconURL({ extension: 'png' }))
+                        .addFields(
+                            {
+                                name: '__**一般:**__',
+                                value: `**[名前]** ${guild.name}\n**[ID]** ${guild.id}\n**[オーナー]** <@${guild.ownerId}>`
+                            },
+                            {
+                                name: '__**メッセージ数:**__',
+                                value: `**[総メッセージ]** ${messageCount.member}\n**[ユーザー]** ${messageCount.user}\n**[ボット]** ${messageCount.bot}`
+                            },
+                        )
+                        .setTimestamp()
+                        .setFooter({ text: '© 2021-2022 HitoriYuu, Hitrin' });
+                    await guildModel.findOneAndUpdate(
                         {
-                            name: '__**一般:**__',
-                            value: `**[名前]** ${guild.name}\n**[ID]** ${guild.id}\n**[オーナー]** <@${guild.ownerId}>`
+                            id: guild.id,
                         },
                         {
-                            name: '__**メッセージ数:**__',
-                            value: `**[総メッセージ]** ${messageCount.member}\n**[ユーザー]** ${messageCount.user}\n**[ボット]** ${messageCount.bot}`
+                            $push: {
+                                'analytics.messages': {
+                                    'member': messageCount.member,
+                                    'user': messageCount.user,
+                                    'bot': messageCount.bot,
+                                    'date': `${year}/${month}/${day}`,
+                                }
+                            },
                         },
-                    )
-                    .setTimestamp()
-                    .setFooter({ text: '© 2021-2022 HitoriYuu, Hitrin' });
-                await guildModel.findOneAndUpdate(
-                    {
-                        id: guild.id,
-                    },
-                    {
-                        $push: {
-                            'analytics.messages': {
-                                'member': messageCount.member,
-                                'user': messageCount.user,
-                                'bot': messageCount.bot,
-                                'date': `${year}/${month}/${day}`,
-                            }
-                        },
-                    },
-                );
-                client.channels.cache.get('1022444125980741642').send({
-                    embeds: [logEmbed]
-                });
+                    );
+                    client.channels.cache.get('1022444125980741642').send({
+                        embeds: [logEmbed]
+                    });
+                }, 1800000);
             });
         });
 	},
