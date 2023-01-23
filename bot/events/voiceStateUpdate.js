@@ -1,3 +1,4 @@
+const { EmbedBuilder } = require('discord.js');
 const { AudioPlayerStatus, getVoiceConnection, createAudioResource, StreamType, createAudioPlayer, NoSubscriberBehavior } = require('@discordjs/voice');
 
 module.exports = {
@@ -29,13 +30,17 @@ module.exports = {
 	},
 };
 
+const disconnectEmbed = new EmbedBuilder()
+    .setColor('#d9333f')
+    .setAuthor({ name: '💥メンバーがいなくなったため読み上げを終了しました。'})
+
 function disconnect(client, guild, channel, channelId, connection) {
     if (channel.members.size <= 1) {
         setTimeout(() => {
             if (channel.members.size === 1) {
                 connection.destroy(true);
                 guild.channels.cache.get(client.voiceChannels.get(channelId)).send({
-                    content: '💥｜メンバーがいなくなったため読み上げを終了しました。'
+                    embeds: [disconnectEmbed]
                 });
                 client.voiceChannels.delete(channelId);
             }
