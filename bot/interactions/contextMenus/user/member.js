@@ -2,7 +2,7 @@ const { EmbedBuilder } = require('discord.js');
 
 module.exports = {
 	data: {
-		name: 'Member',
+		name: 'メンバーの詳細',
 		type: 2,
 	},
 

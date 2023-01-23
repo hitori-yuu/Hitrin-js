@@ -3,7 +3,7 @@ const config = require('../../../config.json');
 
 module.exports = {
 	data: {
-		name: 'Avatar',
+		name: 'アバターを取得',
 		type: 2,
 	},
 
