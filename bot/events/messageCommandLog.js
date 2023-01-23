@@ -93,7 +93,7 @@ module.exports = {
                 embeds: [commandEmbed]
             });
         } catch (error) {
-			return Error(error);
+			return console.error(error);
         }
 	},
 };
