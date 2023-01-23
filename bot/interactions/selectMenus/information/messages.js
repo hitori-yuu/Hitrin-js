@@ -31,21 +31,18 @@ module.exports = {
                             data: data.member.slice(-3),
                             borderColor: '#4d4398',
                             borderWidth: 4,
-                            tension: 0.1
                         },
                         {
                             label: 'ユーザー数',
                             data: data.user.slice(-3),
                             borderColor: '#a22041',
                             borderWidth: 4,
-                            tension: 0.1
                         },
                         {
                             label: 'ボット数',
                             data: data.bot.slice(-3),
                             borderColor: '#53727d',
                             borderWidth: 4,
-                            tension: 0.1
                         }
                     ]
                 };
@@ -62,21 +59,18 @@ module.exports = {
                             data: data.member.slice(-7),
                             borderColor: '#4d4398',
                             borderWidth: 4,
-                            tension: 0.1
                         },
                         {
                             label: 'ユーザー数',
                             data: data.user.slice(-7),
                             borderColor: '#a22041',
                             borderWidth: 4,
-                            tension: 0.1
                         },
                         {
                             label: 'ボット数',
                             data: data.bot.slice(-7),
                             borderColor: '#53727d',
                             borderWidth: 4,
-                            tension: 0.1
                         }
                     ]
                 };
@@ -92,21 +86,18 @@ module.exports = {
                             data: data.member.slice(-14),
                             borderColor: '#4d4398',
                             borderWidth: 4,
-                            tension: 0.1
                         },
                         {
                             label: 'ユーザー数',
                             data: data.user.slice(-14),
                             borderColor: '#a22041',
                             borderWidth: 4,
-                            tension: 0.1
                         },
                         {
                             label: 'ボット数',
                             data: data.bot.slice(-14),
                             borderColor: '#53727d',
                             borderWidth: 4,
-                            tension: 0.1
                         }
                     ]
                 };
@@ -122,21 +113,18 @@ module.exports = {
                             data: data.member.slice(-30),
                             borderColor: '#4d4398',
                             borderWidth: 4,
-                            tension: 0.1
                         },
                         {
                             label: 'ユーザー数',
                             data: data.user.slice(-30),
                             borderColor: '#a22041',
                             borderWidth: 4,
-                            tension: 0.1
                         },
                         {
                             label: 'ボット数',
                             data: data.bot.slice(-30),
                             borderColor: '#53727d',
                             borderWidth: 4,
-                            tension: 0.1
                         }
                     ]
                 };
