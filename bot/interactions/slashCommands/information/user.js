@@ -26,7 +26,7 @@ module.exports = {
         const user = await interaction.client.users.fetch(userId);
 
         if (!user)
-            return interaction.channel.send({
+            return interaction.reply({
                 embeds: [CustomErrorEmbed('指定したユーザーは存在しません。')]
             });
 

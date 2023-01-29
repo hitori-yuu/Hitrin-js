@@ -26,7 +26,7 @@ module.exports = {
         const member = interaction.options.getMember('member');
 
         if (!member)
-            return interaction.channel.send({
+            return interaction.reply({
                 embeds: [CustomErrorEmbed('指定したメンバーは存在しません。')]
             });
 
